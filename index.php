@@ -1,5 +1,100 @@
+<?php 
+    if (!isset($_SESSION)) {
+        session_start(); 
+    }
+    include "connect.php";
+  
+
+    if (isset($_SESSION["usernickname"]) && isset($_SESSION["userid"])) { 
+		loadMenu($mmac);
+	} else if (isset($_POST['username']) && isset($_POST['password'])) {
+			 
+		function validate($data){
+			$data = trim($data);
+			$data = stripslashes($data);
+			$data = htmlspecialchars($data); 
+			return $data;
+		}
+		 
+		$uname = validate($_POST['username']);
+		$pass = validate($_POST['password']);
+		$verifyuname = strtolower($uname); 
+		$verifypass = hash('sha512', $pass);
+		 
+		 if (empty($uname)) {
+			  header("Location: index.php?error=unir");
+		 } else if(empty($pass)) {
+			  header("Location: index.php?error=pir");
+		 } else {
+			 
+			 
+			 
+			 //echo $verify;
+			  $sql = "SELECT 
+							* 
+						FROM 
+							User_MSTR, 
+							Passwords_MSTR 
+						WHERE 
+							LOWER(UserNickName_MSTR) = '$verifyuname' AND	
+							PasswordsPassword_MSTR = '$verifypass' AND
+							PasswordsUserID_MSTR = UserID_MSTR";
+			  
+			  $result = mysqli_query($connect, $sql);
+			  if (mysqli_num_rows($result) === 1) {
+					$row = mysqli_fetch_assoc($result);
+						
+					$_SESSION['usernickname'] = $row['UserNickName_MSTR'];
+					$_SESSION['userid'] = $row['UserID_MSTR'];
+					$_SESSION['lastusing'] = time();
+					//$_SESSION['parentpage'] = "timeline.php";
+
+					user_log("member¬§SuccessfulLogin¬§$_POST[username]");
+					loadMenu($mmac);
+			  } else {
+                    $wrongLoginCount = (checkLog($_POST["username"]) + 1);
+					user_log("member¬§UnsuccessfulLogin¬§".$wrongLoginCount."¬§".$_POST["username"]."¬§".$_POST["password"]);
+                    
+					header("Location: index.php?error=nopass&cnt=".$wrongLoginCount);
+					exit();
+			  }
+
+		}
+		
+	} else {
+	}
+
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu"> 
     <head>
         <title>MotoLand</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>      
@@ -27,26 +122,31 @@
 
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Kezdılap</a></li>
-                        <li><a href="#">Elad·s</a></li>
+                        <li class="active"><a href="#">Kezd≈ëlap</a></li>
+                        <li><a href="#">Elad√°s</a></li>
                         <li><a href="#">Kapcsolat</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szolg·ltat·sok<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szolg√°ltat√°sok<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">SzervÌz idıpontfoglal·s</a></li>
-                                <li><a href="#">AlkatrÈszrendelÈs</a></li>
+                                <li><a href="#">Szerv√≠z id≈ëpontfoglal√°s</a></li>
+                                <li><a href="#">Alkatr√©szrendel√©s</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">AkciÛ</li>
-                                <li><a href="#">Tˆrˆtt motorok</a></li>
+                                <li class="dropdown-header">Akci√≥</li>
+                                <li><a href="#">T√∂r√∂tt motorok</a></li>
                             </ul>
                         </li>
                     </ul>
 
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" title="Regisztr·ciÛ" ><span class="glyphicon glyphicon-user"></span></a></li>
-                        <li><a href="#" title="BejelentkezÈs"><span class="glyphicon glyphicon-log-in"></span></a></li>
-                        <li><a href="#" title="Bev·s·rlÛkos·r"><span class="glyphicon glyphicon-shopping-cart"></span>   </a></li>
+                        <li><a href="#" title="Regisztr√°ci√≥" ><span class="glyphicon glyphicon-user"></span></a></li>
+
+
+                        <li><a href="#loginForm" data-toggle="modal" title="Bejelentkez√©s"><span class="glyphicon glyphicon-log-in"></span></a></li>
+
+
+
+                        <li><a href="#" title="Bev√°s√°rl√≥kos√°r"><span class="glyphicon glyphicon-shopping-cart"></span>   </a></li>
                     </ul>
 
                 </div>
@@ -54,29 +154,55 @@
         </nav>
 
   
+        <div class="modal fade" id="loginForm" role="dialog">
+            <div class="modal-dialog">
+    
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                    <div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4><span class="glyphicon glyphicon-lock"></span> Bejelentkez√©s</h4>
+                    </div>
+
+                    <div class="modal-body" style="padding:40px 50px;">
+
+                        <form role="form" action="<?php .$_SERVER["PHP_SELF"]. ?>" method="post" onsubmit="return fv()" >
+
+                            <div class="form-group">
+                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Felhaszn√°l√≥n√©v</label>
+                                <input type="text" class="form-control" id="usrname" placeholder="EMail">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Jelsz√≥</label>
+                                <input type="text" class="form-control" id="psw" placeholder="Jelsz√≥">
+                            </div>
+
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" checked>Remember me</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                        </form>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <p>Not a member? <a href="#">Sign Up</a></p>
+                        <p>Forgot <a href="#">Password?</a></p>
+                    </div>
+
+                </div>
+      
+            </div>
+        </div> 
+
+
+
         <div class="container" style="height:1000px">
-            echo '<form action="'.$_SERVER["PHP_SELF"].'" method="post" onsubmit="return fv()" name="loginform">
 
-                <div class="login-head"><span>lv426</span></div>
-
-                <div class="login-field">
-                    <div class="login-field-img login-field-img-user"></div>	
-                    <input type="text" name="username" placeholder="Felhaszn·lÛnÈv" autofocus>
-                </div>
-
-                <div class="login-field">
-                    <div class="login-field-img login-field-img-pw"></div>	
-                    <input type="password" name="password" placeholder="JelszÛ" autofocus>
-                </div>
-                <div class="login-submit">
-                    <input type="submit" class="button" value="BejelentkezÈs">
-                </div>
-                <div class="login-as-guest">
-                <!--<a href="#">BejelentkezÈs vendÈgkÈnt</a>-->
-                </div>
-            </form>';
-
-    </div>
+        </div>
     
 
     </body>

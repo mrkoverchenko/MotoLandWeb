@@ -13,7 +13,6 @@
 	if (isset($_POST["userName"]) && 
             isset($_POST["password"]) && 
                 $_POST["formName"] == "loginForm") {
-        
     
 		function validate($data){
 			$data = trim($data);
@@ -44,11 +43,14 @@
                     UserTypeID_MSTR,
                     UserFlagID_MSTR,
                     PasswordSalt_MSTR,
-                    PasswordPassword_MSTR
+                    PasswordPassword_MSTR,
+                    CONCAT(UserFirstName_DET,' ',UserMiddleName_DET,' ',UserLastName_DET) AS UserFullName
+
                 FROM 
-                    user_mstr, password_mstr
+                    user_mstr, user_det, password_mstr
                 WHERE 
                     UserMail_MSTR = '$uname' AND 
+                    UserMSTRID_DET = UserID_MSTR AND 
                     UserID_MSTR = PasswordUserID_MSTR AND 
                     UserTypeID_MSTR <> '6'";
 
@@ -59,6 +61,7 @@
             $_SESSION['usernickname'] = $row['UserNickName_MSTR'];
             $_SESSION['userid'] = $row['UserID_MSTR'];
             $_SESSION['lastusing'] = time();
+            $userFullName = $row['UserFullName'];
             
             $saltFromDb = $row["PasswordSalt_MSTR"];
             $passwordFromDb = $row["PasswordPassword_MSTR"];
@@ -169,12 +172,28 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="boogie.js"></script>
 
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/footers/">
+
         <style>
             .carousel-inner > .item > img,
             .carousel-inner > .item > a > img {
                 width: 100%;
                 margin: auto;
             }   
+
+            .footer {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background-color: black;
+                color: gray;
+                text-align: center;
+            }
+            .navbar-background {
+                background-color: black;
+            }
+        }
         </style>
 
 
@@ -183,8 +202,9 @@
     <body>
 
         <!-- NAVIGATION -->
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">.  
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+
+            <div class="container">
 
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -193,11 +213,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">MotoLand</a>
+
+                    <a class="navbar-brand" href="#">
+                        <img src="imgs/motobike.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                        MotoLand
+                    </a>
+
                 </div>
 
 
                 <div id="navbar" class="navbar-collapse collapse"> 
+
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Kezdőlap</a></li>
                         <li><a href="#">  
@@ -209,14 +235,15 @@
                             ?>
                         </a></li>
                         <li><a href="#">Kapcsolat</a></li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szolgáltatások<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Szervíz időpontfoglalás</a></li>
-                                <li><a href="#">Alkatrészrendelés</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-calendar" style="margin-right:20px;"></span>Szervíz időpontfoglalás</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-euro" style="margin-right:20px;"></span>Alkatrészrendelés</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Akció</li>
-                                <li><a href="#">Törött motorok</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-cog" style="margin-right:20px;"></span>Törött motorok</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -230,20 +257,28 @@
                         </li>
 
 
-                        <li>
-                            <a href="#loginForm" data-toggle="modal" title="Bejelentkezés">
-                                
-                                <span 
-                                
-                                    <?php
-                                        if ($isUser)
-                                            echo "class='glyphicon glyphicon-user'";
-                                        else
-                                            echo "class='glyphicon glyphicon-log-in'";
-                                    ?> >
-                                </span>
-                            </a>
-                        </li>
+                        <?php 
+                            if ($isUser) {
+                                echo "<li class='dropdown'>
+                                        <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
+                                            <span class='glyphicon glyphicon-user' ></span>
+                                        </a>
+                                        <ul class='dropdown-menu'>
+                                            <li class='dropdown-header'>Üdv. $userFullName</li>
+                                            <li><a href='#'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalás</a></li>
+                                            <li><a href='#'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendelések</a></li>
+                                            <li role='separator' class='divider'></li>
+                                            <li><a href='logout.php'><span class='glyphicon glyphicon-log-out' style='margin-right:20px;'></span>Kijelentkezés</a></li>
+                                        </ul>
+                                    </li>";
+                            } else {
+                                echo "<li>
+                                        <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>
+                                            <span class='glyphicon glyphicon-log-in'></span>   
+                                        </a>
+                                     </li>";
+                            };
+                        ?>
 
 
 
@@ -628,8 +663,96 @@
 
 
 
+
+
+
+
+
+
+
+
+        </br>
+
+  <footer class="py-5">
+    <div class="row">
+      <div class="col-2">
+        <h5>Section</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
+
+      <div class="col-2">
+        <h5>Section</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
+
+      <div class="col-2">
+        <h5>Section</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+        </ul>
+      </div>
+
+      <div class="col-4 offset-1">
+        <form>
+          <h5>Subscribe to our newsletter</h5>
+          <p>Monthly digest of whats new and exciting from us.</p>
+          <div class="d-flex w-100 gap-2">
+            <label for="newsletter1" class="visually-hidden">Email address</label>
+            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+            <button class="btn btn-primary" type="button">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+
+
+
+
+
+
+
         </div>
     
+
+
+
+
+        <div class="footer">
+            <div class="d-flex justify-content-between py-4 my-4 border-top">
+                <p>&copy; 2021 Company, Inc. All rights reserved.</p>
+                <ul class="list-unstyled d-flex">
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
 
     </body>
 

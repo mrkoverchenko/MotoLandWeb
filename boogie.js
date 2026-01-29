@@ -1,6 +1,5 @@
 
 
-
 function checkForms(_this) {
     let thisForm = document.getElementById(_this.id);
     let thisFormInputElements = thisForm.getElementsByTagName('INPUT');    
@@ -12,9 +11,9 @@ function checkForms(_this) {
 
         if (thisFormInputElements[ic].alt != "noChecking") { 
 
-            if (thisFormInputElements[ic].value == "") {
-                thisFormInputElements[ic].focus();
+            if (thisFormInputElements[ic].value.length === 0) {
                 alert("Ez a mező nem maradhat üresen!\nCsak mondom!");
+                thisFormInputElements[ic].focus();
                 return false;
             }
 
@@ -45,4 +44,39 @@ function clearForm(formID) {
         thisFormInputElements[ic].value = "";
     }
 }	
+
+
+function checkUserName(_this) {
+
+    var defaultText = "A *-al jelszett mezők kitöltése kötelező!";
+
+    var param = "username=" + _this.value;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "checkUserName.php", true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var ret = xhr.responseText;
+            if (ret.length > 4) { //{[]}
+                _this.focus();
+                const mess = document.getElementById("message");
+                mess.style.color = "red";
+                mess.innerHTML = "Sajnálom, ez a felhasználónév már foglalt!";
+
+                let m = setInterval(clrTimer, 3000);
+                function clrTimer() {
+                    mess.innerHTML = defaultText;
+                    mess.style.color = "black";
+                    _this.value = "";
+                    clearInterval(m);
+                }		
+
+            }
+        }
+    };
+    xhr.send(param);		
+}
+
+
+
 

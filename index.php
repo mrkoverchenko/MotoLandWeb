@@ -1,28 +1,55 @@
 <?php 
-    if (!isset($_SESSION)) {
-        session_start(); 
-    }
+    session_start(); 
+
     include "connect.php";
-  
-    $ok = 0;
-    $isUser = false;
 
-
-
-    // LOGIN
-	if (isset($_POST["userName"]) && 
-            isset($_POST["password"]) && 
-                $_POST["formName"] == "loginForm") {
+    if (!isset($_SESSION['userid'])) {
+//        header("Location: http://lv426.giize.com");
+    }
     
+    $systemIsMessage = true;
+    $systemMessage = "<b>Sikeres regisztráció!</b></br>".
+                        "Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
+    /// REGISTRATION IS COMPLET MESSAGE
+    if (isset($_GET["reg"]) && $_GET["reg"] === "ok") {
+        $systemIsMessage = true;
+        $systemMessage = "<b>Sikeres regisztráció!</b></br>".
+                            "Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
+    }
+
+
+
+    $ok = 0;
+    
+    $isUser = false;
+    
+    
+    if (isset($_GET["logged"]) && $_GET["logged"] == "out") {
+        $_POST["userName"] = "";
+        $_POST["password"] = "";
+        $_POST["formName"] = "";
+        $_POST = array();
+        unset($_POST);
+        $isUser = false;
+    }
+    
+
+
+    ////////////////////////////////////////////////////////
+    // LOGIN
+    ////////////////////////////////////////////////////////
+	if (isset($_POST["userName"]) && 
+    isset($_POST["password"]) && 
+    $_POST["formName"] == "loginForm") {
+        
+        $isUser = false;
+
 		function validate($data){
 			$data = trim($data);
 			$data = stripslashes($data);
 			$data = htmlspecialchars($data); 
 			return $data;
 		}
-        function generateSalt($length = 32) {
-            return bin2hex(random_bytes($length));
-        }
         function createPasswordHash($password, $salt) {
             return hash('sha256', $salt . $password);
         }
@@ -30,9 +57,9 @@
             return hash('sha256', $storedSalt . $inputPassword) === $storedHash;
         }
 		 
-		$uname = validate($_POST['userName']);          //User Mail address
+		$uname = strtolower(validate($_POST['userName']));          //User Mail address
 		$passwordFromInput = validate($_POST['password']);
-		$verifyuname = strtolower($uname); 
+		//$verifyuname = strtolower($uname); 
 		//$verifypass = hash('sha512', $pass);
 		 
 			 
@@ -49,7 +76,7 @@
                 FROM 
                     user_mstr, user_det, password_mstr
                 WHERE 
-                    UserMail_MSTR = '$uname' AND 
+                    LOWER(UserNickName_MSTR) = '$uname' AND 
                     UserMSTRID_DET = UserID_MSTR AND 
                     UserID_MSTR = PasswordUserID_MSTR AND 
                     UserTypeID_MSTR <> '6'";
@@ -82,23 +109,53 @@
 
             $isUser = true;
 		}
+        mysqli_close($connect);
 
-	
     }
 
 
 
 
-
+    ////////////////////////////////////////////////////////
+    // REGISTRATION
+    ////////////////////////////////////////////////////////
 	if (isset($_POST["userName"]) && 
             isset($_POST["password"]) && 
-                isset($_POST["formName"]) && 
-                    $_POST["formName"] == "regForm"  ) {
+                isset($_POST["firstName"]) && 
+                    isset($_POST["middleName"]) && 
+                        isset($_POST["lastName"]) && 
+                            isset($_POST["countryID"]) && 
+                                isset($_POST["postcode"]) && 
+                                    isset($_POST["city"]) && 
+                                        isset($_POST["street"]) && 
+                                            isset($_POST["address"]) && 
+                                                isset($_POST["phone"]) && 
+                                                    isset($_POST["email"]) && 
+                                                        isset($_POST["formName"]) && 
+                                                            $_POST["formName"] == "regForm"  ) {
 
-		$ok = 1;
-        
+	    $username = $_POST["userName"];
+        $password = $_POST["password"];
+        $firstname = $_POST["firstName"];
+        $middlename = $_POST["middleName"];
+        $lastname = $_POST["lastName"];
+        $countryid = $_POST["countryID"];
+        $postcode = $_POST["postcode"];
+        $city = $_POST["city"];
+        $street = $_POST["street"];
+        $address = $_POST["address"];
+        $phone = $_POST["phone"];
+        $email = $_POST["email"];
+
         $_POST = array();
         unset($_POST);
+
+        function generateSalt($length = 32) {
+            return bin2hex(random_bytes($length));
+        }
+        function createPasswordHash($password, $salt) {
+            return hash('sha256', $salt . $password);
+        }
 
 		function validate($data){
 			$data = trim($data);
@@ -107,45 +164,101 @@
 			return $data;
 		}
 		 
-		$uname = validate($_POST['username']);
-		$pass = validate($_POST['password']);
-		$verifyuname = strtolower($uname); 
-		$verifypass = hash('sha512', $pass);
-		 
+		$uname = validate($username);
+		$pass = validate($password);
+		//$verifyuname = strtolower($uname); 
+		//$verifypass = hash('sha512', $pass);
+
+        $sqlstring = "INSERT INTO 
+                        user_mstr (
+                            UserNickName_MSTR, 
+                            UserMail_MSTR, 
+                            UserTypeID_MSTR, 
+                            UserFlagID_MSTR, 
+                            UserNote_MSTR
+                        ) VALUES (
+                            '$uname',
+                            '$email',
+                            '2',
+                            '1',
+                            '')";
+
+        mysqli_query($connect, $sqlstring);
+
+        $lastID = mysqli_insert_id($connect);
+        $dateNow = date("Y-m-d H:i:s");
+
+        $sqlstring = "INSERT INTO 
+                        user_det (
+                            UserMSTRID_DET, 
+                            UserFirstName_DET, 
+                            UserMiddleName_DET, 
+                            UserLastName_DET, 
+                            UserGenderID_DET,
+                            UserPhone_DET, 
+                            UserCountryID_DET, 
+                            UserPostCode_DET,
+                            UserCity_DET, 
+                            UserStreet_DET,
+                            UserAddress_DET,
+                            UserRegDate_DET,
+                            UserMotherName_DET,
+                            UserBirthPlace_DET,
+                            UserBirthDate_DET,
+                            UserLastModifiedDate_DET
+                    ) VALUES (
+                            '$lastID', 
+                            '$firstname', 
+                            '$middlename',
+                            '$lastname', 
+                            '3',
+                            '$phone',
+                            '$countryid', 
+                            '$postcode', 
+                            '$city', 
+                            '$street', 
+                            '$address', 
+                            '$dateNow', 
+                            '',
+                            '',
+                            '1900-01-01',
+                            '$dateNow'
+                    )";
+        mysqli_query($connect, $sqlstring);
+
+
+
+        $salt = generateSalt();
+        $passHASH = createPasswordHash($pass, $salt);
+        $sqlstring = "INSERT INTO 
+                        password_mstr (
+                            PasswordUserID_MSTR, 
+                            PasswordPassword_MSTR, 
+                            PasswordSalt_MSTR, 
+                            PasswordStatusID_MSTR 
+                    ) VALUES (
+                        '$lastID', 
+                        '$passHASH', 
+                        '$salt',
+                        '1'
+                    )";
+        mysqli_query($connect, $sqlstring);
+
+
+
 			 
-        $sql = "SELECT 
-                    UserID_MSTR,
-                    UserMail_MSTR,
-                    UserNickName_MSTR,
-                    UserTypeID_MSTR,
-                    UserFlagID_MSTR,
-                    PasswordSalt_MSTR,
-                    PasswordPassword_MSTR
-                FROM 
-                    user_mstr, password_mstr
-                WHERE 
-                    UserMail_MSTR= @usermail AND 
-                    UserID_MSTR = PasswordUserID_MSTR AND 
-                    UserTypeID_MSTR <> '6'";
-
+        /*$sql = "SELECT * FROM user_mstr WHERE UserNickName_MSTR = '$email'";
         $result = mysqli_query($connect, $sql);
-        if (mysqli_num_rows($result) === 1) {
+        if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
-                
-            $_SESSION['usernickname'] = $row['UserNickName_MSTR'];
-            $_SESSION['userid'] = $row['UserID_MSTR'];
-            $_SESSION['lastusing'] = time();
-            
-            $saltFromDb = $row["PasswordSalt_MSTR"];
-            $passwordFromDb = $row["PasswordPassword_MSTR"];
-            $hashedPasswordFromDb = $verifypass;
+            $row['UserNickName_MSTR'];
+		}*/
 
-		}
-		
+
+        mysqli_close($connect);
+
+        header("Location: index.php?reg=ok");
 	}
-
-
-
 ?>
 
 
@@ -190,10 +303,14 @@
                 color: gray;
                 text-align: center;
             }
+            .footer-icon {
+                width: 20px;
+                margin: 5px 5px 15px 15px;
+            }
             .navbar-background {
                 background-color: black;
             }
-        }
+
         </style>
 
 
@@ -215,7 +332,6 @@
                     </button>
 
                     <a class="navbar-brand" href="#">
-                        <img src="imgs/motobike.png" width="30" height="30" class="d-inline-block align-top" alt="">
                         MotoLand
                     </a>
 
@@ -226,14 +342,7 @@
 
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Kezdőlap</a></li>
-                        <li><a href="#">  
-                            <?php
-                                if ($ok== 1)
-                                    echo "Regisztrácio";
-                                else 
-                                    echo "Eladás"; 
-                            ?>
-                        </a></li>
+                        <li><a href="#">Értékesítés</a></li>
                         <li><a href="#">Kapcsolat</a></li>
 
                         <li class="dropdown">
@@ -264,7 +373,11 @@
                                             <span class='glyphicon glyphicon-user' ></span>
                                         </a>
                                         <ul class='dropdown-menu'>
-                                            <li class='dropdown-header'>Üdv. $userFullName</li>
+                                            <li class='dropdown-header'>
+                                                $userFullName
+                                                <img src='imgs/user.png' style='width:40px; margin-left: 30px;'>
+                                            </li>
+                                            <li role='separator' class='divider'></li>
                                             <li><a href='#'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalás</a></li>
                                             <li><a href='#'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendelések</a></li>
                                             <li role='separator' class='divider'></li>
@@ -292,6 +405,10 @@
 
 
 
+
+
+
+
         <!-- LOGIN -->
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="loginForm" role="dialog">
             <div class="modal-dialog">
@@ -314,6 +431,7 @@
                                 <input type="text" 
                                         class="form-control" 
                                         required 
+                                        value="istvan.lovei@yahoo.com"
                                         id="userName" 
                                         name="userName" 
                                         placeholder="e-mail">
@@ -321,7 +439,7 @@
 
                             <div class="form-group">
                                 <label for="password"><span class="glyphicon glyphicon-eye-open"></span> Jelszó</label>
-                                <input type="password" class="form-control" required id="password" name="password" placeholder="jelszó">
+                                <input type="password" class="form-control" value="katymaty" required id="password" name="password" placeholder="jelszó">
                             </div>
 
                             <button type="submit" class="btn btn-success ">
@@ -376,7 +494,8 @@
                                             id="userName" 
                                             name="userName" 
                                             placeholder="email cím vagy felhasználónév"  
-                                            style="width:300px">
+                                            style="width:300px"
+                                            onfocusout="checkUserName(this)">
                                 </div>
                             </div>
 
@@ -413,36 +532,39 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="fName" class="col-sm-4 col-form-label" style="margin-top:5px"> Vezetéknév *</label>
+                                <label for="firstName" class="col-sm-4 col-form-label" style="margin-top:5px"> Vezetéknév *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="fName" 
+                                            id="firstName" 
+                                            name="firstName" 
                                             placeholder="vezetéknév"
                                             style="width:300px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="mName" class="col-sm-4 col-form-label" style="margin-top:5px" > Keresztnév *</label>
+                                <label for="middleName" class="col-sm-4 col-form-label" style="margin-top:5px" > Keresztnév *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="mName" 
+                                            id="middleName" 
+                                            name="middleName" 
                                             placeholder="keresztnév"
                                             style="width:300px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="lName" class="col-sm-4 col-form-label" style="margin-top:5px"> Keresztnév</label>
+                                <label for="lastName" class="col-sm-4 col-form-label" style="margin-top:5px"> Keresztnév</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             alt="noChecking"
                                             class="form-control-plaintext" 
-                                            id="lName" 
+                                            id="lastName" 
+                                            name="lastName" 
                                             placeholder="keresztnév"
                                             style="width:300px">
                                 </div>
@@ -451,8 +573,8 @@
                             <div class="form-group row">
                                 <label for="country" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
                                 <div class="col-sm-6">
-                                    <select class="form-select form-select-sm" id="country" aria-label=".form-select-sm example">
-                                        <option selected>Magyarország</option>
+                                    <select class="form-select form-select-sm" id="country" name="countryID" aria-label=".form-select-sm example">
+                                        <option value="0" selected>Magyarország</option>
                                         <option value="1">Lengyelország</option>
                                         <option value="2">Ausztria</option>
                                         <option value="3">Anglia</option>
@@ -467,6 +589,7 @@
                                             required
                                             class="form-control-plaintext" 
                                             id="postcode" 
+                                            name="postcode" 
                                             placeholder="irányítószám"
                                             style="width:300px">
                                 </div>
@@ -479,6 +602,7 @@
                                             required
                                             class="form-control-plaintext" 
                                             id="city" 
+                                            name="city" 
                                             placeholder="város"
                                             style="width:300px">
                                 </div>
@@ -491,6 +615,7 @@
                                             required
                                             class="form-control-plaintext" 
                                             id="street" 
+                                            name="street" 
                                             placeholder="út/utca/tér ...stb"
                                             style="width:300px">
                                 </div>
@@ -503,6 +628,7 @@
                                             required
                                             class="form-control-plaintext" 
                                             id="address" 
+                                            name="address" 
                                             placeholder="házszám/emelet/ajtó...stb"
                                             style="width:300px">
                                 </div>
@@ -515,6 +641,7 @@
                                             required
                                             class="form-control-plaintext" 
                                             id="phone" 
+                                            name="phone" 
                                             placeholder="telefonszám"
                                             style="width:300px">
                                 </div>
@@ -527,6 +654,7 @@
                                             required
                                             class="form-control-plaintext" 
                                             id="email" 
+                                            name="email" 
                                             placeholder="e-mail cím"
                                             style="width:300px">
                                 </div>
@@ -534,15 +662,14 @@
 
                             <button type="submit" class="btn btn-success">
                                 <span class="glyphicon glyphicon-ok"></span> Regisztráció
-                                </button>
+                            </button>
 
                             <button type="reset" class="btn btn-primary" data-dismiss="modal" >
                                 <span class="glyphicon glyphicon-remove"></span> Mégsem
                             </button>
 
-
                             <div class="modal-footer" style="text-align:left ">
-                                A *-al jelszett mezők kitöltése kötelező!
+                                <span id="message">A *-al jelszett mezők kitöltése kötelező!</span>
                             </div>
 
                         </form>
@@ -576,7 +703,9 @@
 
         <div class="container">
 
+
             <div id="homeMotos" class="carousel slide" data-ride="carousel">
+
 
                 <ol class="carousel-indicators">
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -661,93 +790,41 @@
                 </a>
             </div>
 
-
-
-
-
-
-
-
-
-
-
-        </br>
-
-  <footer class="py-5">
-    <div class="row">
-      <div class="col-2">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-        </ul>
-      </div>
-
-      <div class="col-2">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-        </ul>
-      </div>
-
-      <div class="col-2">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-        </ul>
-      </div>
-
-      <div class="col-4 offset-1">
-        <form>
-          <h5>Subscribe to our newsletter</h5>
-          <p>Monthly digest of whats new and exciting from us.</p>
-          <div class="d-flex w-100 gap-2">
-            <label for="newsletter1" class="visually-hidden">Email address</label>
-            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-            <button class="btn btn-primary" type="button">Subscribe</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-  </footer>
-
-
-
-
-
-
-
+            <!-- SYSTEM MESSAGE -->
+            <?php
+                if ($systemIsMessage) {
+                    $systemIsMessage = false;
+                    echo "<div class='alert alert-success alert-dismissible' style='position:absolute; top:100px; width:500px; id=/'messagediv/''>
+                              <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                              $systemMessage
+                          </div>
+                          <script>
+                            let nt = setInterval(clrInterval, 5000);
+                            function clrInterval() {
+                                clearInterval(nt);
+                                let parent = document.getElementById('messagediv').parent;
+                                alert(parent);
+                            }		
+                          </script>";
+                    $systemMessage = "";
+                }
+            ?>
 
 
 
         </div>
     
-
-
-
-
         <div class="footer">
-            <div class="d-flex justify-content-between py-4 my-4 border-top">
-                <p>&copy; 2021 Company, Inc. All rights reserved.</p>
-                <ul class="list-unstyled d-flex">
-                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
-                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
-                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
-                </ul>
+            <div style="margin-top:10px;">
+                <p>&copy; 2026 Company, Inc. All rights reserved.</p>
+                <a href="https://facebook.com" target="new"><img class="footer-icon" src="imgs/facebook.png" title="FaceBook"></a>
+                <a href="https://instagram.com" target="new"><img class="footer-icon" src="imgs/instagram.png" title="Instagram"></a>
+                <a href="https://x.com" target="new"><img class="footer-icon" src="imgs/twitter.png" title="Twitter"></a>
             </div>
         </div>
+
+
+
 
 
 

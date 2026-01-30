@@ -78,7 +78,7 @@ function checkUserName(_this) {
 }
 
 function startItem(item) {
-    let container = document.getElementById("container");
+    let container = document.getElementById("subcontainer");
     var param = "";
     var req = new XMLHttpRequest();
     req.open("POST", item + ".php", true);

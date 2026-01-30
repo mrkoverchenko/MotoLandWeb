@@ -4,7 +4,7 @@
 	}
 	$connect = mysqli_connect("localhost","root","","motoland");
 	if (mysqli_connect_errno()) {
-		echo "<div style='background-color:red;color:yellow;'>Kapcsol�d�si hiba: " . mysqli_connect_error() . "</div";
+		echo "<div style='background-color:red;color:yellow;'>Connection error: " . mysqli_connect_error() . "</div";
 		mysqli_close($connect);  
 		exit();
 	}

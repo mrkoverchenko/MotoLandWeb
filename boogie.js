@@ -2,14 +2,14 @@
 
 function checkForms(_this) {
     let thisForm = document.getElementById(_this.id);
-    let thisFormInputElements = thisForm.getElementsByTagName('INPUT');    
+    let thisFormInputElements = thisForm.getElementsByTagName('INPUT');
     var pw1 = "";
     var pw2 = "";
     var wrongPasswordField1, wrongPasswordField2;
 
     for (var ic = 0; ic < thisFormInputElements.length; ++ic) {
 
-        if (thisFormInputElements[ic].alt != "noChecking") { 
+        if (thisFormInputElements[ic].alt != "noChecking") {
 
             if (thisFormInputElements[ic].value.length === 0) {
                 alert("Ez a mező nem maradhat üresen!\nCsak mondom!");
@@ -26,24 +26,24 @@ function checkForms(_this) {
                     pw2 = thisFormInputElements[ic].value;
                 }
             }
-        }            
+        }
     }
     if (pw1 != pw2) {
         alert("A két jelszó nem egyezik!");
-        wrongPasswordField1.value =  wrongPasswordField2.value = "";
+        wrongPasswordField1.value = wrongPasswordField2.value = "";
         wrongPasswordField1.focus();
         return false;
     }
-}	
+}
 
 function clearForm(formID) {
     let thisForm = document.getElementById(formID);
-    let thisFormInputElements = thisForm.getElementsByTagName('INPUT');    
-    
+    let thisFormInputElements = thisForm.getElementsByTagName('INPUT');
+
     for (var ic = 0; ic < thisFormInputElements.length; ++ic) {
         thisFormInputElements[ic].value = "";
     }
-}	
+}
 
 
 function checkUserName(_this) {
@@ -69,14 +69,26 @@ function checkUserName(_this) {
                     mess.style.color = "black";
                     _this.value = "";
                     clearInterval(m);
-                }		
+                }
 
             }
         }
     };
-    xhr.send(param);		
+    xhr.send(param);
 }
 
-
+function startItem(item) {
+    let container = document.getElementById("container");
+    var param = "";
+    var req = new XMLHttpRequest();
+    req.open("POST", item + ".php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            container.innerHTML = req.responseText;
+        }
+    }
+    req.send(param);
+}
 
 

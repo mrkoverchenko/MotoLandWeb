@@ -7,9 +7,8 @@
 //        header("Location: http://lv426.giize.com");
     }
     
-    $systemIsMessage = true;
-    $systemMessage = "<b>Sikeres regisztráció!</b></br>".
-                        "Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
+    $systemIsMessage = false;
+    $systemMessage = "";
     /// REGISTRATION IS COMPLET MESSAGE
     if (isset($_GET["reg"]) && $_GET["reg"] === "ok") {
         $systemIsMessage = true;
@@ -324,16 +323,26 @@
             <div class="container">
 
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <button type="button" 
+                        class="navbar-toggle collapsed" 
+                        data-toggle="collapse" 
+                        data-target="#navbar" 
+                        aria-expanded="false" 
+                        aria-controls="navbar">
+
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
 
-                    <a class="navbar-brand" href="#">
-                        MotoLand
-                    </a>
+                    <a class="navbar-brand" href="#" onclick="startItem('sales')" style="padding:5px">
+                        <div style="display: inline;">
+                            <img src="imgs/motorbike.png" 
+                                style="background-color:white; padding:4px; border-radius:6px;">
+                            MotoLand
+                        </div>                            
+                    </a>                    
 
                 </div>
 
@@ -341,19 +350,40 @@
                 <div id="navbar" class="navbar-collapse collapse"> 
 
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Kezdőlap</a></li>
                         <li><a href="#">Értékesítés</a></li>
                         <li><a href="#">Kapcsolat</a></li>
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Szolgáltatások<span class="caret"></span></a>
+                            <a href="#" 
+                                class="dropdown-toggle" 
+                                data-toggle="dropdown" 
+                                role="button" 
+                                aria-haspopup="true" 
+                                aria-expanded="false">
+                                Szolgáltatások
+                                <span class="caret"></span>
+                            </a>
+
                             <ul class="dropdown-menu">
-                                <li><a href="#"><span class="glyphicon glyphicon-calendar" style="margin-right:20px;"></span>Szervíz időpontfoglalás</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-euro" style="margin-right:20px;"></span>Alkatrészrendelés</a></li>
+                                <li>
+                                    <a href="#">
+                                        <span class="glyphicon glyphicon-calendar" style="margin-right:20px;"></span>
+                                        Szervíz időpontfoglalás
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" onclick="startItem('ordering')">
+                                        <span class="glyphicon glyphicon-euro" style="margin-right:20px;"></span>
+                                        Alkatrészrendelés
+                                    </a>
+                                </li>
+
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Akció</li>
                                 <li><a href="#"><span class="glyphicon glyphicon-cog" style="margin-right:20px;"></span>Törött motorok</a></li>
                             </ul>
+
                         </li>
                     </ul>
 
@@ -692,20 +722,19 @@
 
             </script>
 
-
-
-
         </div> 
 
 
 
 
 
-        <div class="container">
 
+
+
+
+        <div class="container" id="container">
 
             <div id="homeMotos" class="carousel slide" data-ride="carousel">
-
 
                 <ol class="carousel-indicators">
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -724,7 +753,7 @@
                         <img src="motoimg/1776335-3000x1794-desktop-hd-kawasaki-1400gtr-wallpaper.jpg" alt="Kawasaki" width="460" height="345">
                         <div class="carousel-caption">
                             <h3>Kawasaki</h3>
-                            <p>Kawasaki 1400GTR 2011</p> 
+                            <p>Kawasaki 1400GTR 2011</p>
                         </div>
                     </div>
 
@@ -775,7 +804,6 @@
                             <p>Yamaha YZF R7 Sports bikes 2022</p>
                         </div>
                     </div>
-
     
                 </div>
 
@@ -790,21 +818,22 @@
                 </a>
             </div>
 
+
             <!-- SYSTEM MESSAGE -->
             <?php
                 if ($systemIsMessage) {
                     $systemIsMessage = false;
-                    echo "<div class='alert alert-success alert-dismissible' style='position:absolute; top:100px; width:500px; id=/'messagediv/''>
+                    echo "<div class='alert alert-success alert-dismissible' style='position:absolute; top:100px; width:500px;' id='messagediv'>
                               <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                               $systemMessage
                           </div>
                           <script>
-                            let nt = setInterval(clrInterval, 5000);
-                            function clrInterval() {
-                                clearInterval(nt);
-                                let parent = document.getElementById('messagediv').parent;
-                                alert(parent);
-                            }		
+                                let nt = setInterval(clrInterval, 60000);
+                                function clrInterval() {
+                                    clearInterval(nt);
+                                    let parent = document.getElementById('messagediv').parentNode;
+                                    parent.removeChild(document.getElementById('messagediv'));
+                                }		
                           </script>";
                     $systemMessage = "";
                 }

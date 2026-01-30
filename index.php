@@ -724,7 +724,7 @@
                         <img src="motoimg/1776335-3000x1794-desktop-hd-kawasaki-1400gtr-wallpaper.jpg" alt="Kawasaki" width="460" height="345">
                         <div class="carousel-caption">
                             <h3>Kawasaki</h3>
-                            <p>Kawasaki 1400GTR 2011</p>
+                            <p>Kawasaki 1400GTR 2011</p> 
                         </div>
                     </div>
 

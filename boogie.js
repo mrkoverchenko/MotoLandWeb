@@ -92,3 +92,57 @@ function startItem(item) {
 }
 
 
+
+
+function manSelect(_this) {
+    document.getElementById("motopartscategory").innerHTML = "";
+    document.getElementById("motoparts").innerHTML = "";
+
+    let container = document.getElementById("mototype");
+    container.innerHTML = "";
+    var param = "manufacturerID=" + _this.value;
+    var req = new XMLHttpRequest();
+    req.open("POST", "getMotoType.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            container.innerHTML += req.responseText;
+        }
+    }
+    req.send(param);
+}
+
+function typeSelect(_this) {
+    document.getElementById("motoparts").innerHTML = "";
+
+    let container = document.getElementById("motopartscategory");
+    container.innerHTML = "";
+    let manID = document.getElementById("motoman").value;
+    var param = "typeID=" + _this.value + "&manID=" + manID;
+    var req = new XMLHttpRequest();
+    req.open("POST", "getMotoPartsCategory.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            container.innerHTML += req.responseText;
+        }
+    }
+    req.send(param);
+}
+
+function categorySelect(_this) {
+    let container = document.getElementById("motoparts");
+    container.innerHTML = "";
+    let manID = document.getElementById("motoman").value;
+    let typeID = document.getElementById("mototype").value;
+    var param = "typeID=" + typeID + "&manID=" + manID + "&catID=" + _this.value;
+    var req = new XMLHttpRequest();
+    req.open("POST", "getMotoParts.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            container.innerHTML += req.responseText;
+        }
+    }
+    req.send(param);
+}

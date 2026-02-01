@@ -146,3 +146,92 @@ function categorySelect(_this) {
     }
     req.send(param);
 }
+
+
+function onlyNumber(event) {
+    var chr = (event.which)? event.which: event.keyCode;
+    if (chr >= 48 && chr <= 57) //numbers
+        return true;
+    return false;
+}  
+
+function checkPW() {
+    let pws = document.getElementById("regpassword");
+    if (pws.value.length > 0 && !passwordIsOk) {
+        alert("A jelszó nem elég erős!\nMinimum 8 karater, kisbetű, nagybetű, szám formátumban!\nCsak mondom!");
+        pws.focus();
+    }
+}
+
+let passwordIsOk;
+function chkp() {
+    passwordIsOk = false;
+    var validCount = 0;  
+    let pws = document.getElementById("regpassword");
+    let valid = document.getElementById("validator");
+    var lower = /[a-z]/g;
+    if (pws.value.match(lower)) {  
+        validCount = validCount + 1;
+    }
+    
+    var upper = /[A-Z]/g;
+    if (pws.value.match(upper)) {  
+        validCount = validCount + 1;
+    }
+    
+    var numbers = /[0-9]/g;
+    if (pws.value.match(numbers)) {  
+        validCount = validCount + 1;
+    }
+    
+    if (pws.value.length >= 8) {
+        validCount = validCount + 1;
+    }
+
+    switch (validCount) {
+        case 0: valid.style.backgroundColor = "red";
+        break;
+        case 1: valid.style.backgroundColor = "orange";
+        break;
+        case 2: valid.style.backgroundColor = "yellow";
+        break;
+        case 3: valid.style.backgroundColor = "lightgreen";
+        break;
+        case 4: valid.style.backgroundColor = "green";
+                passwordIsOk = true;
+        break;
+    }
+    if (validCount == 4) {
+        valid.style.paddingLeft = "2px";
+        valid.innerHTML = '\&#128077';
+    } else 
+        valid.innerHTML = '';
+}
+
+function onlyPhone(event) {
+    var chr = (event.which)? event.which: event.keyCode;
+    if (chr >= 48 && chr <= 57 || chr == 43 || chr == 45 || chr == 32 || chr == 44) //numbers, +, space, comma
+        return true;
+    return false;
+}
+
+function initFields(fieldID) {
+
+    let container = document.getElementById(fieldID);
+    let fileName = "";
+    var param = "";
+    if (fieldID === "country") {
+        fileName = "getCountry.php";
+        param = "countryID=";
+    }
+
+    var req = new XMLHttpRequest();
+    req.open("POST", fileName, true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            container.innerHTML = req.responseText;
+        }
+    }
+    req.send(param);
+}

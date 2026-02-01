@@ -3,8 +3,8 @@
     include "connect.php";
 	
     $found = "";
-    if (isset($_POST["username"])) {
-        $username = $_POST["username"];
+    if (isset($_POST["regUserName"])) {
+        $username = $_POST["regUserName"];
 
         $querystring = "SELECT UserNickName_MSTR FROM user_mstr WHERE UserNickName_MSTR = '$username'";
         $result = mysqli_query($connect, $querystring);

@@ -9,6 +9,8 @@
     
     $systemIsMessage = false;
     $systemMessage = "";
+    $hideTime = 60000;
+    $alertType = "alert-dismissible";
     /// REGISTRATION IS COMPLET MESSAGE
     if (isset($_GET["reg"]) && $_GET["reg"] === "ok") {
         $systemIsMessage = true;
@@ -30,6 +32,14 @@
         $_POST = array();
         unset($_POST);
         $isUser = false;
+
+       
+        $systemIsMessage = true;
+        $systemMessage = "";
+        $hideTime = 10000;
+        $alertType = "alert-dismissible";
+        $systemMessage = "<b>Sikeres kijelentkezés!</b>";
+
     }
     
 
@@ -37,27 +47,19 @@
     ////////////////////////////////////////////////////////
     // LOGIN
     ////////////////////////////////////////////////////////
-	if (isset($_POST["userName"]) && 
-    isset($_POST["loginpassword"]) && 
-    $_POST["formName"] == "loginForm") {
+	if (isset($_POST["loginUserName"]) && 
+            isset($_POST["loginPassword"]) && 
+                $_POST["formName"] == "loginForm") {
         
-        $isUser = false;
-
 		function validate($data){
 			$data = trim($data);
 			$data = stripslashes($data);
 			$data = htmlspecialchars($data); 
 			return $data;
 		}
-        function createPasswordHash($password, $salt) {
-            return hash('sha256', $salt . $password);
-        }
-        function verifyPassword($inputPassword, $storedSalt, $storedHash) {
-            return hash('sha256', $storedSalt . $inputPassword) === $storedHash;
-        }
 		 
-		$uname = strtolower(validate($_POST['userName']));          //User Mail address
-		$passwordFromInput = validate($_POST['loginpassword']);
+		$uname = strtolower(validate($_POST['loginUserName']));          //User Mail address or Nick name
+		$passwordFromInput = validate($_POST['loginPassword']);
 		//$verifyuname = strtolower($uname); 
 		//$verifypass = hash('sha512', $pass);
 		 
@@ -80,35 +82,41 @@
                     UserID_MSTR = PasswordUserID_MSTR AND 
                     UserTypeID_MSTR <> '6'";
 
+        $isUser = false;
         $result = mysqli_query($connect, $sql);
         if (mysqli_num_rows($result) === 1) {
             $row = mysqli_fetch_assoc($result);
-                
-            $_SESSION['usernickname'] = $row['UserNickName_MSTR'];
-            $_SESSION['userid'] = $row['UserID_MSTR'];
-            $_SESSION['lastusing'] = time();
-            $userFullName = $row['UserFullName'];
             
             $saltFromDb = $row["PasswordSalt_MSTR"];
             $passwordFromDb = $row["PasswordPassword_MSTR"];
-            //$hashedPasswordFromDb = $verifypass;
 
-            //$salt = generateSalt(); 
-            $hash = createPasswordHash($passwordFromDb, $saltFromDb);
-
-            if (verifyPassword($passwordFromInput, $saltFromDb, $hash)) {
+            if (hash('sha256', $saltFromDb.$passwordFromInput) === $passwordFromDb) {
                 $isUser = true;
+
+                $_SESSION['usernickname'] = $row['UserNickName_MSTR'];
+                $_SESSION['userid'] = $row['UserID_MSTR'];
+                $_SESSION['lastusing'] = time();
+                $userFullName = $row['UserFullName'];
+
             } else {
                 $isUser = false;
             }
-
             $_POST = array();
             unset($_POST);
-
-
-            $isUser = true;
 		}
         mysqli_close($connect);
+
+
+
+        $hideTime = 10000;
+        $systemIsMessage = true;
+        if ($isUser) {
+            $alertType = "alert-dismissible";
+            $systemMessage = "<b>Sikeres bejelentkezés!</b>";
+        } else {
+            $alertType = "alert-danger";
+            $systemMessage = "<b>Sikertelen bejelentkezés!</b";
+        }
 
     }
 
@@ -118,8 +126,8 @@
     ////////////////////////////////////////////////////////
     // REGISTRATION
     ////////////////////////////////////////////////////////
-	if (isset($_POST["userName"]) && 
-            isset($_POST["regpassword"]) && 
+	if (isset($_POST["regUserName"]) && 
+            isset($_POST["regPassword"]) && 
                 isset($_POST["firstName"]) && 
                     isset($_POST["middleName"]) && 
                         isset($_POST["lastName"]) && 
@@ -133,8 +141,8 @@
                                                         isset($_POST["formName"]) && 
                                                             $_POST["formName"] == "regForm"  ) {
 
-	    $username = $_POST["userName"];
-        $password = $_POST["regpassword"];
+	    $username = $_POST["regUserName"];
+        $password = $_POST["regPassword"];
         $firstname = $_POST["firstName"];
         $middlename = $_POST["middleName"];
         $lastname = $_POST["lastName"];
@@ -148,13 +156,6 @@
 
         $_POST = array();
         unset($_POST);
-
-        function generateSalt($length = 32) {
-            return bin2hex(random_bytes($length));
-        }
-        function createPasswordHash($password, $salt) {
-            return hash('sha256', $salt . $password);
-        }
 
 		function validate($data){
 			$data = trim($data);
@@ -226,9 +227,16 @@
         mysqli_query($connect, $sqlstring);
 
 
+        function generateSalt($length = 32) {
+            return bin2hex(random_bytes($length));
+        }
+        function createPasswordHashReg($password, $salt) {
+            return hash('sha256', $salt . $password);
+            //return hash('sha256', $password);
+        }
 
         $salt = generateSalt();
-        $passHASH = createPasswordHash($pass, $salt);
+        $passHASH = createPasswordHashReg($pass, $salt);
         $sqlstring = "INSERT INTO 
                         password_mstr (
                             PasswordUserID_MSTR, 
@@ -469,19 +477,19 @@
                             <div class="form-group">
                                 <input type="hidden" name="formName" value="loginForm">
 
-                                <label for="userName"><span class="glyphicon glyphicon-user"></span> Felhasználónév</label>
+                                <label for="loginUserName"><span class="glyphicon glyphicon-user"></span> Felhasználónév</label>
                                 <input type="text" 
                                         class="form-control" 
                                         required 
-                                        value="istvan.lovei@yahoo.com"
-                                        id="userName" 
-                                        name="userName" 
+                                        value="LoIs"
+                                        id="loginUserName" 
+                                        name="loginUserName" 
                                         placeholder="e-mail">
                             </div>
 
                             <div class="form-group">
                                 <label for="loginpassword"><span class="glyphicon glyphicon-eye-open"></span> Jelszó</label>
-                                <input type="password" class="form-control" value="katymaty" required id="loginpassword" name="loginpassword" placeholder="jelszó">
+                                <input type="password" class="form-control" value="" required id="loginPassword" name="loginPassword" placeholder="jelszó">
                             </div>
 
                             <button type="submit" class="btn btn-success ">
@@ -495,6 +503,18 @@
                     <div class="modal-footer">
                         <p>Nem vagy még tag? <a href="#registrationForm" class="close" data-dismiss="modal" data-toggle="modal" style="font-size:14px; color: black; margin:3px 10px;"> Regisztráció</a></p>
                     </div>
+
+                    <script>
+                        // ONCLOSE
+                        $('#loginForm').on('hidden.bs.modal', function () {
+                        });
+
+                        // BEFORE ON SHOW
+                        $('#loginForm').on('show.bs.modal', function (e) {
+                        })
+
+                    </script>
+
 
                 </div>
             </div>
@@ -533,8 +553,8 @@
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="userName" 
-                                            name="userName" 
+                                            id="regUserName" 
+                                            name="regUserName" 
                                             placeholder="email cím vagy felhasználónév"  
                                             style="width:300px"
                                             onfocusout="checkUserName(this)">
@@ -553,7 +573,7 @@
                                             required
                                             class="form-control-plaintext" 
                                             id="regpassword" 
-                                            name="regpassword" 
+                                            name="regPassword" 
                                             placeholder="jelszó"
                                             style="width:270px"
                                             onkeyup="chkp()"
@@ -740,6 +760,7 @@
                 // BEFORE ON SHOW
                 $('#registrationForm').on('show.bs.modal', function (e) {
                     initFields("country");
+                    document.getElementById("userName").focus();
                 })
 
             </script>
@@ -1096,12 +1117,12 @@
             <?php
                 if ($systemIsMessage) {
                     $systemIsMessage = false;
-                    echo "<div class='alert alert-success alert-dismissible' style='position:absolute; top:100px; width:500px;' id='messagediv'>
+                    echo "<div class='alert alert-success $alertType' style='position:absolute; top:100px; width:500px;' id='messagediv'>
                                 <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
                                 $systemMessage
                             </div>
                             <script>
-                                let nt = setInterval(clrInterval, 60000);
+                                let nt = setInterval(clrInterval, $hideTime);
                                 function clrInterval() {
                                     clearInterval(nt);
                                     let parent = document.getElementById('messagediv').parentNode;

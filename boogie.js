@@ -50,7 +50,7 @@ function checkUserName(_this) {
 
     var defaultText = "A *-al jelszett mezők kitöltése kötelező!";
 
-    var param = "username=" + _this.value;
+    var param = "regUserName=" + _this.value;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "checkUserName.php", true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');

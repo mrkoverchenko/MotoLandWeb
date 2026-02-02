@@ -1,4 +1,5 @@
 
+const defaultFieldMesage = "A *-al jelszett mezők kitöltése kötelező!";
 
 function checkForms(_this) {
     let thisForm = document.getElementById(_this.id);
@@ -48,8 +49,6 @@ function clearForm(formID) {
 
 function checkUserName(_this) {
 
-    var defaultText = "A *-al jelszett mezők kitöltése kötelező!";
-
     var param = "regUserName=" + _this.value;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "checkUserName.php", true);
@@ -65,7 +64,7 @@ function checkUserName(_this) {
 
                 let m = setInterval(clrTimer, 3000);
                 function clrTimer() {
-                    mess.innerHTML = defaultText;
+                    mess.innerHTML = defaultFieldMesage;
                     mess.style.color = "black";
                     _this.value = "";
                     clearInterval(m);
@@ -158,7 +157,19 @@ function onlyNumber(event) {
 function checkPW() {
     let pws = document.getElementById("regpassword");
     if (pws.value.length > 0 && !passwordIsOk) {
-        alert("A jelszó nem elég erős!\nMinimum 8 karater, kisbetű, nagybetű, szám formátumban!\nCsak mondom!");
+        //alert("A jelszó nem elég erős!\nMinimum 8 karater, kisbetű, nagybetű, szám formátumban!\nCsak mondom!");
+
+        const mess = document.getElementById("message");
+        mess.style.color = "red";
+        mess.innerHTML = "A jelszó nem elég erős!\nMinimum 8 karater, kisbetű, nagybetű, szám formátumban!";
+
+        let m1 = setInterval(clrTimer, 3000);
+        function clrTimer() {
+            mess.innerHTML = defaultFieldMesage;
+            mess.style.color = "black";
+            clearInterval(m1);
+        }
+
         pws.focus();
     }
 }
@@ -220,7 +231,7 @@ function initFields(fieldID) {
     let container = document.getElementById(fieldID);
     let fileName = "";
     var param = "";
-    if (fieldID === "country") {
+    if (fieldID === "country" || fieldID === "country1") {
         fileName = "getCountry.php";
         param = "countryID=";
     }

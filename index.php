@@ -9,14 +9,14 @@
     
     $systemIsMessage = false;
     $systemMessage = "";
-    $hideTime = 60000;
-    $alertType = "alert-dismissible";
     /// REGISTRATION IS COMPLET MESSAGE
-    if (isset($_GET["reg"]) && $_GET["reg"] === "ok") {
+/*    if (isset($_GET["reg"]) && $_GET["reg"] === "ok") {
+        $hideTime = 60000;
+        $alertType = "alert-dismissible";
         $systemIsMessage = true;
         $systemMessage = "<b>Sikeres regisztráció!</b></br>".
                             "Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
-    }
+    }*/
 
 
 
@@ -168,6 +168,12 @@
 		$pass = validate($password);
 		//$verifyuname = strtolower($uname); 
 		//$verifypass = hash('sha512', $pass);
+        $lastID = "";
+        $lastDETID = "";
+        $lastPWID = "";
+        $usermstr = false;
+        $userdet = false;
+        $passwordmstr = false;
 
         $sqlstring = "INSERT INTO 
                         user_mstr (
@@ -186,6 +192,8 @@
         mysqli_query($connect, $sqlstring);
 
         $lastID = mysqli_insert_id($connect);
+        $usermstr = ($lastID != "") ? true : false;
+
         $dateNow = date("Y-m-d H:i:s");
 
         $sqlstring = "INSERT INTO 
@@ -225,6 +233,8 @@
                             '$dateNow'
                     )";
         mysqli_query($connect, $sqlstring);
+        $lastDETID = mysqli_insert_id($connect);
+        $userdet = ($lastDETID != "") ? true : false;
 
 
         function generateSalt($length = 32) {
@@ -250,21 +260,25 @@
                         '1'
                     )";
         mysqli_query($connect, $sqlstring);
-
-
-
-			 
-        /*$sql = "SELECT * FROM user_mstr WHERE UserNickName_MSTR = '$email'";
-        $result = mysqli_query($connect, $sql);
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $row['UserNickName_MSTR'];
-		}*/
+        $lastPWID = mysqli_insert_id($connect);
+        $passwordmstr = ($lastPWID != "") ? true : false;
 
 
         mysqli_close($connect);
 
-        header("Location: index.php?reg=ok");
+        if ($usermstr && $userdet && $passwordmstr) { 
+            $hideTime = 10000;
+            $alertType = "alert-dismissible";
+            $systemIsMessage = true;
+            $systemMessage = "<b>Sikeres regisztráció!</b></br>".
+                                "Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
+        } else {
+            $hideTime = 10000;
+            $alertType = "alert-danger";
+            $systemIsMessage = true;
+            $systemMessage = "<b>Sikertelen regisztráció!</b></br>".
+                                "Hiba a rekordok létrehozása közben!";
+        }
 	}
 ?>
 

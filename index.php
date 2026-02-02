@@ -813,42 +813,6 @@
                             </div>
 
 
-                            <div class="form-group row">
-                                <label for="regpassword" class="col-sm-4 col-form-label" style="margin-top:5px">
-                                    <span class="glyphicon glyphicon-eye-open"></span> Jelszó *
-                                </label>
-
-                                <div class="col-sm-6">
-                                    <input type="password" 
-                                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="regpassword" 
-                                            name="regpassword" 
-                                            placeholder="jelszó"
-                                            style="width:270px"
-                                            onkeyup="chkp()"
-                                            onfocusout="checkPW()">
-                                </div>
-                                <div class="col-sm-2">
-                                    <div id="validator" class="circle"></div>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password1" class="col-sm-4 col-form-label" style="margin-top:5px">
-                                    <span class="glyphicon glyphicon-eye-open"></span> Ellenőrzés *
-                                </label>
-
-                                <div class="col-sm-6">
-                                    <input type="password" 
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="password1" 
-                                            placeholder="jelszó ellenőrzés"
-                                            style="width:270px">
-                                </div>
-                            </div>
 
                             <div class="form-group row">
                                 <label for="firstName" class="col-sm-4 col-form-label" style="margin-top:5px"> Vezetéknév *</label>
@@ -890,9 +854,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="country" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
+                                <label for="country1" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
                                 <div class="col-sm-6">
-                                    <select class="form-select form-select-sm" id="country" name="countryID" aria-label=".form-select-sm example"></select>
+                                    <select class="form-select form-select-sm" id="country1" name="countryID" aria-label=".form-select-sm example"></select>
                                 </div>
                             </div>
 
@@ -1004,13 +968,13 @@
 
             <script>
                 // ONCLOSE
-                $('#registrationForm').on('hidden.bs.modal', function () {
+                $('#myProfileForm').on('hidden.bs.modal', function () {
                     clearForm("regForm");
                 });
 
                 // BEFORE ON SHOW
-                $('#registrationForm').on('show.bs.modal', function (e) {
-                    initFields("country");
+                $('#myProfileForm').on('show.bs.modal', function (e) {
+                    initFields("country1");
                 })
 
             </script>

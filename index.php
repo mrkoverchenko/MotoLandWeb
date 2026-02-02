@@ -3,27 +3,15 @@
 
     include "connect.php";
 
-    if (!isset($_SESSION['userid'])) {
-//        header("Location: http://lv426.giize.com");
-    }
-    
+    $userFullName = "";
     $systemIsMessage = false;
     $systemMessage = "";
-    /// REGISTRATION IS COMPLET MESSAGE
-/*    if (isset($_GET["reg"]) && $_GET["reg"] === "ok") {
-        $hideTime = 60000;
-        $alertType = "alert-dismissible";
-        $systemIsMessage = true;
-        $systemMessage = "<b>Sikeres regisztráció!</b></br>".
-                            "Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
-    }*/
-
-
-
     $ok = 0;
-    
     $isUser = false;
     
+    if (isset($_SESSION['userid'])) {
+        $isUser = true;
+    }
     
     if (isset($_GET["logged"]) && $_GET["logged"] == "out") {
         $_POST["userName"] = "";
@@ -60,9 +48,6 @@
 		 
 		$uname = strtolower(validate($_POST['loginUserName']));          //User Mail address or Nick name
 		$passwordFromInput = validate($_POST['loginPassword']);
-		//$verifyuname = strtolower($uname); 
-		//$verifypass = hash('sha512', $pass);
-		 
 			 
         $sql = "SELECT 
                     UserID_MSTR,
@@ -166,8 +151,7 @@
 		 
 		$uname = validate($username);
 		$pass = validate($password);
-		//$verifyuname = strtolower($uname); 
-		//$verifypass = hash('sha512', $pass);
+
         $lastID = "";
         $lastDETID = "";
         $lastPWID = "";
@@ -280,6 +264,75 @@
                                 "Hiba a rekordok létrehozása közben!";
         }
 	}
+
+
+
+
+    ////////////////////////////////////////////////////////
+    // PROFILE FORM
+    ////////////////////////////////////////////////////////
+	if (isset($_POST["profileFirstName"]) && 
+            isset($_POST["profileMiddleName"]) && 
+                isset($_POST["profileLastName"]) && 
+                    isset($_POST["profileCountryID"]) && 
+                        isset($_POST["profilePostCode"]) && 
+                            isset($_POST["profileCity"]) && 
+                                isset($_POST["profileStreet"]) && 
+                                    isset($_POST["profileAddress"]) && 
+                                        isset($_POST["profilePhone"]) && 
+                                            isset($_POST["profileEmail"]) && 
+                                                isset($_POST["formName"]) && 
+                                                    $_POST["formName"] == "profileForm"  ) {
+        $userid = $_SESSION["userid"];
+        $firstname = $_POST["profileFirstName"];
+        $middlename = $_POST["profileMiddleName"];
+        $lastname = $_POST["profileLastName"];
+        $countryid = $_POST["profileCountryID"];
+        $postcode = $_POST["profilePostCode"];
+        $city = $_POST["profileCity"];
+        $street = $_POST["profileStreet"];
+        $address = $_POST["profileAddress"];
+        $phone = $_POST["profilePhone"];
+        $email = $_POST["profileEmail"];
+
+
+        $sqlstring = "UPDATE
+                        user_mstr 
+                      SET
+                        UserMail_MSTR = '$email'
+                      WHERE
+                        UserID_MSTR = '$userid'";
+        mysqli_query($connect, $sqlstring);
+        $dateNow = date("Y-m-d H:i:s");
+
+        $sqlstring = "UPDATE
+                        user_det 
+                      SET
+                        UserFirstName_DET = '$firstname', 
+                        UserMiddleName_DET = '$middlename', 
+                        UserLastName_DET = '$lastname', 
+                        UserPhone_DET = '$phone', 
+                        UserCountryID_DET = '$countryid', 
+                        UserPostCode_DET = '$postcode',
+                        UserCity_DET = '$city', 
+                        UserStreet_DET = '$street',
+                        UserAddress_DET = '$address',
+                        UserLastModifiedDate_DET = '$dateNow' 
+                      WHERE
+                        UserMSTRID_DET = '$userid'";
+
+        mysqli_query($connect, $sqlstring);
+        mysqli_close($connect);
+
+        //$_POST = array();
+        //unset($_POST);
+
+        $hideTime = 10000;
+        $alertType = "alert-dismissible";
+        $systemIsMessage = true;
+        $systemMessage = "<b>Sikeres profil módosítás!</b>";
+	}
+
 ?>
 
 
@@ -802,86 +855,86 @@
 
 
 
-                        <form id="regForm" 
+                        <form id="profileForm" 
                                 action="index.php"
                                 method="POST" 
                                 onsubmit="return checkForms(this)" >
 
                             <div class="form-group row">
-                                <label for="userName" class="col-sm-4 col-form-label" style="margin-top:5px">
+                                <label for="profileUserName" class="col-sm-4 col-form-label" style="margin-top:5px">
                                     <span class="glyphicon glyphicon-user"></span> Felhasználónév *
                                 </label>
                                 <div class="col-sm-6">
 
-                                    <input type="hidden" name="formName" value="regForm">
+                                    <input type="hidden" name="formName" value="profileForm">
 
                                     <input type="text" 
-                                            required
+                                            readonly 
+                                            disabled 
                                             class="form-control-plaintext" 
-                                            id="userName" 
-                                            name="userName" 
+                                            id="profileUserName" 
+                                            name="profileUserName" 
                                             placeholder="email cím vagy felhasználónév"  
-                                            style="width:300px"
-                                            onfocusout="checkUserName(this)">
+                                            style="width:300px">
                                 </div>
                             </div>
 
 
 
                             <div class="form-group row">
-                                <label for="firstName" class="col-sm-4 col-form-label" style="margin-top:5px"> Vezetéknév *</label>
+                                <label for="profileFirstName" class="col-sm-4 col-form-label" style="margin-top:5px"> Vezetéknév *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="firstName" 
-                                            name="firstName" 
+                                            id="profileFirstName" 
+                                            name="profileFirstName" 
                                             placeholder="vezetéknév"
                                             style="width:300px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="middleName" class="col-sm-4 col-form-label" style="margin-top:5px" > Keresztnév *</label>
+                                <label for="profileMiddleName" class="col-sm-4 col-form-label" style="margin-top:5px" > Keresztnév *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="middleName" 
-                                            name="middleName" 
+                                            id="profileMiddleName" 
+                                            name="profileMiddleName" 
                                             placeholder="keresztnév"
                                             style="width:300px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="lastName" class="col-sm-4 col-form-label" style="margin-top:5px"> Keresztnév</label>
+                                <label for="profileLastName" class="col-sm-4 col-form-label" style="margin-top:5px"> Keresztnév</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             alt="noChecking"
                                             class="form-control-plaintext" 
-                                            id="lastName" 
-                                            name="lastName" 
+                                            id="profileLastName" 
+                                            name="profileLastName" 
                                             placeholder="keresztnév"
                                             style="width:300px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="country1" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
+                                <label for="profileCountryID" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
                                 <div class="col-sm-6">
-                                    <select class="form-select form-select-sm" id="country1" name="countryID" aria-label=".form-select-sm example"></select>
+                                    <select class="form-select form-select-sm" id="profileCountryID" name="profileCountryID" aria-label=".form-select-sm example"></select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="postcode" class="col-sm-4 col-form-label"> Irányítószám *</label>
+                                <label for="profilePostCode" class="col-sm-4 col-form-label"> Irányítószám *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required 
                                             class="form-control-plaintext" 
-                                            id="postcode" 
-                                            name="postcode" 
+                                            id="profilePostCode" 
+                                            name="profilePostCode" 
                                             placeholder="irányítószám" 
                                             style="width:300px" 
                                             onkeypress="return onlyNumber(event)" 
@@ -890,13 +943,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="city" class="col-sm-4 col-form-label"> Város *</label>
+                                <label for="profileCity" class="col-sm-4 col-form-label"> Város *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="city" 
-                                            name="city" 
+                                            id="profileCity" 
+                                            name="profileCity" 
                                             placeholder="város"
                                             style="width:300px"
                                             maxlength="30">
@@ -904,13 +957,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="street" class="col-sm-4 col-form-label"> Utca *</label>
+                                <label for="profileStreet" class="col-sm-4 col-form-label"> Utca *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="street" 
-                                            name="street" 
+                                            id="profileStreet" 
+                                            name="profileStreet" 
                                             placeholder="út/utca/tér ...stb"
                                             style="width:300px"
                                             maxlength="30">
@@ -918,13 +971,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="address" class="col-sm-4 col-form-label"> Házszám/emelet *</label>
+                                <label for="profileAddress" class="col-sm-4 col-form-label"> Házszám/emelet *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="address" 
-                                            name="address" 
+                                            id="profileAddress" 
+                                            name="profileAddress" 
                                             placeholder="házszám/emelet/ajtó...stb"
                                             style="width:300px"
                                             maxlength="50">
@@ -932,13 +985,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="phone" class="col-sm-4 col-form-label"> Telefonszám *</label>
+                                <label for="profilePhone" class="col-sm-4 col-form-label"> Telefonszám *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="phone" 
-                                            name="phone" 
+                                            id="profilePhone" 
+                                            name="profilePhone" 
                                             placeholder="telefonszám"
                                             style="width:300px"
                                             maxlength="30"
@@ -947,13 +1000,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="email" class="col-sm-4 col-form-label"> E-mail cím *</label>
+                                <label for="profileEmail" class="col-sm-4 col-form-label"> E-mail cím *</label>
                                 <div class="col-sm-6">
                                     <input type="email" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="email" 
-                                            name="email" 
+                                            id="profileEmail" 
+                                            name="profileEmail" 
                                             placeholder="e-mail cím"
                                             style="width:300px"
                                             maxlength="64">
@@ -961,7 +1014,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-success">
-                                <span class="glyphicon glyphicon-ok"></span> Regisztráció
+                                <span class="glyphicon glyphicon-ok"></span> Mentés
                             </button>
 
                             <button type="reset" class="btn btn-primary" data-dismiss="modal" >
@@ -969,7 +1022,7 @@
                             </button>
 
                             <div class="modal-footer" style="text-align:left ">
-                                <span id="message">A *-al jelszett mezők kitöltése kötelező!</span>
+                                <span id="profileMessage">A *-al jelszett mezők kitöltése kötelező!</span>
                             </div>
 
                         </form>
@@ -983,12 +1036,13 @@
             <script>
                 // ONCLOSE
                 $('#myProfileForm').on('hidden.bs.modal', function () {
-                    clearForm("regForm");
+                    //clearForm("regForm");
                 });
 
                 // BEFORE ON SHOW
                 $('#myProfileForm').on('show.bs.modal', function (e) {
-                    initFields("country1");
+                    initFields("profileCountryID");
+                    initProfileEditor(<?php echo $_SESSION['userid']; ?>);
                 })
 
             </script>

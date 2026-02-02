@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 01. 20:14
+-- Létrehozás ideje: 2026. Feb 02. 20:08
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -48,13 +48,6 @@ CREATE TABLE `booking_mstr` (
   `BookingLastModifiedDate_MSTR` datetime NOT NULL DEFAULT current_timestamp(),
   `BookingRegDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `booking_mstr`
---
-
-INSERT INTO `booking_mstr` (`BookingID_MSTR`, `BookingDateTime_MSTR`, `BookingNote_MSTR`, `BookingUserID_MSTR`, `BookingMotoRegNumber_MSTR`, `BookingMotoManID_MSTR`, `BookingMotoTypeID_MSTR`, `BookingMotoYear_MSTR`, `BookingCheckList_MSTR`, `BookingMechanicCheckList_MSTR`, `BookingWorkStatusID_MSTR`, `BookingWorkBegin_MSTR`, `BookingWorkEnd_MSTR`, `BookingWorkHours_MSTR`, `BookingWorkCost_MSTR`, `BookingLastModifiedDate_MSTR`, `BookingRegDateTime_MSTR`) VALUES
-(40, '2026-09-04 12:00:00', '', 47, 'UMP129', 37, 33, 1988, 'Lánccsere', '', 1, '2026-09-04 12:00:00', '2026-09-04 13:00:00', 0.00, 0.00, '2026-01-13 14:21:10', '2026-01-13 14:21:10');
 
 -- --------------------------------------------------------
 
@@ -4160,16 +4153,7 @@ CREATE TABLE `password_mstr` (
 --
 
 INSERT INTO `password_mstr` (`PasswordID_MSTR`, `PasswordUserID_MSTR`, `PasswordPassword_MSTR`, `PasswordSalt_MSTR`, `PasswordStatusID_MSTR`) VALUES
-(21, 46, 'Ar62qnB6swkoP/UtQI/MU1M6im+ZdXyb2+O9vKyS3ug=', 'tt/mY+rtSK36Y21qyHhOgg==', 0),
-(22, 47, 'Nezq2DECDCu9dBIC1kO5dDw2z7lF9Frdw5y1E9Di+CA=', 'iUosCbf1SYrJQpASFCwjWw==', 0),
-(23, 48, 'LeSOvucHEvAJMVhW370j6S3EsqFtFk14WPt+67WjQcw=', 'WWglAXnxNZyLPB/NLtZe7g==', 10),
-(28, 55, 'b9946f779728d1ed70bbf7b54afa0c5e07fdb6be0333980c8a1eb5b9e78d386e\n\n', 'a3668aa5c5e5fa75b838ec2b137d3fea1f37cb295032a5b50e1b514dbf27c151\nb9946f779728d1ed70bbf7b54afa0c5e07f', 1),
-(29, 56, '391b84f6bb6364458908460036626c2362a9f52f9070c4b30e823c973aef8e94\n', '7955d32d69adc5d4e7f852545d98a2179ab9ad8331fca24d7d853033e58daf95', 1),
-(30, 57, 'ef30df20eee5965c137e784eba9e433644e2dd526c792a2b344ecc255762d6a9', '5f3a3e318f490a47c0529427cb632f3e53c3da9ea2a98b85f6e30c94e05d2af3', 1),
-(31, 58, '2197b6465c847d2ccd0d5a7a0bfdced7aa0deef9d8813733b9feb148e4d74939', 'savacska', 1),
-(32, 59, 'e8fcefa2c4a95110b814fce10fb1e518c66aea5cbb731fb85c52699c141e1d2a', '20ce50662526059241d344abc41e8d85d5e9c92876669cb22ef1b70dbc3907fc', 1),
-(33, 60, '4e3c512f1340eba2871e577a577ce2aab3220a3eaccd96c2e0b3ff0527214205', 'cb70c75097abb02a2ac51008bcf07d075df57d55208f00abb2c82cfa8e065bcb', 1),
-(34, 61, '6457de65d7bee5f970008937534a23c04f0ba3fd2975698f8261ec1068b0cbc3', '9a13d798b878f06c73059b969d007ad39ad74618c672f35656a1634cc81dc4c3', 1);
+(35, 62, 'e35b7cac0be23e5d22a8fe6adbfe65113fff699325b3443e0681dcf3c876af00', '12bcd8bcea9e2f240b4ff4ba553bbe101500d8edca6999cc4eabb7b75bffb7ed', 1);
 
 -- --------------------------------------------------------
 
@@ -4284,16 +4268,7 @@ CREATE TABLE `user_det` (
 --
 
 INSERT INTO `user_det` (`UserID_DET`, `UserMSTRID_DET`, `UserFirstName_DET`, `UserMiddleName_DET`, `UserLastName_DET`, `UserGenderID_DET`, `UserPhone_DET`, `UserCountryID_DET`, `UserPostCode_DET`, `UserCity_DET`, `UserStreet_DET`, `UserAddress_DET`, `UserRegDate_DET`, `UserMotherName_DET`, `UserBirthPlace_DET`, `UserBirthDate_DET`, `UserLastModifiedDate_DET`) VALUES
-(21, 46, 'Dobos', 'István', '', 1, '+36201515151', 2, '3533', 'Miskolc', 'Nádastó 6', '', '2026-01-13 14:14:57', 'Dobosné Irénke', 'Miskolc', '1976-01-01', '2026-01-13 14:22:31'),
-(22, 47, 'Domonkos', 'Emőke', '', 2, '+36201515152', 2, '3533', 'Miskolc', 'Szétszekál', '15', '2026-01-13 14:20:44', 'Dominó Mutter', 'Miskolc', '1977-01-01', '2026-01-13 14:20:44'),
-(23, 48, 'torolt', 'felhasznalo', '', 3, '+362012121212', 1, '12566', 'Bergen op zoom', 'Harrier', '166/b', '2026-01-13 14:24:10', 'Ezistörölt Piroska', 'Amsterdam', '1972-04-25', '2026-01-13 18:11:20'),
-(30, 55, 'Lövei', 'István', '', 3, '+36 30 3375379', 2, '3533', 'Miskolc', 'Nádastó', '2', '2026-02-01 19:07:36', '', '', '1900-01-01', '2026-02-01 19:07:36'),
-(31, 56, '1', '1', '1', 3, '1', 2, '1', '1', '1', '1', '2026-02-01 19:11:58', '', '', '1900-01-01', '2026-02-01 19:11:58'),
-(32, 57, '1', '2', '', 3, '8', 2, '3', '4', '5', '7', '2026-02-01 19:32:48', '', '', '1900-01-01', '2026-02-01 19:32:48'),
-(33, 58, '1', '2', '', 3, '7', 2, '3', '4', '5', '6', '2026-02-01 19:49:06', '', '', '1900-01-01', '2026-02-01 19:49:06'),
-(34, 59, '1', '2', '', 3, '7', 2, '3', '45', '5', '6', '2026-02-01 19:56:38', '', '', '1900-01-01', '2026-02-01 19:56:38'),
-(35, 60, '1', '2', '', 3, '344', 2, '3', '4', 'd', 'sdgh', '2026-02-01 20:00:03', '', '', '1900-01-01', '2026-02-01 20:00:03'),
-(36, 61, 'L', 'ö', 'i', 3, '6464', 1, '6546', '65416', '.ljn', '.jn.j', '2026-02-01 20:08:44', '', '', '1900-01-01', '2026-02-01 20:08:44');
+(37, 62, 'Lövei', 'István', '', 3, '+36 46 52899', 2, '312263', 'Bergen op Zoom', 'Rosenfeld', '135', '2026-02-02 16:19:07', '', '', '1900-01-01', '2026-02-02 20:07:21');
 
 -- --------------------------------------------------------
 
@@ -4315,16 +4290,7 @@ CREATE TABLE `user_mstr` (
 --
 
 INSERT INTO `user_mstr` (`UserID_MSTR`, `UserNickName_MSTR`, `UserMail_MSTR`, `UserTypeID_MSTR`, `UserFlagID_MSTR`, `UserNote_MSTR`) VALUES
-(46, 'Kisdobos', 'kisdobos@uborka.hu', 1, 1, ''),
-(47, 'Domino', 'domino@szekall.hu', 1, 1, ''),
-(48, 'törölt', 'torolt@torolt.hu', 6, 1, 'Problémás vásárló'),
-(55, 'LoIs', 'istvan.lovei@yahoo.com', 2, 1, ''),
-(56, 'proba', 'ghvg@lkbh.hu', 2, 1, ''),
-(57, 'próba1', 'istvan.lovei@yahoo.com', 2, 1, ''),
-(58, 'próba2', 'istvan.lovei@gg.hu', 2, 1, ''),
-(59, 'próba3', 'istvan.lovei@gg.hu', 2, 1, ''),
-(60, 'proba4', 'istvan.lovei@gg.hu', 2, 1, ''),
-(61, 'proba5', 'istvan.lovei@gg.hu', 2, 1, '');
+(62, 'LoIs', 'istvan.lovei@yahoo.com', 2, 1, '');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -4591,7 +4557,7 @@ ALTER TABLE `orders_mstr`
 -- AUTO_INCREMENT a táblához `password_mstr`
 --
 ALTER TABLE `password_mstr`
-  MODIFY `PasswordID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `PasswordID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT a táblához `quantityunit_mstr`
@@ -4627,13 +4593,13 @@ ALTER TABLE `usertype_mstr`
 -- AUTO_INCREMENT a táblához `user_det`
 --
 ALTER TABLE `user_det`
-  MODIFY `UserID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `UserID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT a táblához `user_mstr`
 --
 ALTER TABLE `user_mstr`
-  MODIFY `UserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `UserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- Megkötések a kiírt táblákhoz

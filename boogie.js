@@ -231,7 +231,7 @@ function initFields(fieldID) {
     let container = document.getElementById(fieldID);
     let fileName = "";
     var param = "";
-    if (fieldID === "country" || fieldID === "country1") {
+    if (fieldID === "country" || fieldID === "profileCountryID") {
         fileName = "getCountry.php";
         param = "countryID=";
     }
@@ -245,4 +245,42 @@ function initFields(fieldID) {
         }
     }
     req.send(param);
+}
+
+function initProfileEditor(userID) {
+
+    var param = "userID=" + userID;
+
+    var req = new XMLHttpRequest();
+    req.open("POST", "getUserProfile.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+
+            const myObj = JSON.parse(this.responseText);
+            console.log(myObj);
+
+            document.getElementById("profileUserName").value = myObj[0].UserNickName_MSTR;
+            document.getElementById("profileEmail").value = myObj[0].UserMail_MSTR;
+
+            document.getElementById("profileFirstName").value = myObj[0].UserFirstName_DET;
+            document.getElementById("profileMiddleName").value = myObj[0].UserMiddleName_DET;
+            document.getElementById("profileLastName").value = myObj[0].UserLastName_DET;
+
+            document.getElementById("profileCountryID").value = myObj[0].UserCountryID_DET;
+            document.getElementById("profilePostCode").value = myObj[0].UserPostCode_DET;
+            document.getElementById("profileCity").value = myObj[0].UserCity_DET;
+            document.getElementById("profileStreet").value = myObj[0].UserStreet_DET;
+            document.getElementById("profileAddress").value = myObj[0].UserAddress_DET;
+
+            document.getElementById("profilePhone").value = myObj[0].UserPhone_DET;
+
+
+
+        }
+    }
+    req.send(param);
+    
+
+
 }

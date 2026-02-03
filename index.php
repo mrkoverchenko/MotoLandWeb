@@ -360,7 +360,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="boogie.js"></script>
 
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/footers/">
 
         <style>
             .carousel-inner > .item > img,
@@ -648,7 +647,7 @@
                                             onfocusout="checkPW()">
                                 </div>
                                 <div class="col-sm-2">
-                                    <div id="validator" class="circle"></div>
+                                    <div id="passwordValidator" class="circle"></div>
                                 </div>
                             </div>
 
@@ -808,7 +807,7 @@
                             </button>
 
                             <div class="modal-footer" style="text-align:left ">
-                                <span id="message">A *-al jelszett mezők kitöltése kötelező!</span>
+                                <span id="regMessage">A *-al jelszett mezők kitöltése kötelező!</span>
                             </div>
 
                         </form>

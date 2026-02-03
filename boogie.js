@@ -58,7 +58,7 @@ function checkUserName(_this) {
             var ret = xhr.responseText;
             if (ret.length > 4) { //{[]}
                 _this.focus();
-                const mess = document.getElementById("message");
+                const mess = document.getElementById("regMessage");
                 mess.style.color = "red";
                 mess.innerHTML = "Sajnálom, ez a felhasználónév már foglalt!";
 
@@ -155,11 +155,11 @@ function onlyNumber(event) {
 }  
 
 function checkPW() {
-    let pws = document.getElementById("regpassword");
+    let pws = document.getElementById("regPassword");
     if (pws.value.length > 0 && !passwordIsOk) {
         //alert("A jelszó nem elég erős!\nMinimum 8 karater, kisbetű, nagybetű, szám formátumban!\nCsak mondom!");
 
-        const mess = document.getElementById("message");
+        const mess = document.getElementById("regMessage");
         mess.style.color = "red";
         mess.innerHTML = "A jelszó nem elég erős!\nMinimum 8 karater, kisbetű, nagybetű, szám formátumban!";
 
@@ -178,8 +178,8 @@ let passwordIsOk;
 function chkp() {
     passwordIsOk = false;
     var validCount = 0;  
-    let pws = document.getElementById("regpassword");
-    let valid = document.getElementById("validator");
+    let pws = document.getElementById("regPassword");
+    let valid = document.getElementById("passwordValidator");
     var lower = /[a-z]/g;
     if (pws.value.match(lower)) {  
         validCount = validCount + 1;

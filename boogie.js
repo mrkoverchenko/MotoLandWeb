@@ -231,7 +231,7 @@ function initFields(fieldID) {
     let container = document.getElementById(fieldID);
     let fileName = "";
     var param = "";
-    if (fieldID === "country" || fieldID === "profileCountryID") {
+    if (fieldID === "regCountryID" || fieldID === "profileCountryID") {
         fileName = "getCountry.php";
         param = "countryID=";
     }

@@ -113,31 +113,31 @@
     ////////////////////////////////////////////////////////
 	if (isset($_POST["regUserName"]) && 
             isset($_POST["regPassword"]) && 
-                isset($_POST["firstName"]) && 
-                    isset($_POST["middleName"]) && 
-                        isset($_POST["lastName"]) && 
-                            isset($_POST["countryID"]) && 
-                                isset($_POST["postcode"]) && 
-                                    isset($_POST["city"]) && 
-                                        isset($_POST["street"]) && 
-                                            isset($_POST["address"]) && 
-                                                isset($_POST["phone"]) && 
-                                                    isset($_POST["email"]) && 
+                isset($_POST["regFirstName"]) && 
+                    isset($_POST["regMiddleName"]) && 
+                        isset($_POST["regLastName"]) && 
+                            isset($_POST["regCountryID"]) && 
+                                isset($_POST["regPostCode"]) && 
+                                    isset($_POST["regCity"]) && 
+                                        isset($_POST["regStreet"]) && 
+                                            isset($_POST["regAddress"]) && 
+                                                isset($_POST["regPhone"]) && 
+                                                    isset($_POST["regEmail"]) && 
                                                         isset($_POST["formName"]) && 
                                                             $_POST["formName"] == "regForm"  ) {
 
 	    $username = $_POST["regUserName"];
         $password = $_POST["regPassword"];
-        $firstname = $_POST["firstName"];
-        $middlename = $_POST["middleName"];
-        $lastname = $_POST["lastName"];
-        $countryid = $_POST["countryID"];
-        $postcode = $_POST["postcode"];
-        $city = $_POST["city"];
-        $street = $_POST["street"];
-        $address = $_POST["address"];
-        $phone = $_POST["phone"];
-        $email = $_POST["email"];
+        $firstname = $_POST["regFirstName"];
+        $middlename = $_POST["regMiddleName"];
+        $lastname = $_POST["regLastName"];
+        $countryid = $_POST["regCountryID"];
+        $postcode = $_POST["regPostCode"];
+        $city = $_POST["regCity"];
+        $street = $_POST["regStreet"];
+        $address = $_POST["regAddress"];
+        $phone = $_POST["regPhone"];
+        $email = $_POST["regEmail"];
 
         $_POST = array();
         unset($_POST);
@@ -323,6 +323,7 @@
 
         mysqli_query($connect, $sqlstring);
         mysqli_close($connect);
+        $userFullName = $firstname." ".$middlename." ".$lastname;
 
         //$_POST = array();
         //unset($_POST);
@@ -495,8 +496,8 @@
                                             <li><a href='#myProfileForm' data-toggle='modal' ><span class='glyphicon glyphicon-user' style='margin-right:20px;'></span>Profil</a></li>
                                             <li><a href='#mySecurityForm' data-toggle='modal' ><span class='glyphicon glyphicon-lock' style='margin-right:20px;'></span>Biztonság</a></li>
                                             <li role='separator' class='divider'></li>
-                                            <li><a href='#'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalás</a></li>
-                                            <li><a href='#'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendelések</a></li>
+                                            <li><a href='#'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalásaim</a></li>
+                                            <li><a href='#'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>
                                             <li role='separator' class='divider'></li>
                                             <li><a href='logout.php'><span class='glyphicon glyphicon-log-out' style='margin-right:20px;'></span>Kijelentkezés</a></li>
                                         </ul>
@@ -610,7 +611,7 @@
                                 onsubmit="return checkForms(this)" >
 
                             <div class="form-group row">
-                                <label for="userName" class="col-sm-4 col-form-label" style="margin-top:5px">
+                                <label for="regUserName" class="col-sm-4 col-form-label" style="margin-top:5px">
                                     <span class="glyphicon glyphicon-user"></span> Felhasználónév *
                                 </label>
                                 <div class="col-sm-6">
@@ -630,7 +631,7 @@
 
 
                             <div class="form-group row">
-                                <label for="regpassword" class="col-sm-4 col-form-label" style="margin-top:5px">
+                                <label for="regPassword" class="col-sm-4 col-form-label" style="margin-top:5px">
                                     <span class="glyphicon glyphicon-eye-open"></span> Jelszó *
                                 </label>
 
@@ -639,7 +640,7 @@
                                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                             required
                                             class="form-control-plaintext" 
-                                            id="regpassword" 
+                                            id="regPassword" 
                                             name="regPassword" 
                                             placeholder="jelszó"
                                             style="width:270px"
@@ -652,7 +653,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="password1" class="col-sm-4 col-form-label" style="margin-top:5px">
+                                <label for="password1Check" class="col-sm-4 col-form-label" style="margin-top:5px">
                                     <span class="glyphicon glyphicon-eye-open"></span> Ellenőrzés *
                                 </label>
 
@@ -660,66 +661,66 @@
                                     <input type="password" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="password1" 
+                                            id="passwordCheck" 
                                             placeholder="jelszó ellenőrzés"
                                             style="width:270px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="firstName" class="col-sm-4 col-form-label" style="margin-top:5px"> Vezetéknév *</label>
+                                <label for="regFirstName" class="col-sm-4 col-form-label" style="margin-top:5px"> Vezetéknév *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="firstName" 
-                                            name="firstName" 
+                                            id="regFirstName" 
+                                            name="regFirstName" 
                                             placeholder="vezetéknév"
                                             style="width:300px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="middleName" class="col-sm-4 col-form-label" style="margin-top:5px" > Keresztnév *</label>
+                                <label for="regMiddleName" class="col-sm-4 col-form-label" style="margin-top:5px" > Keresztnév *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="middleName" 
-                                            name="middleName" 
+                                            id="regMiddleName" 
+                                            name="regMiddleName" 
                                             placeholder="keresztnév"
                                             style="width:300px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="lastName" class="col-sm-4 col-form-label" style="margin-top:5px"> Keresztnév</label>
+                                <label for="regLastName" class="col-sm-4 col-form-label" style="margin-top:5px"> Keresztnév</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             alt="noChecking"
                                             class="form-control-plaintext" 
-                                            id="lastName" 
-                                            name="lastName" 
+                                            id="regLastName" 
+                                            name="regLastName" 
                                             placeholder="keresztnév"
                                             style="width:300px">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="country" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
+                                <label for="regCountryID" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
                                 <div class="col-sm-6">
-                                    <select class="form-select form-select-sm" id="country" name="countryID" aria-label=".form-select-sm example"></select>
+                                    <select class="form-select form-select-sm" id="regCountryID" name="regCountryID" aria-label=".form-select-sm example"></select>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="postcode" class="col-sm-4 col-form-label"> Irányítószám *</label>
+                                <label for="regPostCode" class="col-sm-4 col-form-label"> Irányítószám *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required 
                                             class="form-control-plaintext" 
-                                            id="postcode" 
-                                            name="postcode" 
+                                            id="regPostCode" 
+                                            name="regPostCode" 
                                             placeholder="irányítószám" 
                                             style="width:300px" 
                                             onkeypress="return onlyNumber(event)" 
@@ -728,13 +729,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="city" class="col-sm-4 col-form-label"> Város *</label>
+                                <label for="regCity" class="col-sm-4 col-form-label"> Város *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="city" 
-                                            name="city" 
+                                            id="regCity" 
+                                            name="regCity" 
                                             placeholder="város"
                                             style="width:300px"
                                             maxlength="30">
@@ -742,13 +743,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="street" class="col-sm-4 col-form-label"> Utca *</label>
+                                <label for="regStreet" class="col-sm-4 col-form-label"> Utca *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="street" 
-                                            name="street" 
+                                            id="regStreet" 
+                                            name="regStreet" 
                                             placeholder="út/utca/tér ...stb"
                                             style="width:300px"
                                             maxlength="30">
@@ -756,13 +757,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="address" class="col-sm-4 col-form-label"> Házszám/emelet *</label>
+                                <label for="regAddress" class="col-sm-4 col-form-label"> Házszám/emelet *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="address" 
-                                            name="address" 
+                                            id="regAddress" 
+                                            name="regAddress" 
                                             placeholder="házszám/emelet/ajtó...stb"
                                             style="width:300px"
                                             maxlength="50">
@@ -770,13 +771,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="phone" class="col-sm-4 col-form-label"> Telefonszám *</label>
+                                <label for="regPhone" class="col-sm-4 col-form-label"> Telefonszám *</label>
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="phone" 
-                                            name="phone" 
+                                            id="regPhone" 
+                                            name="regPhone" 
                                             placeholder="telefonszám"
                                             style="width:300px"
                                             maxlength="30"
@@ -785,13 +786,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="email" class="col-sm-4 col-form-label"> E-mail cím *</label>
+                                <label for="regEmail" class="col-sm-4 col-form-label"> E-mail cím *</label>
                                 <div class="col-sm-6">
                                     <input type="email" 
                                             required
                                             class="form-control-plaintext" 
-                                            id="email" 
-                                            name="email" 
+                                            id="regEmail" 
+                                            name="regEmail" 
                                             placeholder="e-mail cím"
                                             style="width:300px"
                                             maxlength="64">
@@ -826,8 +827,7 @@
 
                 // BEFORE ON SHOW
                 $('#registrationForm').on('show.bs.modal', function (e) {
-                    initFields("country");
-                    document.getElementById("userName").focus();
+                    initFields("regCountryID");
                 })
 
             </script>

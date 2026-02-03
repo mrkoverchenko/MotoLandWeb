@@ -360,6 +360,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="boogie.js"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <style>
             .carousel-inner > .item > img,
@@ -400,6 +401,10 @@
     </head>
 
     <body>
+
+
+
+
 
         <!-- NAVIGATION -->
         <nav class="navbar navbar-inverse navbar-fixed-top">

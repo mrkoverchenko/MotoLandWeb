@@ -1,6 +1,5 @@
 <?php
     session_start(); 
-
     include "connect.php";
     $ret = "";
     if (isset($_POST["typeID"]) && isset($_POST["manID"]) && isset($_POST["catID"])) {
@@ -22,11 +21,14 @@
         $ret = "<option></option>";
         while ($row = mysqli_fetch_assoc($result)) {                                    
             $id = $row["MotoPartsID_MSTR"];
-            $num = $row["MotoPartsNumber_MSTR"];
+            $num = $row["MotoPartsName_MSTR"]." - ".$row["MotoPartsNumber_MSTR"];
             $ret .= "<option value='$id'>$num</option>"; 
         }
     
     }
+
     mysqli_close($connect);
     echo $ret;
+    
 ?>
+    

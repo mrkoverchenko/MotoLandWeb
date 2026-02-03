@@ -147,6 +147,36 @@ function categorySelect(_this) {
 }
 
 
+function partSelect(_this) {
+    let manID = document.getElementById("motoman").value;
+    let typeID = document.getElementById("mototype").value;
+    let catID = document.getElementById("motopartscategory").value;
+
+    var param = "typeID=" + typeID + "&manID=" + manID + "&catID=" + catID + "&partID=" + _this.value;
+    var req = new XMLHttpRequest();
+    req.open("POST", "getMotoPartsDetail.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            const myObj = JSON.parse(this.responseText);
+            console.log(myObj);
+
+            document.getElementById("motopartnettoprice").value = myObj[0].MotoPartsNettoPrice_MSTR;
+            document.getElementById("motopartvat").value = myObj[0].MotoPartsVAT_MSTR;
+
+            document.getElementById("motopartbruttoprice").value = myObj[0].MotoPartsBruttoPrice_MSTR;
+            document.getElementById("motopartbruttoeurprice").value = myObj[0].MotoPartsBruttoEURPrice_MSTR;
+            document.getElementById("motopartdiscount").value = myObj[0].MotoPartsDiscount_MSTR;
+            document.getElementById("motopartquantity").value = myObj[0].MotoPartsQuantity_MSTR ;
+            document.getElementById("motopartquantityunit").value = myObj[0].QuantityUnitUnit_MSTR;
+            document.getElementById("motopartinfo").value = myObj[0].MotoPartsInfo_MSTR;
+
+        }
+    }
+    req.send(param);
+}
+
+
 function onlyNumber(event) {
     var chr = (event.which)? event.which: event.keyCode;
     if (chr >= 48 && chr <= 57) //numbers
@@ -256,10 +286,7 @@ function initProfileEditor(userID) {
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-
             const myObj = JSON.parse(this.responseText);
-            console.log(myObj);
-
             document.getElementById("profileUserName").value = myObj[0].UserNickName_MSTR;
             document.getElementById("profileEmail").value = myObj[0].UserMail_MSTR;
 
@@ -274,9 +301,6 @@ function initProfileEditor(userID) {
             document.getElementById("profileAddress").value = myObj[0].UserAddress_DET;
 
             document.getElementById("profilePhone").value = myObj[0].UserPhone_DET;
-
-
-
         }
     }
     req.send(param);

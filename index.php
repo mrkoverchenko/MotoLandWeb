@@ -224,6 +224,8 @@
         function generateSalt($length = 32) {
             return bin2hex(random_bytes($length));
         }
+
+      
         function createPasswordHashReg($password, $salt) {
             return hash('sha256', $salt . $password);
             //return hash('sha256', $password);

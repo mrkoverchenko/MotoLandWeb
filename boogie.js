@@ -96,6 +96,7 @@ function startItem(item) {
 function manSelect(_this) {
     document.getElementById("motopartscategory").innerHTML = "";
     document.getElementById("motoparts").innerHTML = "";
+    clearDetailFields();
 
     let container = document.getElementById("mototype");
     container.innerHTML = "";
@@ -113,6 +114,7 @@ function manSelect(_this) {
 
 function typeSelect(_this) {
     document.getElementById("motoparts").innerHTML = "";
+    clearDetailFields();
 
     let container = document.getElementById("motopartscategory");
     container.innerHTML = "";
@@ -132,9 +134,15 @@ function typeSelect(_this) {
 function categorySelect(_this) {
     let container = document.getElementById("motoparts");
     container.innerHTML = "";
+    clearDetailFields();
+
     let manID = document.getElementById("motoman").value;
     let typeID = document.getElementById("mototype").value;
     var param = "typeID=" + typeID + "&manID=" + manID + "&catID=" + _this.value;
+
+    let explodedViewIMG = document.getElementById("explodedViewIMG");
+    explodedViewIMG.src = _this.options[_this.selectedIndex].title
+
     var req = new XMLHttpRequest();
     req.open("POST", "getMotoParts.php", true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -148,9 +156,11 @@ function categorySelect(_this) {
 
 
 function partSelect(_this) {
+
     let manID = document.getElementById("motoman").value;
     let typeID = document.getElementById("mototype").value;
     let catID = document.getElementById("motopartscategory").value;
+    clearDetailFields();
 
     var param = "typeID=" + typeID + "&manID=" + manID + "&catID=" + catID + "&partID=" + _this.value;
     var req = new XMLHttpRequest();
@@ -175,7 +185,18 @@ function partSelect(_this) {
     }
     req.send(param);
 }
+/**********************************************************
+ * ORDERING.PHP
+ * CLEARING ALL DATABASE FIELD BEFORE SELECT NEXT PART
+ */
+function clearDetailFields() {
+    /*let parentDiv = document.getElementById("details");
+    let thisFormInputElements = parentDiv.getElementsByTagName('INPUT');
 
+    for (var ic = 0; ic < thisFormInputElements.length; ++ic) {
+        thisFormInputElements[ic].value = "";
+    }*/
+}
 
 function onlyNumber(event) {
     var chr = (event.which)? event.which: event.keyCode;

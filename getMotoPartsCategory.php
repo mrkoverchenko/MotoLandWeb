@@ -25,7 +25,7 @@
             $cat = $row["PartsCategoryCategory_MSTR"];
             $image = $row["PartsCategoryCategoryImageFileName_MSTR"];
             
-            $ret .= "<option value='$id'>$cat</option>"; 
+            $ret .= "<option title='$image' value='$id'>$cat</option>"; 
         }
     
     }

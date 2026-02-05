@@ -13,7 +13,7 @@ function checkForms(_this) {
         if (thisFormInputElements[ic].alt != "noChecking") {
 
             if (thisFormInputElements[ic].value.length === 0) {
-                alert("Ez a mező nem maradhat üresen!\nCsak mondom!");
+                alert("Ez a mező nem maradhat üresen!\n"+thisFormInputElements[ic]+"\nCsak mondom!");
                 thisFormInputElements[ic].focus();
                 return false;
             }
@@ -93,10 +93,54 @@ function startItem(item) {
 
 
 
+
+let magniBig = false;
+function changeSize(clear) {
+    let explodedViewIMG = document.getElementById("explodedViewIMG");
+    if (clear)
+        explodedViewIMG.src = "";
+    else {
+        let magni = document.getElementById("magni");
+        if (!magniBig) {
+            magni.src = "http://localhost/mrkoverchenko/MotoLandWeb/imgs/magni-.png";
+            explodedViewIMG.style.width = "100%";
+            explodedViewIMG.style.height = "auto";
+            magni.title = "Alaphelyzet";
+        } else {
+            magni.src = "http://localhost/mrkoverchenko/MotoLandWeb/imgs/magni+.png";
+            explodedViewIMG.style.width = "100px";
+            explodedViewIMG.style.height = "auto";
+            magni.title = "Nagyítás";
+        }
+        magniBig = !magniBig;
+    }
+
+}
+
+
+let man = false;
+let type = false;
+let cat = false;
+let part = false;
+
+function clearMTCP() {
+    man = false;
+    type = false;
+    cat = false;
+    part = false;
+}
+
 function manSelect(_this) {
+
     document.getElementById("motopartscategory").innerHTML = "";
     document.getElementById("motoparts").innerHTML = "";
     clearDetailFields();
+    changeSize(true);
+
+    clearMTCP;
+    if (_this.selectedIndex > 0) man = true; else man = type = cat = part = false; 
+    setSubmitButton();
+
 
     let container = document.getElementById("mototype");
     container.innerHTML = "";
@@ -115,6 +159,10 @@ function manSelect(_this) {
 function typeSelect(_this) {
     document.getElementById("motoparts").innerHTML = "";
     clearDetailFields();
+    changeSize(true);
+
+    if (_this.selectedIndex > 0) type = true; else type = cat = part = false; 
+    setSubmitButton();
 
     let container = document.getElementById("motopartscategory");
     container.innerHTML = "";
@@ -135,13 +183,20 @@ function categorySelect(_this) {
     let container = document.getElementById("motoparts");
     container.innerHTML = "";
     clearDetailFields();
+    changeSize(true);
+
+    if (_this.selectedIndex > 0) cat = true; else cat = part = false; 
+    setSubmitButton();
 
     let manID = document.getElementById("motoman").value;
     let typeID = document.getElementById("mototype").value;
     var param = "typeID=" + typeID + "&manID=" + manID + "&catID=" + _this.value;
 
     let explodedViewIMG = document.getElementById("explodedViewIMG");
-    explodedViewIMG.src = _this.options[_this.selectedIndex].title
+    var expIMG = _this.options[_this.selectedIndex].title;
+    explodedViewIMG.src = (expIMG.length > 0)
+        ? expIMG
+        : "http://localhost/mrkoverchenko/MotoLandWeb/imgs/nopic.png";
 
     var req = new XMLHttpRequest();
     req.open("POST", "getMotoParts.php", true);
@@ -154,13 +209,15 @@ function categorySelect(_this) {
     req.send(param);
 }
 
-
 function partSelect(_this) {
 
     let manID = document.getElementById("motoman").value;
     let typeID = document.getElementById("mototype").value;
     let catID = document.getElementById("motopartscategory").value;
     clearDetailFields();
+
+    if (_this.selectedIndex > 0) part = true; else part = false; 
+    setSubmitButton();
 
     var param = "typeID=" + typeID + "&manID=" + manID + "&catID=" + catID + "&partID=" + _this.value;
     var req = new XMLHttpRequest();
@@ -171,31 +228,52 @@ function partSelect(_this) {
             const myObj = JSON.parse(this.responseText);
             console.log(myObj);
 
-            document.getElementById("motopartnettoprice").value = myObj[0].MotoPartsNettoPrice_MSTR;
-            document.getElementById("motopartvat").value = myObj[0].MotoPartsVAT_MSTR;
+            document.getElementById("motopartnettoprice").value = Math.round(myObj[0].MotoPartsNettoPrice_MSTR);
+            document.getElementById("motopartvat").value = myObj[0].MotoPartsVAT_MSTR * 100;
 
-            document.getElementById("motopartbruttoprice").value = myObj[0].MotoPartsBruttoPrice_MSTR;
+            document.getElementById("motopartbruttoprice").value = Math.round(myObj[0].MotoPartsBruttoPrice_MSTR);
             document.getElementById("motopartbruttoeurprice").value = myObj[0].MotoPartsBruttoEURPrice_MSTR;
-            document.getElementById("motopartdiscount").value = myObj[0].MotoPartsDiscount_MSTR;
-            document.getElementById("motopartquantity").value = myObj[0].MotoPartsQuantity_MSTR ;
-            document.getElementById("motopartquantityunit").value = myObj[0].QuantityUnitUnit_MSTR;
+            document.getElementById("motopartdiscount").value = myObj[0].MotoPartsDiscount_MSTR * 100;
+
+            let mee = myObj[0].QuantityUnitUnit_MSTR;
+            document.getElementById("motopartquantityunit").value = mee;
+
+            let q = Math.round(myObj[0].MotoPartsQuantity_MSTR);
+            document.getElementById("motopartquantity").value = q;
+            document.getElementById("quantity").max = q;
+            document.getElementById("meeDiv").innerHTML = "Raktári mennyiség: " + q + " " + mee;
+
             document.getElementById("motopartinfo").value = myObj[0].MotoPartsInfo_MSTR;
+
 
         }
     }
     req.send(param);
 }
+
+
+function setSubmitButton() {
+    let qua = document.getElementById("quantity");
+    let iSC = document.getElementById("intoShoppingCart");
+    //alert("man: " + man + "\ntype: " + type + "\ncat: " + cat + "\npart: " + part);
+    if (man && type && cat && part) {
+        qua.disabled = iSC.disabled = false;
+    } else {
+        qua.disabled = iSC.disabled = true;
+    }
+}
+
 /**********************************************************
  * ORDERING.PHP
  * CLEARING ALL DATABASE FIELD BEFORE SELECT NEXT PART
  */
 function clearDetailFields() {
-    /*let parentDiv = document.getElementById("details");
-    let thisFormInputElements = parentDiv.getElementsByTagName('INPUT');
+    let parentDiv = document.getElementById("details");
+    let thisInputElements = parentDiv.getElementsByTagName('INPUT');
 
-    for (var ic = 0; ic < thisFormInputElements.length; ++ic) {
-        thisFormInputElements[ic].value = "";
-    }*/
+    for (var ic = 0; ic < thisInputElements.length; ++ic) {
+        thisInputElements[ic].value = "";
+    }
 }
 
 function onlyNumber(event) {
@@ -326,6 +404,14 @@ function initProfileEditor(userID) {
     }
     req.send(param);
     
+}
 
-
+var arrow = false;
+function setArrow(_this) {
+    let defaultText = _this.innerHTML.split(" ")[0];
+    if (arrow)
+        _this.innerHTML = defaultText + " &#11167;";
+    else
+        _this.innerHTML = defaultText + " &#11165;";
+    arrow = !arrow;
 }

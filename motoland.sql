@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 02. 20:08
+-- Létrehozás ideje: 2026. Feb 05. 14:01
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -3485,7 +3485,7 @@ CREATE TABLE `motopartscategory_mstr` (
   `PartsCategoryManID_MSTR` int(11) NOT NULL,
   `PartsCategoryTypeID_MSTR` int(11) NOT NULL,
   `PartsCategoryCategory_MSTR` varchar(40) NOT NULL,
-  `PartsCategoryCategoryImageFileName_MSTR` varchar(100) NOT NULL
+  `PartsCategoryCategoryImageFileName_MSTR` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
@@ -3493,18 +3493,18 @@ CREATE TABLE `motopartscategory_mstr` (
 --
 
 INSERT INTO `motopartscategory_mstr` (`PartsCategoryID_MSTR`, `PartsCategoryManID_MSTR`, `PartsCategoryTypeID_MSTR`, `PartsCategoryCategory_MSTR`, `PartsCategoryCategoryImageFileName_MSTR`) VALUES
-(1, 43, 1, 'Accessory', 'C:\\categories\\43_1_1.png'),
-(2, 43, 1, 'Air Cleaner', 'C:\\categories\\43_1_2.png'),
-(3, 43, 1, 'Balancer', 'C:\\categories\\43_1_3.png'),
-(4, 43, 1, 'Battery Case', 'C:\\Users\\istva\\Desktop\\C#\\MotoLandAdmin\\MotoLandAdmin\\categories\\43_1_4.png'),
-(5, 43, 1, 'Brake Pedal', 'c:\\categories\\43_1_5.png'),
-(6, 43, 1, 'Brake Piping', 'c:\\categories\\43_1_6.png'),
-(7, 43, 1, 'Cables', 'c:\\categories\\43_1_7.png'),
-(8, 43, 1, 'Camshaft(s)/Tensioner', 'c:\\categories\\43_1_8.png'),
-(9, 43, 1, 'Chassis Electrical Equipment', 'c:\\categories\\43_1_9.png'),
-(10, 43, 1, 'Clutch', 'c:\\categories\\43_1_10.png'),
-(11, 43, 1, 'Clutch Master Cylinder', 'c:\\categories\\43_1_11.png'),
-(12, 43, 1, 'Cowling Lowers', 'c:\\categories\\43_1_12.png'),
+(1, 43, 1, 'Accessory', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_1.png'),
+(2, 43, 1, 'Air Cleaner', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_2.png'),
+(3, 43, 1, 'Balancer', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_3.png'),
+(4, 43, 1, 'Battery Case', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_4.png'),
+(5, 43, 1, 'Brake Pedal', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_5.png'),
+(6, 43, 1, 'Brake Piping', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_6.png'),
+(7, 43, 1, 'Cables', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_7.png'),
+(8, 43, 1, 'Camshaft(s)/Tensioner', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_8.png'),
+(9, 43, 1, 'Chassis Electrical Equipment', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_9.png'),
+(10, 43, 1, 'Clutch', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_10.png'),
+(11, 43, 1, 'Clutch Master Cylinder', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_11.png'),
+(12, 43, 1, 'Cowling Lowers', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_12.png'),
 (13, 43, 1, 'Cowling(Center)', ''),
 (14, 43, 1, 'Cowling(Upper)', ''),
 (15, 43, 1, 'Crankcase', ''),
@@ -3567,22 +3567,22 @@ INSERT INTO `motopartscategory_mstr` (`PartsCategoryID_MSTR`, `PartsCategoryManI
 (72, 43, 1, 'Valve(s)', ''),
 (73, 43, 1, 'Water Pipe', ''),
 (74, 43, 1, 'Windshield', ''),
-(90, 106, 28, 'új kat', 'C:\\categories\\43_1_9.png'),
-(91, 106, 28, 'sg', 'C:\\categories\\43_1_12.png'),
-(92, 106, 28, 'tzktzvv', 'C:\\categories\\43_1_12.png'),
-(93, 37, 29, 'CYLINDER HEAD COVER', 'C:\\categories\\37_1_1.png'),
-(94, 37, 29, 'GENERATOR COVER', 'C:\\categories\\37_1_2.png'),
-(95, 37, 29, 'GENERATOR', 'C:\\categories\\37_1_3.png'),
-(96, 37, 29, 'STARTER MOTOR', 'C:\\categories\\37_1_4.png'),
-(97, 37, 29, 'OIL PAN, OIL PUMP', 'C:\\categories\\37_1_5.png'),
-(98, 37, 29, 'CRANKCASE', 'C:\\categories\\37_1_6.png'),
-(99, 37, 29, 'CRANKSHAFT PISTON', 'C:\\categories\\37_1_7.png'),
-(100, 37, 29, 'TRANSMISSION', 'C:\\Users\\istva\\Desktop\\C#\\MotoLandAdmin\\MotoLandAdmin\\categories\\37_1_8.png'),
-(101, 37, 29, 'GEARSHIFT DRUM', 'C:\\categories\\37_1_9.png'),
-(102, 37, 29, 'CYLINDER HEAD', 'C:\\categories\\37_1_10.png'),
-(103, 37, 29, 'THROTTLE BODY', 'C:\\categories\\37_1_11.png'),
-(104, 37, 29, 'CAMSHAFT', 'C:\\categories\\37_1_12.png'),
-(105, 37, 30, 'új kat', 'C:\\categories\\37_1_3.png'),
+(90, 106, 28, 'új kat', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_9.png'),
+(91, 106, 28, 'sg', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_12.png'),
+(92, 106, 28, 'tzktzvv', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_12.png'),
+(93, 37, 29, 'CYLINDER HEAD COVER', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_1.png'),
+(94, 37, 29, 'GENERATOR COVER', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_2.png'),
+(95, 37, 29, 'GENERATOR', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_3.png'),
+(96, 37, 29, 'STARTER MOTOR', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_4.png'),
+(97, 37, 29, 'OIL PAN, OIL PUMP', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_5.png'),
+(98, 37, 29, 'CRANKCASE', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_6.png'),
+(99, 37, 29, 'CRANKSHAFT PISTON', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_7.png'),
+(100, 37, 29, 'TRANSMISSION', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_8.png'),
+(101, 37, 29, 'GEARSHIFT DRUM', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_9.png'),
+(102, 37, 29, 'CYLINDER HEAD', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_10.png'),
+(103, 37, 29, 'THROTTLE BODY', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_11.png'),
+(104, 37, 29, 'CAMSHAFT', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_12.png'),
+(105, 37, 30, 'új kat', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_3.png'),
 (106, 108, 37, 'új rotyogó kategória', '');
 
 -- --------------------------------------------------------
@@ -3615,14 +3615,14 @@ CREATE TABLE `motoparts_mstr` (
 INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPartsTypeID_MSTR`, `MotoPartsCategoryID_MSTR`, `MotoPartsNumber_MSTR`, `MotoPartsName_MSTR`, `MotoPartsNettoPrice_MSTR`, `MotoPartsVAT_MSTR`, `MotoPartsBruttoPrice_MSTR`, `MotoPartsBruttoEURPrice_MSTR`, `MotoPartsDiscount_MSTR`, `MotoPartsQuantity_MSTR`, `MotoPartsQuantityUnitID_MSTR`, `MotoPartsInfo_MSTR`) VALUES
 (1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 0.0000, 0.2700, 116.7900, 0.0000, 0.0000, 25.0000, 1, ''),
 (2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
-(3, 43, 1, 1, '14091-0919-17N', 'COVER,SIDE BAG,LH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
+(3, 43, 1, 1, '14091-0919-17N', 'COVER,SIDE BAG,LH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 11.0000, 1, 'No longer available'),
 (4, 43, 1, 1, '14091-0920-17K', 'COVER,SIDE BAG,RH,M.BLAC', 0.0000, 0.2700, 398.2000, 0.0000, 0.0000, 25.0000, 1, ''),
 (5, 43, 1, 1, '14091-0920-17N', 'COVER,SIDE BAG,RH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (6, 43, 1, 1, '14091-1688', 'COVER,SIDE BAG,LID', 0.0000, 0.2700, 112.7800, 0.0000, 0.0000, 25.0000, 1, ''),
 (7, 43, 1, 1, '27012-0110', 'HOOK,LH', 0.0000, 0.2700, 17.0700, 0.0000, 0.0000, 25.0000, 1, ''),
 (8, 43, 1, 1, '27012-0111', 'HOOK,RH', 0.0000, 0.2700, 17.0700, 0.0000, 0.0000, 25.0000, 1, ''),
 (9, 43, 1, 1, '43049-0010', 'PACKING', 0.0000, 0.2700, 12.8600, 0.0000, 0.0000, 25.0000, 1, ''),
-(10, 43, 1, 1, '53009-0020', 'HINGE', 0.0000, 0.2700, 23.4000, 0.0000, 0.0000, 25.0000, 1, ''),
+(10, 43, 1, 1, '53009-0020', 'HINGE', 0.0000, 0.2700, 11320.0000, 0.0000, 0.0000, 25.0000, 1, ''),
 (11, 43, 1, 1, '57003-0034-18N', 'BAG-ASSY,LH,BODY BLK+COV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (12, 43, 1, 1, '57003A', 'BAG-ASSY,LH,BODY BLK+COVER BLK', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (13, 43, 1, 1, '57003-0035-18N', 'BAG-ASSY,RH,BODY BLK+COV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
@@ -3997,7 +3997,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (395, 37, 29, 104, '1002725194', 'Szeleprugó (EX)', 0.0000, 0.0000, 5295.0000, 0.0000, 0.0000, 0.0000, 1, 'rendelésre'),
 (396, 37, 29, 98, 'új c', 'cikk tárgy', 100.0000, 25.0000, 125.0000, 131231.0000, 0.0000, 5.0000, 2, 'nincs'),
 (397, 37, 30, 105, 'drz', 'drzjd', 545.0000, 45.0000, 45.0000, 54.0000, 0.0000, 50.0000, 3, 'dh'),
-(398, 106, 28, 90, 'etze', 'er', 100.0000, 10.0000, 110.0000, 12.0000, 0.0000, 0.0000, 1, 'ttt'),
+(398, 106, 28, 90, 'etze', 'er', 100.0000, 0.1000, 110.0000, 12.0000, 0.0000, 0.0000, 1, 'ttt'),
 (399, 106, 28, 90, 'sdhg', 'sh', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 2, 'ff'),
 (401, 37, 29, 93, 'lkhlbighl', 'lkjhln', 100.0000, 0.0000, 118.0000, 1321.0000, 0.0000, 150.0000, 1, ''),
 (402, 108, 37, 106, 'sghsg', 'sdgb', 231.0000, 0.0000, 14.0000, 12.0000, 0.0000, 124.0000, 1, '143');
@@ -4153,7 +4153,16 @@ CREATE TABLE `password_mstr` (
 --
 
 INSERT INTO `password_mstr` (`PasswordID_MSTR`, `PasswordUserID_MSTR`, `PasswordPassword_MSTR`, `PasswordSalt_MSTR`, `PasswordStatusID_MSTR`) VALUES
-(35, 62, 'e35b7cac0be23e5d22a8fe6adbfe65113fff699325b3443e0681dcf3c876af00', '12bcd8bcea9e2f240b4ff4ba553bbe101500d8edca6999cc4eabb7b75bffb7ed', 1);
+(35, 62, '0371f2782d6f56cf564122925a375a79b54f3c41f5ed8509f190a54239510af6', 'f5e2d66c95cdf64be98981eb0de8371042a0a458dfdcb6c266c923d72f344cb1', 1),
+(36, 63, 'c63f4c6a92e5cc5d162186cc0329602b10e59932cbf9a620d08237a0db8b0975', '01f3a26c574221ee2e5ab9ef4261d8e90f127ccfcb255cd0cfba1bce052b1fb7', 1),
+(37, 64, 'fe2d7304be02b714fdc5f0a62942e6c986d0aa984d7073a1c60ac6b2aaeefd00', 'b6c475f602df84438ed2fdf283f6a6f85d1801ed671bff12b65ec7fda3d3c360', 1),
+(38, 65, 'ce2b11eafe4a7bf4a0f18bbe4c18a4d624616cda521c4bb97990de37353c0244', 'e5089d4f4f93a30fe82450d7e452eab36090ac886090b51c6c04a08004b71297', 1),
+(39, 66, '5e93fffbf48339f56085c2f36b6afc3ac2e808d18fca8b75ce1be977ae99e409', '1bdabc4c0cf18633de9a1c5a06e452103721b60f66bbd2f9180c5efe09f6ffdf', 1),
+(40, 67, '85df9a72a0eebef58d138e64a0b4d7ec89a5f1a92fa786969acdf3a18f1f462f', '6c8e4918f6cf8cc69ea4ad277112348e7d9e5711e471576b4b89d72fb49c172e', 1),
+(41, 68, '01f89c2afbe2889b14bad1babd4abf6404b967434ddd160ee9f7c6bf25aa9001', '837e8c4f541d08eb490867de2a5f59574304b21ac20b40f7d9a122b502b72a1f', 1),
+(42, 69, 'cabaa6bbc2369a358e5dc2d7fcfc41830b9ba30312a08d5605e996e83d746eea', 'b6b01627949603e166da7f426e799ed4f8ba941227e550e22430b818889bbb32', 1),
+(43, 70, '2211bcf998245d37a2573f4bc71fbdea2a922970929fdd428581f94aa0b25a30', '6d534f497fdc0866ce8db844c006bfbc78e383b2e900827811b221f1eb046028', 1),
+(44, 71, '96caab15c316445ac36344000565912e72e8456bb88872d3dc1f57f535e87895', '30fef9c8b21cb93914ec3c93248df90421caac993403bde032b719ab9a022d24', 1);
 
 -- --------------------------------------------------------
 
@@ -4268,7 +4277,16 @@ CREATE TABLE `user_det` (
 --
 
 INSERT INTO `user_det` (`UserID_DET`, `UserMSTRID_DET`, `UserFirstName_DET`, `UserMiddleName_DET`, `UserLastName_DET`, `UserGenderID_DET`, `UserPhone_DET`, `UserCountryID_DET`, `UserPostCode_DET`, `UserCity_DET`, `UserStreet_DET`, `UserAddress_DET`, `UserRegDate_DET`, `UserMotherName_DET`, `UserBirthPlace_DET`, `UserBirthDate_DET`, `UserLastModifiedDate_DET`) VALUES
-(37, 62, 'Lövei', 'István', '', 3, '+36 46 52899', 2, '312263', 'Bergen op Zoom', 'Rosenfeld', '135', '2026-02-02 16:19:07', '', '', '1900-01-01', '2026-02-02 20:07:21');
+(37, 62, 'Lövei', 'István', 'Béla', 3, '+36 46 52899', 2, '3525', 'Miskolc', 'Király', '4', '2026-02-02 13:57:48', '', '', '1900-01-01', '2026-02-05 12:15:29'),
+(38, 63, 'Katy', 'Maty', '', 3, '6465', 2, '222454', 'j', 'kjh', 'jl', '2026-02-05 11:51:57', '', '', '1900-01-01', '2026-02-05 11:51:57'),
+(39, 64, 'ljh', 'gf', '', 3, '5', 2, '3', 'j', 'gf', 'fd', '2026-02-05 11:57:02', '', '', '1900-01-01', '2026-02-05 11:57:02'),
+(40, 65, 'ljh', 'gf', '', 3, '5', 2, '3', 'j', 'gf', 'fd', '2026-02-05 11:58:07', '', '', '1900-01-01', '2026-02-05 11:58:07'),
+(41, 66, 'élkj', 'hd', '', 3, '8', 2, '76', 'k', 'j', 'jl', '2026-02-05 11:58:53', '', '', '1900-01-01', '2026-02-05 11:58:53'),
+(42, 67, 'd', 'd', 'd', 3, '3', 2, '76', 'g', 'h', 'd', '2026-02-05 12:05:01', '', '', '1900-01-01', '2026-02-05 12:05:01'),
+(43, 68, 'd', 'd', 'd', 3, '3', 2, '76', 'g', 'h', 'd', '2026-02-05 12:08:09', '', '', '1900-01-01', '2026-02-05 12:08:09'),
+(44, 69, 'ddd', 'lj', 'j', 3, '2222', 2, '9876', 'jll', 'ljh', 'ljh', '2026-02-05 12:09:13', '', '', '1900-01-01', '2026-02-05 12:09:13'),
+(45, 70, 'dfk', ',b', 'k', 3, '454', 2, '78', 'khg', 'kh', 'hjg', '2026-02-05 12:10:40', '', '', '1900-01-01', '2026-02-05 12:10:40'),
+(46, 71, 'kh', 'hg', 'jkhgkjg', 3, '888', 1, '888', 'lkn', '.jn', 'kjn', '2026-02-05 12:16:07', '', '', '1900-01-01', '2026-02-05 12:16:07');
 
 -- --------------------------------------------------------
 
@@ -4290,7 +4308,16 @@ CREATE TABLE `user_mstr` (
 --
 
 INSERT INTO `user_mstr` (`UserID_MSTR`, `UserNickName_MSTR`, `UserMail_MSTR`, `UserTypeID_MSTR`, `UserFlagID_MSTR`, `UserNote_MSTR`) VALUES
-(62, 'LoIs', 'istvan.lovei@yahoo.com', 2, 1, '');
+(62, 'LoIs', 'istvan.lovei@yahoo.com', 2, 1, ''),
+(63, 'anonim', 'katy@maty.ka', 2, 1, ''),
+(64, 'rotyi', 'istva@ff.hu', 2, 1, ''),
+(65, 'rotyi', 'istva@ff.hu', 2, 1, ''),
+(66, 'koko', 'istva@ff.hu', 2, 1, ''),
+(67, 'ddd', 'istva@ff.hu', 2, 1, ''),
+(68, 'ddd', 'istva@ff.hu', 2, 1, ''),
+(69, 'lolo', 'katymaty@katy.ka', 2, 1, ''),
+(70, 'dfgdfhgdfh', 'katymaty@katy.ka', 2, 1, ''),
+(71, 'ssdfsf', 'katymaty@katy.ka', 2, 1, '');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -4557,7 +4584,7 @@ ALTER TABLE `orders_mstr`
 -- AUTO_INCREMENT a táblához `password_mstr`
 --
 ALTER TABLE `password_mstr`
-  MODIFY `PasswordID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `PasswordID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT a táblához `quantityunit_mstr`
@@ -4593,13 +4620,13 @@ ALTER TABLE `usertype_mstr`
 -- AUTO_INCREMENT a táblához `user_det`
 --
 ALTER TABLE `user_det`
-  MODIFY `UserID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `UserID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT a táblához `user_mstr`
 --
 ALTER TABLE `user_mstr`
-  MODIFY `UserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `UserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- Megkötések a kiírt táblákhoz

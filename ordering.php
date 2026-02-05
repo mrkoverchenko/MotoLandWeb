@@ -30,6 +30,9 @@
             .mrg {
                 margin-top: 5px;
             }
+            .readonly {
+                color: gray;
+            } 
         </style>
 
 
@@ -49,9 +52,14 @@
 
 
             <div class="tab-content">
-                <div id="types" class="container tab-pane active tabcontain"><br>
+                <div id="types" class="container tab-pane active tabcontain" style="margin-bottom:80px;"><br>
                     <h3>Keresés típus szerint</h3>
-                    <form action="index.php">
+
+                    <form action="addToShoppingCart.php" method="POST">
+
+                        <input type="hidden" name="formName" value="orderingForm">
+
+
 
                         <div class="row">
                             <div class="col-sm-2 mrg">
@@ -107,9 +115,13 @@
                             </div>
                             <div class="col-sm-2 mrg">
                                 <p class="d-inline-flex gap-1">
-                                    <a data-bs-toggle="collapse" class="icon-link" href="#explodedView" role="button" aria-expanded="false" aria-controls="explodedView">
-                                        Robbantott nézet &#11167;
-                                    </a>                            
+                                    <a data-bs-toggle="collapse" 
+                                        onclick="setArrow(this)" 
+                                        class="icon-link" 
+                                        href="#explodedView" 
+                                        role="button" 
+                                        aria-expanded="false" 
+                                        aria-controls="explodedView">Ábra &#11167;</a>                            
                                  </p>
                             </div>
 
@@ -122,8 +134,17 @@
                                     Robbantott nézet
                                 </div>
                                 <div class="col-sm-6" >
-                                    <div class="card card-body">
-                                        <img id="explodedViewIMG" src="" style="width:100px; height:100px; margin-bottom:20px;">
+                                    <div>
+                                        <img id="explodedViewIMG" style="width:100px; height:auto; margin-bottom:20px;">
+                                    </div>
+                                </div>
+                                <div class="col-sm-1" >
+                                    <div>
+                                        <img title="Nagyítás" 
+                                            id="magni"
+                                            src="http://localhost/mrkoverchenko/MotoLandWeb/imgs/magni+.png" 
+                                            style="width:20px; margin-bottom:20px; cursor: pointer"
+                                            onclick="changeSize(false)">
                                     </div>
                                 </div>
                             </div>
@@ -139,42 +160,49 @@
                                     <select class="form-control" id="motoparts" name="motoparts" onchange="partSelect(this)"></select>
                                 </div>                     
                             </div>
+                            <div class="col-sm-2 mrg">
+                                <p class="d-inline-flex gap-1">
+                                    <a data-bs-toggle="collapse" 
+                                        onclick="setArrow(this)" 
+                                        class="icon-link" 
+                                        href="#showDetails" 
+                                        role="button" 
+                                        aria-expanded="false" 
+                                        aria-controls="showDetails">Részletek &#11167;</a>                            
+                                 </p>
+                            </div>
+
                         </div>
 
 
-                        <div class="row">
-                            <div class="col-sm-2 mrg" >
-                                Brutto (Ft.)
-                            </div>
-                            <div class="col-sm-2" >
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="motopartbruttoprice" name="motopartbruttoprice"/>
-                                </div>                     
-                            </div>
-                        </div>    
-
-
-                        <div class="row">
-                            <div class="col-sm-2 mrg" >
-                                Brutto (&euro;)
-                            </div>
-                            <div class="col-sm-2" >
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="motopartbruttoeurprice" name="motopartbruttoeurprice"/>
-                                </div>                     
-                            </div>
-                            <div class="col-sm-2 mrg">
-                                <p class="d-inline-flex gap-1">
-                                    <a data-bs-toggle="collapse" class="icon-link" href="#showDetails" role="button" aria-expanded="false" aria-controls="showDetails">
-                                        Részletek &#11167;
-                                    </a>                            
-                                 </p>
-                            </div>
-                        </div>    
 
 
                         <div class="collapse" id="showDetails">
-                            <div class="card card-body">
+
+                            <div id="details">
+
+                                <div class="row">
+                                    <div class="col-sm-2 mrg" >
+                                        Brutto (Ft.)
+                                    </div>
+                                    <div class="col-sm-2" >
+                                        <div class="form-group">
+                                            <input type="text" readonly class="form-control readonly" id="motopartbruttoprice" name="motopartbruttoprice"/>
+                                        </div>                     
+                                    </div>
+                                </div>    
+
+                                <div class="row">
+                                    <div class="col-sm-2 mrg" >
+                                        Brutto (&euro;)
+                                    </div>
+                                    <div class="col-sm-2" >
+                                        <div class="form-group">
+                                            <input type="text" readonly class="form-control readonly" id="motopartbruttoeurprice" name="motopartbruttoeurprice"/>
+                                        </div>                     
+                                    </div>
+                                </div>    
+
 
                                 <div class="row">
                                     <div class="col-sm-2 mrg" >
@@ -182,7 +210,7 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="motopartnettoprice" name="motopartnettoprice"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartnettoprice" name="motopartnettoprice"/>
                                         </div>                     
                                     </div>
                                 </div>    
@@ -193,7 +221,7 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="motopartvat" name="motopartvat"/> 
+                                            <input type="text" readonly class="form-control readonly" id="motopartvat" name="motopartvat"/> 
                                         </div>                     
                                     </div>
                                     <div class="col-sm-2" >
@@ -211,8 +239,11 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="motopartdiscount" name="motopartdiscount"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartdiscount" name="motopartdiscount"/>
                                         </div>                     
+                                    </div>
+                                    <div class="col-sm-2" >
+                                        <div class="form-group mrg">%</div>                     
                                     </div>
                                 </div>    
 
@@ -222,12 +253,12 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="motopartquantity" name="motopartquantity"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartquantity" name="motopartquantity"/>
                                         </div>                     
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="motopartquantityunit" name="motopartquantityunit"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartquantityunit" name="motopartquantityunit"/>
                                         </div>                     
                                     </div>
                                 </div>    
@@ -239,15 +270,43 @@
                                     </div>
                                     <div class="col-sm-6" >
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="motopartinfo" name="motopartinfo"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartinfo" name="motopartinfo"/>
                                         </div>                     
                                     </div>
                                 </div>    
 
-
-
                             </div>
+
                         </div>                        
+
+
+                        <div class="row">
+                            <div class="col-sm-2 mrg" >Rendelési mennyiség</div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <input type="number" 
+                                        class="form-control" 
+                                        min="1" 
+                                        max="10" 
+                                        disabled 
+                                        id="quantity" 
+                                        value="1" 
+                                        style="width:80px">
+                                </div>                     
+                            </div>
+                            <div class="col-sm-3 mrg" id="meeDiv" ></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2 mrg" ></div>
+                            <div class="col-sm-2 mrg">
+                                <button type="submit" id="intoShoppingCart" class="btn btn-success" disabled>
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> 
+                                    Kosárba
+                                </button>
+                            </div>
+
+                        </div>
 
 
                     </form>                
@@ -274,28 +333,3 @@
         </div>
 
 
-<?php
-/*
-
-
-
-            <div class="tab-content" id="myTabContent">
-
-                <div class="tab-pane fade" id="types" role="tabpanel" aria-labelledby="types-tab">
-                    <h2>Típus keresés</h2>
-                </div>
-
-                <div class="tab-pane fade" id="filters" role="tabpanel" aria-labelledby="filters-tab">
-                    <h2>Szűrők</h2>
-                    <p></p>
-                </div>
-                <div class="tab-pane fade" id="secondhand" role="tabpanel" aria-labelledby="secondhand-tab">
-                    <h2>Használt alkatrészek</h2>
-                    <p></p>
-  
-                </div>
-            </div>
-
-
-*/
-?>

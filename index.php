@@ -3,7 +3,6 @@
 
     include "connect.php";
 
-    $userFullName = "";
     $systemIsMessage = false;
     $systemMessage = "";
     $ok = 0;
@@ -80,8 +79,8 @@
 
                 $_SESSION['usernickname'] = $row['UserNickName_MSTR'];
                 $_SESSION['userid'] = $row['UserID_MSTR'];
+                $_SESSION['userfullname'] = $row['UserFullName'];
                 $_SESSION['lastusing'] = time();
-                $userFullName = $row['UserFullName'];
 
             } else {
                 $isUser = false;
@@ -256,8 +255,10 @@
             $hideTime = 10000;
             $alertType = "alert-dismissible";
             $systemIsMessage = true;
-            $systemMessage = "<b>Sikeres regisztráció!</b></br>".
-                                "Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
+            $systemMessage = "<b>Sikeres regisztráció!</b>".
+                                ($isUser)
+                                    ? "Bejelentkezéshez előbb lépj ki a jelenlegi accountod-ból!"
+                                    : "</br>Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
         } else {
             $hideTime = 10000;
             $alertType = "alert-danger";
@@ -325,7 +326,7 @@
 
         mysqli_query($connect, $sqlstring);
         mysqli_close($connect);
-        $userFullName = $firstname." ".$middlename." ".$lastname;
+        $_SESSION['userfullname'] = $firstname." ".$middlename." ".$lastname;
 
         //$_POST = array();
         //unset($_POST);
@@ -494,9 +495,9 @@
                                             <span class='glyphicon glyphicon-user' ></span>
                                         </a>
                                         <ul class='dropdown-menu'>
-                                            <li class='dropdown-header'>
-                                                $userFullName
-                                                <img src='imgs/user.png' style='width:40px; margin-left: 30px;'>
+                                            <li class='dropdown-header'>".
+                                                $_SESSION["userfullname"].
+                                                "<img src='imgs/user.png' style='width:40px; margin-left: 30px;'>
                                             </li>
                                             <li role='separator' class='divider'></li>
                                             <li><a href='#myProfileForm' data-toggle='modal' ><span class='glyphicon glyphicon-user' style='margin-right:20px;'></span>Profil</a></li>

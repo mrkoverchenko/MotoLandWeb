@@ -12,7 +12,16 @@
     
 
 
-	if (isset
+	if (isset($_POST["motoparts"]) &&
+            isset($_POST["motopartbruttoprice"]) &&
+                isset($_POST["motopartbruttoeurprice"]) &&
+                    isset($_POST["motopartvat"]) &&
+                        isset($_POST["motopartdiscount"]) &&
+                            isset($_POST["quantity"]) &&
+                                isset($_POST["motopartquantityunit"]) ) {
+
+
+
         
     $_POST["formName"] == "orderingForm") {
         

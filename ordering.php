@@ -290,12 +290,34 @@
                                         max="10" 
                                         disabled 
                                         id="quantity" 
+                                        name="quantity" 
                                         value="1" 
+                                        style="width:80px"
+                                        onchange="setCost(this)">
+                                </div>                     
+                            </div>
+                            <div class="col-sm-2 mrg" id="mee" >Rendelési mennyiség</div>
+                            <div class="col-sm-3 mrg" id="meeDiv" ></div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-sm-2 mrg" >Fizetendő</div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <input type="text" 
+                                        class="form-control" 
+                                        disabled 
+                                        readonly
+                                        id="totalcost" 
                                         style="width:80px">
                                 </div>                     
                             </div>
-                            <div class="col-sm-3 mrg" id="meeDiv" ></div>
+                            <div class="col-sm-2 mrg">Ft.</div>
                         </div>
+
+
 
                         <div class="row">
                             <div class="col-sm-2 mrg" ></div>

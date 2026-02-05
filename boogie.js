@@ -241,25 +241,34 @@ function partSelect(_this) {
             let q = Math.round(myObj[0].MotoPartsQuantity_MSTR);
             document.getElementById("motopartquantity").value = q;
             document.getElementById("quantity").max = q;
+            document.getElementById("mee").innerHTML = mee;
             document.getElementById("meeDiv").innerHTML = "Raktári mennyiség: " + q + " " + mee;
 
             document.getElementById("motopartinfo").value = myObj[0].MotoPartsInfo_MSTR;
 
-
+            setCost();
         }
     }
     req.send(param);
+}
+
+function setCost(_this) {
+    let brutto = document.getElementById("motopartbruttoprice").value;
+    let qua = document.getElementById("quantity").value;
+    document.getElementById("totalcost").value = brutto * qua;
+
 }
 
 
 function setSubmitButton() {
     let qua = document.getElementById("quantity");
     let iSC = document.getElementById("intoShoppingCart");
+    let tcost = document.getElementById("totalcost");
     //alert("man: " + man + "\ntype: " + type + "\ncat: " + cat + "\npart: " + part);
     if (man && type && cat && part) {
-        qua.disabled = iSC.disabled = false;
+        qua.disabled = iSC.disabled = tcost.disabled = false;
     } else {
-        qua.disabled = iSC.disabled = true;
+        qua.disabled = iSC.disabled = tcost.disabled = true;
     }
 }
 

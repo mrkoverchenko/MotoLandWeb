@@ -1,99 +1,148 @@
 <?php 
-    session_start(); 
+
+    if (session_status() != PHP_SESSION_ACTIVE) {
+        session_start();
+    }
 
     include "connect.php";
 
-    if (isset($_SESSION['userid'])) {
-        $isUser = true;
+    /************************************************
+     * CHECK SESSION DEADLINE
+     */   
+    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 20) {
+        session_unset();
+        session_destroy();
+        session_start();
 
-
-
+        header('Location: index.php?session=out');
     }
     
+    if (!isset($_SESSION["cartid"]) && !isset($_SESSION["cartdeadline"])) {
+        $date = new DateTime();
+        $milliseconds = (int) $date->format('Uv');
+        $_SESSION["cartid"] = $milliseconds; 
+    }
+
+    $_SESSION['cartdeadline'] = time();
 
 
 	if (isset($_POST["motoparts"]) &&
-            isset($_POST["motopartbruttoprice"]) &&
-                isset($_POST["motopartbruttoeurprice"]) &&
-                    isset($_POST["motopartvat"]) &&
-                        isset($_POST["motopartdiscount"]) &&
-                            isset($_POST["quantity"]) &&
-                                isset($_POST["motopartquantityunit"]) ) {
+        isset($_POST["quantity"]) &&
+            $_POST["formName"] == "orderingForm") {
 
 
 
-        
-    $_POST["formName"] == "orderingForm") {
-        
-		function validate($data){
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data); 
-			return $data;
-		}
-		 
-		$uname = strtolower(validate($_POST['loginUserName']));          //User Mail address or Nick name
-		$passwordFromInput = validate($_POST['loginPassword']);
-			 
-        $sql = "SELECT 
-                    UserID_MSTR,
-                    UserMail_MSTR,
-                    UserNickName_MSTR,
-                    UserTypeID_MSTR,
-                    UserFlagID_MSTR,
-                    PasswordSalt_MSTR,
-                    PasswordPassword_MSTR,
-                    CONCAT(UserFirstName_DET,' ',UserMiddleName_DET,' ',UserLastName_DET) AS UserFullName
+	    $partId = $_POST["motoparts"];          // SELECTED PART ID
+        $partQuantity = $_POST["quantity"];     // SELECTED QUANTITY
+        $dateNow = date("Y-m-d H:i:s");
+        $cartID = $_SESSION["cartid"];
 
-                FROM 
-                    user_mstr, user_det, password_mstr
-                WHERE 
-                    LOWER(UserNickName_MSTR) = '$uname' AND 
-                    UserMSTRID_DET = UserID_MSTR AND 
-                    UserID_MSTR = PasswordUserID_MSTR AND 
-                    UserTypeID_MSTR <> '6'";
 
-        $isUser = false;
+
+        $lastID = 0;
+        $sql = "SELECT ShoppingCartID_MSTR FROM shoppingcart_mstr WHERE ShoppingCartSessionID_MSTR = '$cartID'";
         $result = mysqli_query($connect, $sql);
-        if (mysqli_num_rows($result) === 1) {
-            $row = mysqli_fetch_assoc($result);
-            
-            $saltFromDb = $row["PasswordSalt_MSTR"];
-            $passwordFromDb = $row["PasswordPassword_MSTR"];
+        while ($row = mysqli_fetch_assoc($result)) {                                    
+            $lastID = $row["ShoppingCartID_MSTR"];
+        }
 
-            if (hash('sha256', $saltFromDb.$passwordFromInput) === $passwordFromDb) {
-                $isUser = true;
 
-                $_SESSION['usernickname'] = $row['UserNickName_MSTR'];
-                $_SESSION['userid'] = $row['UserID_MSTR'];
-                $_SESSION['userfullname'] = $row['UserFullName'];
-                $_SESSION['lastusing'] = time();
 
-            } else {
-                $isUser = false;
-            }
-            $_POST = array();
-            unset($_POST);
-		}
+        /************************************************
+         * INSERT TO SHOPPINGCART_MSTR IF NOT EXIST
+         * ID(AUTOINC), STATUS, DATETIME
+        */
+        if ($lastID == 0) {
+            $sql = "INSERT INTO 
+                        shoppingcart_mstr (
+                            ShoppingCartStatusID_MSTR, 
+                            ShoppingCartDateTime_MSTR,
+                            ShoppingCartSessionID_MSTR
+                    ) VALUES (
+                          '0',
+                          '$dateNow',
+                          '$cartID'
+                    )";
+            mysqli_query($connect, $sql);
+            $lastID = mysqli_insert_id($connect);
+        }
+
+         /*****************************************************
+          * FUNCTIONAL BUT NOT USED
+          */
+         /*$sql = "INSERT INTO 
+                    shoppingcart_mstr (
+                        ShoppingCartStatusID_MSTR, 
+                        ShoppingCartDateTime_MSTR,
+                        ShoppingCartSessionID_MSTR
+                    )
+                    SELECT '0', '$dateNow', '$cartID' 
+                    WHERE NOT EXISTS (
+                        SELECT 
+                            '$cartID' 
+                        FROM 
+                            shoppingcart_mstr 
+                        WHERE ShoppingCartSessionID_MSTR = '$cartID')";*/
+
+
+
+
+
+
+        /************************************************
+         * INSERT TO SHOPPINGCART_DET
+         * ID(AUTOINC), MSTR ID, PART ID, QUANTITY
+        */
+        $sql = "INSERT INTO 
+                    shoppingcart_det (
+                        ShoppingCartMSTRID_DET, 
+                        ShoppingCartMotoPartsID_DET, 
+                        ShoppingCartQuantity_DET
+                    ) VALUES (
+                        '$lastID',
+                        '$partId',
+                        '$partQuantity'
+                    )";
+        mysqli_query($connect, $sql);
+
+
+        /************************************************
+         * INSERT QUANTITY TO LOCKEDQUANTITY_MSTR 
+         * ID(AUTOINC), LockedQuantitySessionID_MSTR,
+         * LockedQuantityQuantity_MSTR,
+         * LockedQuantityDateTime_MSTR,
+        */
+        $sql = "INSERT INTO 
+                    lockedquantity_mstr (
+                        LockedQuantitySessionID_MSTR, 
+                        LockedQuantityQuantity_MSTR, 
+                        LockedQuantityDateTime_MSTR
+                    ) VALUES (
+                        '$cartID',
+                        '$partQuantity',
+                        '$dateNow'
+                    )";
+        mysqli_query($connect, $sql);
+
+
+        /************************************************************
+         * PARTS MSTR TABLE - QUANTITY VALUE DECREMENT IF NOT ZERO
+        */
+        $sql = "UPDATE 
+                    motoparts_mstr
+                SET 
+                    MotoPartsQuantity_MSTR = (MotoPartsQuantity_MSTR - $partQuantity) 
+                WHERE 
+                    MotoPartsID_MSTR = '$partId' AND
+                    MotoPartsQuantity_MSTR > (MotoPartsQuantity_MSTR - $partQuantity)";
+        mysqli_query($connect, $sql);
+
         mysqli_close($connect);
 
 
-
-        $hideTime = 10000;
-        $systemIsMessage = true;
-        if ($isUser) {
-            $alertType = "alert-dismissible";
-            $systemMessage = "<b>Sikeres bejelentkezés!</b>";
-        } else {
-            $alertType = "alert-danger";
-            $systemMessage = "<b>Sikertelen bejelentkezés!</b";
-        }
+        header('Location: index.php?shoppingcart=added');
 
     }
-
-
-
-
 
 ?>
 

@@ -1,17 +1,82 @@
 <?php 
-    session_start(); 
+
+    if (session_status() != PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+
+    $cartid = "üres";
+
+    if (isset($_SESSION["cartid"]))
+        $cartid = $_SESSION["cartid"];
+
+    function sessionOutMessage() {
+    }
+
+    /*****************************************************************
+     * SESSION CHECKING
+    */
+    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 20) {
+        session_unset();
+        session_destroy();
+        session_start();
+
+//        sessionOutMessage();
+        $hideTime = 10000;
+        $systemIsMessage = true;
+        $cartIs = false;
+        $alertType = "alert-danger";
+        $systemMessage = "<b>Lejárt a munkamenet!</b";
+    }
+
+
+/*    if (!empty($_SESSION['deadline']) && $_SESSION['deadline'] < time() - 300) {
+        session_destroy();
+        session_start();
+    }*/
 
     include "connect.php";
 
     $systemIsMessage = false;
     $systemMessage = "";
+    $cartIs = false;
     $ok = 0;
     $isUser = false;
     
     if (isset($_SESSION['userid'])) {
         $isUser = true;
     }
+
+    if (isset($_GET["session"]) && $_GET["session"] == "out") {
+//        sessionOutMessage();
+        $hideTime = 10000;
+        $systemIsMessage = true;
+        $cartIs = false;
+        $alertType = "alert-danger";
+        $systemMessage = "<b>Lejárt a munkamenet!</b";
+    }
     
+    /**************************************************************
+     * ADDED TO SHOPPING CART IS SUCCESSFUL MESSAGE
+     */
+    if (isset($_GET["shoppingcart"])) { 
+        $hideTime = 10000;
+        $systemIsMessage = true;
+
+        if ($_GET["shoppingcart"] == "added") {
+            $cartIs = true;
+            $alertType = "alert-dismissible";
+            $systemMessage = "<b>Sikeresen a kosárba raktad!</b></br>Folytathatod a vásárlást vagy megtekintheted <a href='#'>kosarad</a> tartalmát.";
+        } else {
+            $cartIs = false;
+            $alertType = "alert-danger";
+            $systemMessage = "<b>Probléma a kosárbahelyezésnél!</b";
+        }
+    }
+
+
+    /**************************************************************
+     * LOGGED OUT IS SUCCESSFUL MESSAGE
+     */
     if (isset($_GET["logged"]) && $_GET["logged"] == "out") {
         $_POST["userName"] = "";
         $_POST["password"] = "";
@@ -80,7 +145,7 @@
                 $_SESSION['usernickname'] = $row['UserNickName_MSTR'];
                 $_SESSION['userid'] = $row['UserID_MSTR'];
                 $_SESSION['userfullname'] = $row['UserFullName'];
-                $_SESSION['lastusing'] = time();
+                $_SESSION['userdeadline'] = time();
 
             } else {
                 $isUser = false;
@@ -452,7 +517,7 @@
                                 role="button" 
                                 aria-haspopup="true" 
                                 aria-expanded="false">
-                                Szolgáltatások
+                                Szolgáltatások <?php echo $cartid; ?>
                                 <span class="caret"></span>
                             </a>
 
@@ -516,11 +581,12 @@
                                         </a>
                                      </li>";
                             };
+
+                            echo "<li><a href='#' ".(($cartIs) ? "title=''" : "Üres bevásárlókosár")."><span class='glyphicon glyphicon-shopping-cart'></span></a></li>";
                         ?>
 
 
 
-                        <li><a href="#" title="Bevásárlókosár"><span class="glyphicon glyphicon-shopping-cart"></span>   </a></li>
                     </ul>
 
                 </div>

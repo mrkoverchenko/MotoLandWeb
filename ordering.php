@@ -1,5 +1,4 @@
 <?php
-	session_start();
 /*	if (isset($_SESSION['userid']) && isset($_SESSION['usernickname'])) {
 
     } else {
@@ -8,12 +7,7 @@
     }*/
 
 
-
     include "connect.php";
-
-
-
-
 
 ?>
         <style>
@@ -69,7 +63,7 @@
 
                             <div class="col-sm-4" >
                                 <div class="form-group">
-                                    <select class="form-control" id="motoman" name="motoman" onchange="manSelect(this)">
+                                    <select class="form-control" id="motoman" onchange="manSelect(this)">
                                         <option></option>
                                         <?php
                                             $sql = "SELECT MotoManufacturerID_MSTR, MotoManufacturerManufacturer_MSTR
@@ -97,7 +91,7 @@
                             </div>
                             <div class="col-sm-6" >
                                 <div class="form-group">
-                                    <select class="form-control" id="mototype" name="mototype" onchange="typeSelect(this)"></select>
+                                    <select class="form-control" id="mototype" onchange="typeSelect(this)"></select>
                                 </div>                     
                             </div>
                         </div>
@@ -110,7 +104,7 @@
                             </div>
                             <div class="col-sm-6" >
                                 <div class="form-group">
-                                    <select class="form-control" id="motopartscategory" name="motopartscategory" onchange="categorySelect(this)"></select>
+                                    <select class="form-control" id="motopartscategory" onchange="categorySelect(this)"></select>
                                 </div>                     
                             </div>
                             <div class="col-sm-2 mrg">
@@ -187,7 +181,7 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartbruttoprice" name="motopartbruttoprice"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartbruttoprice"/>
                                         </div>                     
                                     </div>
                                 </div>    
@@ -198,7 +192,7 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartbruttoeurprice" name="motopartbruttoeurprice"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartbruttoeurprice"/>
                                         </div>                     
                                     </div>
                                 </div>    
@@ -210,7 +204,7 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartnettoprice" name="motopartnettoprice"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartnettoprice"/>
                                         </div>                     
                                     </div>
                                 </div>    
@@ -221,7 +215,7 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartvat" name="motopartvat"/> 
+                                            <input type="text" readonly class="form-control readonly" id="motopartvat"/> 
                                         </div>                     
                                     </div>
                                     <div class="col-sm-2" >
@@ -239,7 +233,7 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartdiscount" name="motopartdiscount"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartdiscount"/>
                                         </div>                     
                                     </div>
                                     <div class="col-sm-2" >
@@ -253,12 +247,12 @@
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartquantity" name="motopartquantity"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartquantity"/>
                                         </div>                     
                                     </div>
                                     <div class="col-sm-2" >
                                         <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartquantityunit" name="motopartquantityunit"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartquantityunit"/>
                                         </div>                     
                                     </div>
                                 </div>    
@@ -270,7 +264,7 @@
                                     </div>
                                     <div class="col-sm-6" >
                                         <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartinfo" name="motopartinfo"/>
+                                            <input type="text" readonly class="form-control readonly" id="motopartinfo"/>
                                         </div>                     
                                     </div>
                                 </div>    

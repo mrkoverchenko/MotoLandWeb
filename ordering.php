@@ -293,6 +293,7 @@
                                         name="quantity" 
                                         value="1" 
                                         style="width:80px"
+                                        onkeydown="disText(event)" 
                                         onchange="setCost(this)">
                                 </div>                     
                             </div>

@@ -256,9 +256,12 @@ function setCost(_this) {
     let brutto = document.getElementById("motopartbruttoprice").value;
     let qua = document.getElementById("quantity").value;
     document.getElementById("totalcost").value = brutto * qua;
-
 }
 
+function disText(event) {
+    if (event.keyCode != 40 && event.keyCode != 38)
+        event.preventDefault();
+}
 
 function setSubmitButton() {
     let qua = document.getElementById("quantity");

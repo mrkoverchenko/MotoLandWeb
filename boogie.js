@@ -1,5 +1,6 @@
 
 const defaultFieldMesage = "A *-al jelszett mezők kitöltése kötelező!";
+const defaultPath = "http://localhost/mrkoverchenko/MotoLandWeb/";
 
 function checkForms(_this) {
     let thisForm = document.getElementById(_this.id);
@@ -102,12 +103,12 @@ function changeSize(clear) {
     else {
         let magni = document.getElementById("magni");
         if (!magniBig) {
-            magni.src = "http://localhost/mrkoverchenko/MotoLandWeb/imgs/magni-.png";
+            magni.src = defaultPath + "imgs/magni-.png";
             explodedViewIMG.style.width = "100%";
             explodedViewIMG.style.height = "auto";
             magni.title = "Alaphelyzet";
         } else {
-            magni.src = "http://localhost/mrkoverchenko/MotoLandWeb/imgs/magni+.png";
+            magni.src = defaultPath + "imgs/magni+.png";
             explodedViewIMG.style.width = "100px";
             explodedViewIMG.style.height = "auto";
             magni.title = "Nagyítás";
@@ -241,8 +242,8 @@ function partSelect(_this) {
             let q = Math.round(myObj[0].MotoPartsQuantity_MSTR);
             document.getElementById("motopartquantity").value = q;
             document.getElementById("quantity").max = q;
-            document.getElementById("mee").innerHTML = mee;
-            document.getElementById("meeDiv").innerHTML = "Raktári mennyiség: " + q + " " + mee;
+            document.getElementById("meeDiv").innerHTML = mee; 
+            document.getElementById("mee").innerHTML = "Raktári mennyiség: " + q + " " + mee;
 
             document.getElementById("motopartinfo").value = myObj[0].MotoPartsInfo_MSTR;
 
@@ -250,6 +251,10 @@ function partSelect(_this) {
         }
     }
     req.send(param);
+}
+
+function clearSC() {
+    location.href = defaultPath + "index.php?shoppingcart=cleared";
 }
 
 function setCost(_this) {
@@ -370,11 +375,17 @@ function onlyPhone(event) {
 function initFields(fieldID) {
 
     let container = document.getElementById(fieldID);
+
     let fileName = "";
-    var param = "";
+    let param = "";
     if (fieldID === "regCountryID" || fieldID === "profileCountryID") {
         fileName = "getCountry.php";
         param = "countryID=";
+    }
+
+    if (fieldID == "systemPath") {
+        fileName = "getSystem.php";
+        param = "field=7";
     }
 
     var req = new XMLHttpRequest();
@@ -382,7 +393,10 @@ function initFields(fieldID) {
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
-            container.innerHTML = req.responseText;
+            if (container.type === "text")
+                container.value = req.responseText;
+            else 
+                container.innerHTML = req.responseText;
         }
     }
     req.send(param);

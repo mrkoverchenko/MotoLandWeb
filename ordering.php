@@ -9,6 +9,12 @@
 
     include "connect.php";
 
+
+
+
+
+
+
 ?>
         <style>
             .orderbody {
@@ -136,7 +142,7 @@
                                     <div>
                                         <img title="Nagyítás" 
                                             id="magni"
-                                            src="http://localhost/mrkoverchenko/MotoLandWeb/imgs/magni+.png" 
+                                            src="<?php echo $_SESSION["systemPath"];?>imgs/magni+.png" 
                                             style="width:20px; margin-bottom:20px; cursor: pointer"
                                             onclick="changeSize(false)">
                                     </div>
@@ -276,7 +282,7 @@
 
                         <div class="row">
                             <div class="col-sm-2 mrg" >Rendelési mennyiség</div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <input type="number" 
                                         class="form-control" 
@@ -286,27 +292,25 @@
                                         id="quantity" 
                                         name="quantity" 
                                         value="1" 
-                                        style="width:80px"
                                         onkeydown="disText(event)" 
                                         onchange="setCost(this)">
                                 </div>                     
                             </div>
-                            <div class="col-sm-2 mrg" id="mee" >Rendelési mennyiség</div>
-                            <div class="col-sm-3 mrg" id="meeDiv" ></div>
+                            <div class="col-sm-1 mrg" id="meeDiv" >DB.</div>
+                            <div class="col-sm-3 mrg" id="mee" >Raktári mennyiség</div>
                         </div>
 
 
 
                         <div class="row">
                             <div class="col-sm-2 mrg" >Fizetendő</div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <input type="text" 
                                         class="form-control" 
                                         disabled 
                                         readonly
-                                        id="totalcost" 
-                                        style="width:80px">
+                                        id="totalcost">
                                 </div>                     
                             </div>
                             <div class="col-sm-2 mrg">Ft.</div>
@@ -333,14 +337,14 @@
 
                 <div id="filters" class="container tab-pane tabcontain"><br>
                     <h3>Szűrőkereső</h3>
-                    <p>.</p>
+                    <p>...</p>
                 </div>
 
 
 
                 <div id="secondhand" class="container tab-pane tabcontain"><br>
                     <h3>Használt alkatrészek</h3>
-                    <p>.</p>
+                    <p>...</p>
                 </div>
             </div>
 

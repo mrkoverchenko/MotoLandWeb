@@ -9,7 +9,7 @@
     /************************************************
      * CHECK SESSION DEADLINE
      */   
-    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 20) {
+    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 300) {
         session_unset();
         session_destroy();
         session_start();
@@ -140,7 +140,7 @@
         mysqli_close($connect);
 
 
-        header('Location: index.php?shoppingcart=added');
+        header('Location: index.php?shoppingcart=added&page=ordering');
 
     }
 

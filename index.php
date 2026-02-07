@@ -2,9 +2,13 @@
 
     if (session_status() != PHP_SESSION_ACTIVE) {
         session_start();
+        $_SESSION["systemPath"] = "http://localhost/mrkoverchenko/MotoLandWeb/";
     }
 
     $cartid = "üres";
+    $activePage = "sales";
+    $shoppingcartqua = 0;
+
 
     if (isset($_SESSION["cartid"]))
         $cartid = $_SESSION["cartid"];
@@ -15,7 +19,7 @@
     /*****************************************************************
      * SESSION CHECKING
     */
-    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 20) {
+    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 300) {
         session_unset();
         session_destroy();
         session_start();
@@ -55,24 +59,6 @@
         $systemMessage = "<b>Lejárt a munkamenet!</b";
     }
     
-    /**************************************************************
-     * ADDED TO SHOPPING CART IS SUCCESSFUL MESSAGE
-     */
-    if (isset($_GET["shoppingcart"])) { 
-        $hideTime = 10000;
-        $systemIsMessage = true;
-
-        if ($_GET["shoppingcart"] == "added") {
-            $cartIs = true;
-            $alertType = "alert-dismissible";
-            $systemMessage = "<b>Sikeresen a kosárba raktad!</b></br>Folytathatod a vásárlást vagy megtekintheted <a href='#'>kosarad</a> tartalmát.";
-        } else {
-            $cartIs = false;
-            $alertType = "alert-danger";
-            $systemMessage = "<b>Probléma a kosárbahelyezésnél!</b";
-        }
-    }
-
 
     /**************************************************************
      * LOGGED OUT IS SUCCESSFUL MESSAGE
@@ -95,13 +81,49 @@
     }
     
 
+    /**************************************************************
+     * ADDED TO SHOPPING CART IS SUCCESSFUL MESSAGE OR NOT
+     */
+    if (isset($_GET["shoppingcart"])) { 
+        $hideTime = 10000;
+        $systemIsMessage = true;
+
+        if ($_GET["shoppingcart"] === "added") {
+
+            $shoppingcartqua = $_SESSION["shoppingcartquantity"] + 1;
+            $_SESSION["shoppingcartquantity"] = $shoppingcartqua;
+
+            $cartIs = true;
+            $alertType = "alert-dismissible";
+            $systemMessage = "<b>Sikeresen a kosárba raktad!</b></br>Folytathatod a vásárlást vagy megtekintheted <a href='#shoppingCart' data-toggle='modal'>kosarad</a> tartalmát.";
+        } else {
+            $cartIs = false;
+            $alertType = "alert-danger";
+            $systemMessage = "<b>Probléma a kosárbahelyezésnél!</b";
+        }
+
+        if ($_GET["shoppingcart"] === "cleared") {
+            unset($_SESSION["shoppingcartquantity"]);
+            $shoppingcartqua = 0;
+
+            $alertType = "alert-danger";
+            $systemMessage = "<b>Kosár kiürítve!</b";
+        }
+
+
+        if (isset($_GET["page"])) {
+            $activePage = $_GET["page"];
+        }
+    }
+
+
 
     ////////////////////////////////////////////////////////
     // LOGIN
     ////////////////////////////////////////////////////////
 	if (isset($_POST["loginUserName"]) && 
             isset($_POST["loginPassword"]) && 
-                $_POST["formName"] == "loginForm") {
+                $_POST["formName"] == "logForm") {
         
 		function validate($data){
 			$data = trim($data);
@@ -337,6 +359,33 @@
 
 
     ////////////////////////////////////////////////////////
+    // SYSTEM
+    ////////////////////////////////////////////////////////
+	if (isset($_POST["systemPath"]) && 
+        isset($_POST["formName"]) && $_POST["formName"] == "systemForm") {
+
+	    $systemPath = $_POST["systemPath"];
+
+        $sqlstring = "UPDATE
+                        motosystem_mstr
+                      SET  
+                        MotoSystemWebPath_MSTR = '$systemPath'
+                      WHERE  
+                        MotoSystemID_MSTR = '1'";
+        mysqli_query($connect, $sqlstring);
+
+        mysqli_close($connect);
+
+        $hideTime = 10000;
+        $alertType = "alert-dismissible";
+        $systemIsMessage = true;
+        $systemMessage = "<b>Sikeres mentés!</b>";
+	}
+
+
+
+
+    ////////////////////////////////////////////////////////
     // PROFILE FORM
     ////////////////////////////////////////////////////////
 	if (isset($_POST["profileFirstName"]) && 
@@ -517,7 +566,7 @@
                                 role="button" 
                                 aria-haspopup="true" 
                                 aria-expanded="false">
-                                Szolgáltatások <?php echo $cartid; ?>
+                                Szolgáltatások
                                 <span class="caret"></span>
                             </a>
 
@@ -537,8 +586,13 @@
                                 </li>
 
                                 <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Akció</li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog" style="margin-right:20px;"></span>Törött motorok</a></li>
+                                <li class="dropdown-header">Egyéb</li>
+                                <li>
+                                    <a href="#systemRows" data-toggle="modal">
+                                        <span class="glyphicon glyphicon-cog" style="margin-right:20px;"></span>
+                                        Rendszerbeállítások
+                                    </a>
+                                </li>
                             </ul>
 
                         </li>
@@ -582,8 +636,21 @@
                                      </li>";
                             };
 
-                            echo "<li><a href='#' ".(($cartIs) ? "title=''" : "Üres bevásárlókosár")."><span class='glyphicon glyphicon-shopping-cart'></span></a></li>";
                         ?>
+                        <li>
+                            <?php 
+                                if ($shoppingcartqua > 0) 
+                                    echo "<a href='#shoppingCart' data-toggle='modal'>
+                                            <span class='glyphicon glyphicon-shopping-cart'></span>
+                                            <span role='img' class='badge gh-badge'>$shoppingcartqua</span>
+                                         </a>";
+                                else
+                                    echo "<a href='#' title='Még üres a kosarad!\nCsak mondom!'>
+                                            <span class='glyphicon glyphicon-shopping-cart'></span>
+                                            <span role='img' class='badge gh-badge'>$shoppingcartqua</span>
+                                         </a>";
+                            ?>
+                        </li>";
 
 
 
@@ -607,16 +674,16 @@
                 <div class="modal-content">
 
                     <div class="modal-header" style="padding:5px 50px;">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" style="margin-top:13px" data-dismiss="modal">&times;</button>
                         <h4><span class="glyphicon glyphicon-user"></span> Bejelentkezés</h4>
                     </div>
 
                     <div class="modal-body" style="padding:40px 50px;">
 
-                        <form id="loginForm" action="index.php" method="POST">
+                        <form id="logForm" action="index.php" method="POST">
 
                             <div class="form-group">
-                                <input type="hidden" name="formName" value="loginForm">
+                                <input type="hidden" name="formName" value="logForm">
 
                                 <label for="loginUserName"><span class="glyphicon glyphicon-user"></span> Felhasználónév</label>
                                 <input type="text" 
@@ -663,6 +730,129 @@
 
 
 
+        <!-- SYSTEM -->
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="systemRows" role="dialog">
+            <div class="modal-dialog">
+    
+                <div class="modal-content">
+
+                    <div class="modal-header" style="padding:5px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4><span class="glyphicon glyphicon-cog"></span> Rendszerbeállítások</h4>
+                    </div>
+
+                    <div class="modal-body" style="padding:40px 50px;">
+
+                        <form id="systemForm" action="index.php" method="POST">
+
+                            <div class="form-group">
+                                <input type="hidden" name="formName" value="systemForm">
+
+                                <label for="systemPath">Rendszer útvonal</label>
+                                <input type="text" 
+                                        class="form-control" 
+                                        required 
+                                        id="systemPath" 
+                                        name="systemPath" 
+                                        placeholder="web cím">
+                            </div>
+
+                            <button type="submit" class="btn btn-success ">
+                                <span class="glyphicon glyphicon-floppy-disk"></span> 
+                                Mentés
+                            </button>
+
+                            <button type="reset" class="btn btn-primary" data-dismiss="modal" >
+                                <span class="glyphicon glyphicon-remove"></span> 
+                                Mégsem
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <script>
+                        // ONCLOSE
+                        $('#systemRows').on('hidden.bs.modal', function () {
+                        });
+
+                        // BEFORE ON SHOW
+                        $('#systemRows').on('show.bs.modal', function (e) {
+                            initFields("systemPath");
+                        })
+                    </script>
+
+                </div>
+
+            </div>
+
+        </div> 
+
+
+
+        <!-- SHOPPING CART -->
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="shoppingCart" role="dialog">
+            <div class="modal-dialog">
+    
+                <div class="modal-content">
+
+                    <div class="modal-header" style="padding:5px 50px;">
+                        <button type="button" class="close" style="margin-top:13px" data-dismiss="modal">&times;</button>
+                        <h4><span class="glyphicon glyphicon-shopping-cart"></span> Bevásárlókosár</h4>
+                    </div>
+
+                    <div class="modal-body" style="padding:40px 50px;">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Product Name</h5>
+                            <p class="card-text">Description of the product.</p>
+                            <p class="card-text"><strong>$99.99</strong></p>
+                            <div class="d-flex align-items-center">
+                                <input type="number" class="form-control w-25 me-2" value="1" min="1">
+                                <button class="btn btn-danger btn-sm">Remove</button>
+                            </div>
+                        </div>
+
+
+
+                        <button type="submit" class="btn btn-success ">
+                            <span class="glyphicon glyphicon-piggy-bank"></span> 
+                            Fizetés és szállítás
+                        </button>
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="clearSC()">
+                            <span class="glyphicon glyphicon-trash"></span> 
+                            Kosár törlés
+                        </button>
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" >
+                            <span class="glyphicon glyphicon-remove"></span> 
+                            Bezárás
+                        </button>
+
+
+                    </div>
+
+                    <script>
+                        // ONCLOSE
+                        $('#shoppingCart').on('hidden.bs.modal', function () {
+                        });
+
+                        // BEFORE ON SHOW
+                        $('#shoppingCart').on('show.bs.modal', function (e) {
+                            //initFields("systemPath");
+                        })
+                    </script>
+
+                </div>
+
+            </div>
+
+        </div> 
+
+
+
+
         <!-- REGISTRATION -->
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="registrationForm" role="dialog">
             <div class="modal-dialog">
@@ -670,7 +860,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header" style="padding:5px 50px;">
-                        <button type="button" class="close" data-dismiss="modal" style="margin-top:3px">&times;</button>
+                        <button type="button" class="close" style="margin-top:13px" data-dismiss="modal" style="margin-top:3px">&times;</button>
                         <h4><span class="glyphicon glyphicon-lock"></span> Regisztráció</h4>
                     </div>
 
@@ -876,7 +1066,7 @@
                                 <span class="glyphicon glyphicon-ok"></span> Regisztráció
                             </button>
 
-                            <button type="reset" class="btn btn-primary" data-dismiss="modal" >
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" >
                                 <span class="glyphicon glyphicon-remove"></span> Mégsem
                             </button>
 
@@ -920,7 +1110,7 @@
                 <div class="modal-content">
 
                     <div class="modal-header" style="padding:5px 50px;">
-                        <button type="button" class="close" data-dismiss="modal" style="margin-top:3px">&times;</button>
+                        <button type="button" class="close" style="margin-top:13px" data-dismiss="modal" style="margin-top:3px">&times;</button>
                         <h4><span class="glyphicon glyphicon-lock"></span> Profil</h4>
                     </div>
 
@@ -1260,5 +1450,11 @@
 
 
     </body>
+
+    <script>
+        window.onload = (event) => {
+            startItem("<?php echo $activePage;?>");
+        };
+    </script>
 
 </html>

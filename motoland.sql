@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 06. 17:10
+-- Létrehozás ideje: 2026. Feb 07. 15:36
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -3380,7 +3380,45 @@ CREATE TABLE `lockedquantity_mstr` (
 
 INSERT INTO `lockedquantity_mstr` (`LockedQuantityID_MSTR`, `LockedQuantitySessionID_MSTR`, `LockedQuantityQuantity_MSTR`, `LockedQuantityDateTime_MSTR`) VALUES
 (1, '1770394148732', 1, '2026-02-06 17:09:08'),
-(2, '1770394148732', 1, '2026-02-06 17:09:18');
+(2, '1770394148732', 1, '2026-02-06 17:09:18'),
+(3, '1770464450642', 4, '2026-02-07 12:40:50'),
+(4, '1770465236084', 1, '2026-02-07 12:53:56'),
+(5, '1770465485950', 1, '2026-02-07 12:58:05'),
+(6, '1770465644315', 1, '2026-02-07 13:00:44'),
+(7, '1770466575558', 1, '2026-02-07 13:16:15'),
+(8, '1770466713262', 1, '2026-02-07 13:18:33'),
+(9, '1770467445784', 1, '2026-02-07 13:30:45'),
+(10, '1770467534689', 1, '2026-02-07 13:32:14'),
+(11, '1770468701351', 1, '2026-02-07 13:51:41'),
+(12, '1770470103381', 1, '2026-02-07 14:15:03'),
+(13, '1770470625659', 1, '2026-02-07 14:23:45'),
+(14, '1770471026250', 1, '2026-02-07 14:30:26'),
+(15, '1770471055413', 1, '2026-02-07 14:30:55'),
+(16, '1770471099148', 1, '2026-02-07 14:31:39'),
+(17, '1770471165756', 1, '2026-02-07 14:32:45'),
+(18, '1770471498870', 1, '2026-02-07 14:38:18'),
+(19, '1770471724228', 1, '2026-02-07 14:42:04'),
+(20, '1770471823785', 1, '2026-02-07 14:43:43'),
+(21, '1770471845724', 1, '2026-02-07 14:44:05'),
+(22, '1770472011606', 1, '2026-02-07 14:46:51'),
+(23, '1770472011606', 1, '2026-02-07 14:47:03'),
+(24, '1770472011606', 1, '2026-02-07 14:48:04'),
+(25, '1770472011606', 1, '2026-02-07 14:48:13'),
+(26, '1770472011606', 1, '2026-02-07 14:50:14'),
+(27, '1770472011606', 1, '2026-02-07 14:50:22'),
+(28, '1770472011606', 1, '2026-02-07 14:50:30'),
+(29, '1770472011606', 1, '2026-02-07 14:51:23'),
+(30, '1770472956255', 1, '2026-02-07 15:02:36'),
+(31, '1770472956255', 1, '2026-02-07 15:02:46'),
+(32, '1770472956255', 1, '2026-02-07 15:03:11'),
+(33, '1770472956255', 1, '2026-02-07 15:04:57'),
+(34, '1770472956255', 1, '2026-02-07 15:05:19'),
+(35, '1770472956255', 1, '2026-02-07 15:07:53'),
+(36, '1770472956255', 1, '2026-02-07 15:09:36'),
+(37, '1770472956255', 1, '2026-02-07 15:09:43'),
+(38, '1770473992356', 1, '2026-02-07 15:19:52'),
+(39, '1770474548248', 1, '2026-02-07 15:29:08'),
+(40, '1770474548248', 1, '2026-02-07 15:33:50');
 
 -- --------------------------------------------------------
 
@@ -3634,8 +3672,8 @@ CREATE TABLE `motoparts_mstr` (
 --
 
 INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPartsTypeID_MSTR`, `MotoPartsCategoryID_MSTR`, `MotoPartsNumber_MSTR`, `MotoPartsName_MSTR`, `MotoPartsNettoPrice_MSTR`, `MotoPartsVAT_MSTR`, `MotoPartsBruttoPrice_MSTR`, `MotoPartsBruttoEURPrice_MSTR`, `MotoPartsDiscount_MSTR`, `MotoPartsQuantity_MSTR`, `MotoPartsQuantityUnitID_MSTR`, `MotoPartsInfo_MSTR`) VALUES
-(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 0.0000, 0.2700, 116.7900, 0.0000, 0.0000, 966.0000, 1, ''),
-(2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 24.0000, 1, 'No longer available'),
+(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 0.0000, 0.2700, 116.7900, 0.0000, 0.0000, 934.0000, 1, ''),
+(2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 23.0000, 1, 'No longer available'),
 (3, 43, 1, 1, '14091-0919-17N', 'COVER,SIDE BAG,LH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 11.0000, 1, 'No longer available'),
 (4, 43, 1, 1, '14091-0920-17K', 'COVER,SIDE BAG,RH,M.BLAC', 0.0000, 0.2700, 398.2000, 0.0000, 0.0000, 25.0000, 1, ''),
 (5, 43, 1, 1, '14091-0920-17N', 'COVER,SIDE BAG,RH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
@@ -3643,7 +3681,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (7, 43, 1, 1, '27012-0110', 'HOOK,LH', 0.0000, 0.2700, 17.0700, 0.0000, 0.0000, 25.0000, 1, ''),
 (8, 43, 1, 1, '27012-0111', 'HOOK,RH', 0.0000, 0.2700, 17.0700, 0.0000, 0.0000, 25.0000, 1, ''),
 (9, 43, 1, 1, '43049-0010', 'PACKING', 0.0000, 0.2700, 12.8600, 0.0000, 0.0000, 25.0000, 1, ''),
-(10, 43, 1, 1, '53009-0020', 'HINGE', 0.0000, 0.2700, 11320.0000, 0.0000, 0.0000, 18.0000, 1, ''),
+(10, 43, 1, 1, '53009-0020', 'HINGE', 0.0000, 0.2700, 11320.0000, 0.0000, 0.0000, 15.0000, 1, ''),
 (11, 43, 1, 1, '57003-0034-18N', 'BAG-ASSY,LH,BODY BLK+COV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (12, 43, 1, 1, '57003A', 'BAG-ASSY,LH,BODY BLK+COVER BLK', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (13, 43, 1, 1, '57003-0035-18N', 'BAG-ASSY,RH,BODY BLK+COV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
@@ -3661,8 +3699,8 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (25, 43, 1, 1, '92200-0375', 'Washer', 0.0000, 0.2700, 4.5500, 0.0000, 0.0000, 25.0000, 1, ''),
 (26, 43, 1, 1, '92200-0416', 'Washer', 0.0000, 0.2700, 2.2400, 0.0000, 0.0000, 25.0000, 1, ''),
 (27, 43, 1, 1, '92210-0434', 'NUT,CAP,4MM', 0.0000, 0.2700, 2.6000, 0.0000, 0.0000, 25.0000, 1, ''),
-(28, 43, 1, 2, '11013-0014', 'Air filter', 0.0000, 0.2700, 40.6100, 0.0000, 0.0000, 24.0000, 1, ''),
-(29, 43, 1, 2, '11065-0220', 'CAP', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
+(28, 43, 1, 2, '11013-0014', 'Air filter', 0.0000, 0.2700, 40.6100, 0.0000, 0.0000, 21.0000, 1, ''),
+(29, 43, 1, 2, '11065-0220', 'CAP', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 24.0000, 1, 'No longer available'),
 (30, 43, 1, 2, '11065-1088', 'CAP,BREATHER', 0.0000, 0.2700, 2.4700, 0.0000, 0.0000, 25.0000, 1, ''),
 (31, 43, 1, 2, '13280-0154', 'HOLDER', 0.0000, 0.2700, 8.9300, 0.0000, 0.0000, 25.0000, 1, ''),
 (32, 43, 1, 2, '13280-0165', 'HOLDER,ELEMENT', 0.0000, 0.2700, 99.5300, 0.0000, 0.0000, 25.0000, 1, ''),
@@ -3928,7 +3966,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (292, 43, 1, 12, '92200-0157', '5 pc - Washer (plastic)', 0.0000, 0.2700, 11.3000, 0.0000, 0.0000, 25.0000, 1, ''),
 (293, 43, 1, 12, '92200-0284', '5 pc - WASHER,5.5X20X1.2', 0.0000, 0.2700, 11.2000, 0.0000, 0.0000, 25.0000, 1, ''),
 (294, 43, 1, 12, '92210-0351', 'NUT,5MM', 0.0000, 0.2700, 6.9200, 0.0000, 0.0000, 25.0000, 1, ''),
-(308, 37, 29, 93, '1001531008', 'Tömítés', 100.0000, 0.2500, 115.0000, 0.2900, 0.1000, 12.0000, 1, '2 db. kell belőle'),
+(308, 37, 29, 93, '1001531008', 'Tömítés', 100.0000, 0.2500, 115.0000, 0.2900, 0.1000, 11.0000, 1, '2 db. kell belőle'),
 (309, 37, 29, 93, '1002725058', 'Szelepfedél', 0.0000, 0.0000, 165397.0000, 0.0000, 0.0000, 43.0000, 1, ' '),
 (310, 37, 29, 93, '1000619335', 'Terelő lemez', 6786.0000, 0.1600, 6782.0000, 16.8500, 0.2000, 31.0000, 1, '2 db. kell belőle'),
 (311, 37, 29, 93, '1001531016', 'Tömítés - szelepfedél', 16420.0000, 0.0000, 16420.0000, 40.7900, 0.0000, 4.0000, 1, ' '),
@@ -4036,15 +4074,16 @@ CREATE TABLE `motosystem_mstr` (
   `MotoSystemDiscount_MSTR` double(14,4) NOT NULL,
   `MotoSystemImagePath_MSTR` varchar(100) NOT NULL,
   `MotoSystemHourPrice_MSTR` double(10,2) NOT NULL,
-  `MotoSystemDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp()
+  `MotoSystemDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp(),
+  `MotoSystemWebPath_MSTR` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `motosystem_mstr`
 --
 
-INSERT INTO `motosystem_mstr` (`MotoSystemID_MSTR`, `MotoSystemEUR_MSTR`, `MotoSystemVAT_MSTR`, `MotoSystemDiscount_MSTR`, `MotoSystemImagePath_MSTR`, `MotoSystemHourPrice_MSTR`, `MotoSystemDateTime_MSTR`) VALUES
-(1, 402.5700, 0.2500, 0.1000, 'https://ssdd', 6780.00, '2025-10-22 14:11:33');
+INSERT INTO `motosystem_mstr` (`MotoSystemID_MSTR`, `MotoSystemEUR_MSTR`, `MotoSystemVAT_MSTR`, `MotoSystemDiscount_MSTR`, `MotoSystemImagePath_MSTR`, `MotoSystemHourPrice_MSTR`, `MotoSystemDateTime_MSTR`, `MotoSystemWebPath_MSTR`) VALUES
+(1, 402.5700, 0.2500, 0.1000, 'https://ssdd', 6780.00, '2025-10-22 14:11:33', 'http://localhost/mrkoverchenko/MotoLandWeb/');
 
 -- --------------------------------------------------------
 
@@ -4224,9 +4263,9 @@ CREATE TABLE `shoppingcart_det` (
 --
 
 INSERT INTO `shoppingcart_det` (`ShoppingCartID_DET`, `ShoppingCartMSTRID_DET`, `ShoppingCartMotoPartsID_DET`, `ShoppingCartQuantity_DET`) VALUES
-(63, 58, 1, 1),
-(64, 59, 1, 1),
-(65, 59, 1, 1);
+(101, 81, 10, 1),
+(102, 82, 1, 1),
+(103, 82, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -4259,8 +4298,8 @@ CREATE TABLE `shoppingcart_mstr` (
 --
 
 INSERT INTO `shoppingcart_mstr` (`ShoppingCartID_MSTR`, `ShoppingCartStatusID_MSTR`, `ShoppingCartDateTime_MSTR`, `ShoppingCartSessionID_MSTR`) VALUES
-(58, 0, '2026-02-06 17:07:48', '1770394068529'),
-(59, 0, '2026-02-06 17:09:08', '1770394148732');
+(81, 0, '2026-02-07 15:19:52', '1770473992356'),
+(82, 0, '2026-02-07 15:29:08', '1770474548248');
 
 -- --------------------------------------------------------
 
@@ -4580,7 +4619,7 @@ ALTER TABLE `holidays_mstr`
 -- AUTO_INCREMENT a táblához `lockedquantity_mstr`
 --
 ALTER TABLE `lockedquantity_mstr`
-  MODIFY `LockedQuantityID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `LockedQuantityID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT a táblához `motomanufacturer_mstr`
@@ -4646,7 +4685,7 @@ ALTER TABLE `quantityunit_mstr`
 -- AUTO_INCREMENT a táblához `shoppingcart_det`
 --
 ALTER TABLE `shoppingcart_det`
-  MODIFY `ShoppingCartID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `ShoppingCartID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_hist`
@@ -4658,7 +4697,7 @@ ALTER TABLE `shoppingcart_hist`
 -- AUTO_INCREMENT a táblához `shoppingcart_mstr`
 --
 ALTER TABLE `shoppingcart_mstr`
-  MODIFY `ShoppingCartID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `ShoppingCartID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT a táblához `usertype_mstr`

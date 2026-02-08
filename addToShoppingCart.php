@@ -9,7 +9,7 @@
     /************************************************
      * CHECK SESSION DEADLINE
      */   
-    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 300) {
+    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 3600) {
         session_unset();
         session_destroy();
         session_start();
@@ -26,17 +26,15 @@
     $_SESSION['cartdeadline'] = time();
 
 
-	if (isset($_POST["motoparts"]) &&
-        isset($_POST["quantity"]) &&
-            $_POST["formName"] == "orderingForm") {
-
+	if (isset($_POST["motoparts"]) && 
+            isset($_POST["quantity"]) && 
+                $_POST["formName"] == "orderingForm") {
 
 
 	    $partId = $_POST["motoparts"];          // SELECTED PART ID
         $partQuantity = $_POST["quantity"];     // SELECTED QUANTITY
         $dateNow = date("Y-m-d H:i:s");
         $cartID = $_SESSION["cartid"];
-
 
 
         $lastID = 0;
@@ -116,11 +114,13 @@
                     lockedquantity_mstr (
                         LockedQuantitySessionID_MSTR, 
                         LockedQuantityQuantity_MSTR, 
-                        LockedQuantityDateTime_MSTR
+                        LockedQuantityDateTime_MSTR,
+                        LockedQuantityPartsID_MSTR 
                     ) VALUES (
                         '$cartID',
                         '$partQuantity',
-                        '$dateNow'
+                        '$dateNow',
+                        '$partId'
                     )";
         mysqli_query($connect, $sql);
 
@@ -140,8 +140,7 @@
         mysqli_close($connect);
 
 
-        header('Location: index.php?shoppingcart=added&page=ordering');
-
+        header("Location: index.php?shoppingcart=added&page=ordering");
     }
 
 ?>

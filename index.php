@@ -13,18 +13,15 @@
     if (isset($_SESSION["cartid"]))
         $cartid = $_SESSION["cartid"];
 
-    function sessionOutMessage() {
-    }
 
     /*****************************************************************
      * SESSION CHECKING
     */
-    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 300) {
+    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 3600) {
         session_unset();
         session_destroy();
         session_start();
 
-//        sessionOutMessage();
         $hideTime = 10000;
         $systemIsMessage = true;
         $cartIs = false;
@@ -33,10 +30,6 @@
     }
 
 
-/*    if (!empty($_SESSION['deadline']) && $_SESSION['deadline'] < time() - 300) {
-        session_destroy();
-        session_start();
-    }*/
 
     include "connect.php";
 
@@ -114,6 +107,7 @@
         if (isset($_GET["page"])) {
             $activePage = $_GET["page"];
         }
+
     }
 
 
@@ -566,7 +560,7 @@
                                 role="button" 
                                 aria-haspopup="true" 
                                 aria-expanded="false">
-                                Szolgáltatások
+                                Szolgáltatások <?php echo $cartid; ?>
                                 <span class="caret"></span>
                             </a>
 
@@ -801,21 +795,11 @@
                         <h4><span class="glyphicon glyphicon-shopping-cart"></span> Bevásárlókosár</h4>
                     </div>
 
-                    <div class="modal-body" style="padding:40px 50px;">
-
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">Description of the product.</p>
-                            <p class="card-text"><strong>$99.99</strong></p>
-                            <div class="d-flex align-items-center">
-                                <input type="number" class="form-control w-25 me-2" value="1" min="1">
-                                <button class="btn btn-danger btn-sm">Remove</button>
-                            </div>
-                        </div>
+                    <div class="modal-body" style="padding:5px 20px;">
+                        <div id="cartBody"></div>
 
 
-
-                        <button type="submit" class="btn btn-success ">
+                        <button type="submit" class="btn btn-success">
                             <span class="glyphicon glyphicon-piggy-bank"></span> 
                             Fizetés és szállítás
                         </button>
@@ -825,8 +809,8 @@
                             Kosár törlés
                         </button>
 
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" >
-                            <span class="glyphicon glyphicon-remove"></span> 
+                        <a href="#" class="btn btn-primary" data-dismiss="modal" >
+                            <span class="glyphicon glyphicon-trash"></span> 
                             Bezárás
                         </button>
 
@@ -840,7 +824,7 @@
 
                         // BEFORE ON SHOW
                         $('#shoppingCart').on('show.bs.modal', function (e) {
-                            //initFields("systemPath");
+                            initFields("cartBody");
                         })
                     </script>
 

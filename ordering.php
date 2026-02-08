@@ -52,7 +52,8 @@
 
 
             <div class="tab-content">
-                <div id="types" class="container tab-pane active tabcontain" style="margin-bottom:80px;"><br>
+
+                <div id="types" class="container tab-pane active tabcontain" style="margin-bottom:30px;">
                     <h3>Keresés típus szerint</h3>
 
                     <form action="addToShoppingCart.php" method="POST">
@@ -181,16 +182,6 @@
 
                             <div id="details">
 
-                                <div class="row">
-                                    <div class="col-sm-2 mrg" >
-                                        Brutto (Ft.)
-                                    </div>
-                                    <div class="col-sm-2" >
-                                        <div class="form-group">
-                                            <input type="text" readonly class="form-control readonly" id="motopartbruttoprice"/>
-                                        </div>                     
-                                    </div>
-                                </div>    
 
                                 <div class="row">
                                     <div class="col-sm-2 mrg" >

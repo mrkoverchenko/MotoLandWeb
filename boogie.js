@@ -227,40 +227,48 @@ function partSelect(_this) {
     req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
             const myObj = JSON.parse(this.responseText);
-            console.log(myObj);
+            //console.log(myObj);
 
-            document.getElementById("motopartnettoprice").value = Math.round(myObj[0].MotoPartsNettoPrice_MSTR);
-            document.getElementById("motopartvat").value = myObj[0].MotoPartsVAT_MSTR * 100;
+            var netto = myObj[0].MotoPartsNettoPrice_MSTR;
+            document.getElementById("motopartnettoprice").value = Math.round(netto);
 
-            document.getElementById("motopartbruttoprice").value = Math.round(myObj[0].MotoPartsBruttoPrice_MSTR);
-            document.getElementById("motopartbruttoeurprice").value = myObj[0].MotoPartsBruttoEURPrice_MSTR;
-            document.getElementById("motopartdiscount").value = myObj[0].MotoPartsDiscount_MSTR * 100;
+            var vat = myObj[0].MotoPartsVAT_MSTR;
+            document.getElementById("motopartvat").value = vat * 100;
+
+            let bruttoEUR = myObj[0].MotoPartsBruttoEURPrice_MSTR;    
+            document.getElementById("motopartbruttoeurprice").value = Math.round(bruttoEUR * 100) / 100
+
+            var disc = myObj[0].MotoPartsDiscount_MSTR;
+            document.getElementById("motopartdiscount").value = disc * 100;
+
+            var q = Math.round(myObj[0].MotoPartsQuantity_MSTR);
 
             let mee = myObj[0].QuantityUnitUnit_MSTR;
             document.getElementById("motopartquantityunit").value = mee;
-
-            let q = Math.round(myObj[0].MotoPartsQuantity_MSTR);
-            document.getElementById("motopartquantity").value = q;
-            document.getElementById("quantity").max = q;
             document.getElementById("meeDiv").innerHTML = mee; 
             document.getElementById("mee").innerHTML = "Raktári mennyiség: " + q + " " + mee;
 
+            document.getElementById("motopartquantity").value = q;
+
+            let selectedQuantity = document.getElementById("quantity")
+            selectedQuantity.max = q;
+
             document.getElementById("motopartinfo").value = myObj[0].MotoPartsInfo_MSTR;
 
-            setCost();
+            document.getElementById("totalcost").value = ((Number(netto) * Number(vat)) + Number(netto)) * selectedQuantity.value;
         }
     }
     req.send(param);
 }
 
-function clearSC() {
-    location.href = defaultPath + "index.php?shoppingcart=cleared";
+function setCost(_this) {
+    var netto = document.getElementById("motopartnettoprice").value;
+    var vat = document.getElementById("motopartvat").value / 100;
+    document.getElementById("totalcost").value = ((Number(netto) * Number(vat)) + Number(netto)) * _this.value;
 }
 
-function setCost(_this) {
-    let brutto = document.getElementById("motopartbruttoprice").value;
-    let qua = document.getElementById("quantity").value;
-    document.getElementById("totalcost").value = brutto * qua;
+function clearSC() {
+    location.href = defaultPath + "index.php?shoppingcart=cleared";
 }
 
 function disText(event) {
@@ -386,6 +394,11 @@ function initFields(fieldID) {
     if (fieldID == "systemPath") {
         fileName = "getSystem.php";
         param = "field=7";
+    }
+
+    if (fieldID == "cartBody") {
+        fileName = "getShoppingCart.php";
+        param = "field=0";
     }
 
     var req = new XMLHttpRequest();

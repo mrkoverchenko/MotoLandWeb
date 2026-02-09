@@ -268,7 +268,7 @@ function setCost(_this) {
 }
 
 function clearSC() {
-    location.href = defaultPath + "index.php?shoppingcart=cleared";
+    location.href = defaultPath + "index.php?shoppingcart=cleared&page=sales";
 }
 
 function disText(event) {

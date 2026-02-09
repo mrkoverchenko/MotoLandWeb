@@ -8,13 +8,6 @@
 
 
     include "connect.php";
-
-
-
-
-
-
-
 ?>
         <style>
             .orderbody {

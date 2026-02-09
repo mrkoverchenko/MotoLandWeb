@@ -9,7 +9,7 @@
     /************************************************
      * CHECK SESSION DEADLINE
      */   
-    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 3600) {
+    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 1200) {
         session_unset();
         session_destroy();
         session_start();
@@ -21,9 +21,9 @@
         $date = new DateTime();
         $milliseconds = (int) $date->format('Uv');
         $_SESSION["cartid"] = $milliseconds; 
+        $_SESSION['cartdeadline'] = time();
     }
 
-    $_SESSION['cartdeadline'] = time();
 
 
 	if (isset($_POST["motoparts"]) && 

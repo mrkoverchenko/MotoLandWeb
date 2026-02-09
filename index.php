@@ -5,7 +5,7 @@
         $_SESSION["systemPath"] = "http://localhost/mrkoverchenko/MotoLandWeb/";
     }
 
-    $cartid = "üres";
+    $cartid = "";
     $activePage = "sales";
     $shoppingcartqua = 0;
 
@@ -17,7 +17,7 @@
     /*****************************************************************
      * SESSION CHECKING
     */
-    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 3600) {
+    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 1200) {
         session_unset();
         session_destroy();
         session_start();
@@ -44,7 +44,6 @@
     }
 
     if (isset($_GET["session"]) && $_GET["session"] == "out") {
-//        sessionOutMessage();
         $hideTime = 10000;
         $systemIsMessage = true;
         $cartIs = false;
@@ -97,17 +96,16 @@
 
         if ($_GET["shoppingcart"] === "cleared") {
             unset($_SESSION["shoppingcartquantity"]);
+            unset($_SESSION['cartdeadline']);
             $shoppingcartqua = 0;
 
             $alertType = "alert-danger";
             $systemMessage = "<b>Kosár kiürítve!</b";
         }
+    }
 
-
-        if (isset($_GET["page"])) {
-            $activePage = $_GET["page"];
-        }
-
+    if (isset($_GET["page"])) {
+        $activePage = $_GET["page"];
     }
 
 
@@ -784,18 +782,23 @@
 
 
 
+
+
+
+
         <!-- SHOPPING CART -->
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="shoppingCart" role="dialog">
             <div class="modal-dialog">
     
                 <div class="modal-content">
 
-                    <div class="modal-header" style="padding:5px 50px;">
+                    <div class="modal-header" style="padding:5px 30px;">
                         <button type="button" class="close" style="margin-top:13px" data-dismiss="modal">&times;</button>
                         <h4><span class="glyphicon glyphicon-shopping-cart"></span> Bevásárlókosár</h4>
                     </div>
 
-                    <div class="modal-body" style="padding:5px 20px;">
+
+                    <div class="modal-body" style="padding:5px 30px;">
                         <div id="cartBody"></div>
 
 
@@ -804,18 +807,20 @@
                             Fizetés és szállítás
                         </button>
 
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="clearSC()">
+                        <button class="btn btn-primary" data-dismiss="modal" onclick="clearSC()">
                             <span class="glyphicon glyphicon-trash"></span> 
                             Kosár törlés
                         </button>
 
-                        <a href="#" class="btn btn-primary" data-dismiss="modal" >
+                        <button class="btn btn-primary" data-dismiss="modal" >
                             <span class="glyphicon glyphicon-trash"></span> 
                             Bezárás
                         </button>
 
 
                     </div>
+
+
 
                     <script>
                         // ONCLOSE
@@ -837,6 +842,7 @@
 
 
 
+    
         <!-- REGISTRATION -->
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="registrationForm" role="dialog">
             <div class="modal-dialog">
@@ -1303,7 +1309,6 @@
 
 
         <div class="container" id="container">
-            
             <div id="subcontainer">
 
                 <div id="homeMotos" class="carousel slide" data-ride="carousel">
@@ -1388,9 +1393,11 @@
                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
-                </div>
 
+                </div>
             </div>
+
+
 
             <!-- SYSTEM MESSAGE -->
             <?php

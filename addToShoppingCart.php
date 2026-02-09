@@ -102,6 +102,7 @@
                         '$partQuantity'
                     )";
         mysqli_query($connect, $sql);
+        $shoppingCartDETID = mysqli_insert_id($connect);
 
 
         /************************************************
@@ -113,11 +114,13 @@
         $sql = "INSERT INTO 
                     lockedquantity_mstr (
                         LockedQuantitySessionID_MSTR, 
+                        LockedQuantityShoppingCartDETID_MSTR,
                         LockedQuantityQuantity_MSTR, 
                         LockedQuantityDateTime_MSTR,
                         LockedQuantityPartsID_MSTR 
                     ) VALUES (
                         '$cartID',
+                        '$shoppingCartDETID',
                         '$partQuantity',
                         '$dateNow',
                         '$partId'

@@ -267,9 +267,6 @@ function setCost(_this) {
     document.getElementById("totalcost").value = ((Number(netto) * Number(vat)) + Number(netto)) * _this.value;
 }
 
-function clearSC() {
-    location.href = defaultPath + "index.php?shoppingcart=cleared&page=sales";
-}
 
 function disText(event) {
     if (event.keyCode != 40 && event.keyCode != 38)

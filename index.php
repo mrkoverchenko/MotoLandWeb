@@ -18,6 +18,8 @@
      * SESSION CHECKING
     */
     if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 1200) {
+        unset($_SESSION['cartdeadline']);
+        unset($_SESSION['cartid']);
         session_unset();
         session_destroy();
         session_start();
@@ -29,6 +31,7 @@
         $systemMessage = "<b>Lejárt a munkamenet!</b";
     }
 
+    //$_SESSION['cartdeadline'] = time();
 
 
     include "connect.php";
@@ -73,6 +76,60 @@
     }
     
 
+
+
+
+
+    /*******************************************************
+     * ROLLBACK SHOPPING CART
+    */
+    if (isset($_POST["formName"]) && ($_POST["formName"]    == "shoppingCartRollbackForm")) {
+
+	/*if (isset($_POST["idDET"]) && 
+            isset($_POST["idMSTR"]) && 
+                isset($_POST["lockedID"]) && 
+                    isset($_POST["sessionID"]) && 
+                        $_POST["formName"] === "shoppingCartRollbackForm") {*/
+            
+        header("Location: index.php?shoppingcart=cleared&page=sales");  
+
+
+    	$idDET = $_POST["idDET"];
+        $idMSTR = $_POST["idMSTR"];
+        $lockedID = $_POST["lockedID"];
+        $sessionID = $_POST["sessionID"];
+
+        /*************************************************
+         * ROLLBACK TO PARTS TABLE
+         */
+        $sqlstring = "SELECT
+                        LockedQuantityPartsID_MSTR,
+                        LockedQuantityQuantity_MSTR 
+                      FROM
+                        lockedquantity_mstr 
+                      WHERE
+                        LockedQuantitySessionID_MSTR = '$sessionID'";
+
+        $result = mysqli_query($connect, $sqlstring);
+
+        while ($row = mysqli_fetch_assoc($result)) {    
+
+            $partID = $row["LockedQuantityPartsID_MSTR"];
+            $partQua = $row["LockedQuantityQuantity_MSTR"];
+
+            $sql = "UPDATE motoparts_mstr 
+                    SET MotoPartsQuantity_MSTR = 88888 
+                    WHERE MotoPartsID_MSTR = 1";
+            mysqli_query($connect, $sql);
+
+        }
+        mysqli_close($connect);
+        //unset($_POST);
+        
+    }
+
+
+
     /**************************************************************
      * ADDED TO SHOPPING CART IS SUCCESSFUL MESSAGE OR NOT
      */
@@ -107,6 +164,8 @@
     if (isset($_GET["page"])) {
         $activePage = $_GET["page"];
     }
+
+    
 
 
 
@@ -558,7 +617,12 @@
                                 role="button" 
                                 aria-haspopup="true" 
                                 aria-expanded="false">
-                                Szolgáltatások <?php echo $cartid; ?>
+                                Szolgáltatások 
+                                <?php
+                                    echo "cartid: ".$cartid." - "; 
+                                    if (isset($_SESSION['cartdeadline']))
+                                        echo("time left: ".$_SESSION['cartdeadline'] - (time() - 1200)." sec."); 
+                                ?>
                                 <span class="caret"></span>
                             </a>
 
@@ -799,25 +863,28 @@
 
 
                     <div class="modal-body" style="padding:5px 30px;">
-                        <div id="cartBody"></div>
 
+                        <form id="rollbackForm" action="index.php" method="POST">
+                            <input type="hidden" name="formName" value="shoppingCartRollbackForm">
+                            <div id="cartBody"></div>
 
-                        <button type="submit" class="btn btn-success">
-                            <span class="glyphicon glyphicon-piggy-bank"></span> 
-                            Fizetés és szállítás
-                        </button>
-
-                        <button class="btn btn-primary" data-dismiss="modal" onclick="clearSC()">
-                            <span class="glyphicon glyphicon-trash"></span> 
-                            Kosár törlés
-                        </button>
-
-                        <button class="btn btn-primary" data-dismiss="modal" >
-                            <span class="glyphicon glyphicon-trash"></span> 
-                            Bezárás
-                        </button>
-
-
+                            <button type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-piggy-bank"></span> 
+                                Fizetés és szállítás
+                            </button>
+                                
+                            <button type="submit" class="btn btn-primary" data-dismiss="modal" >
+                                <span class="glyphicon glyphicon-trash"></span> 
+                                Kosár törlés
+                            </button>
+                            <!--onclick="clearSC()"-->
+                            <button class="btn btn-primary" data-dismiss="modal" >
+                                <span class="glyphicon glyphicon-trash"></span> 
+                                Bezárás
+                            </button>
+                        
+                        </form>    
+                        
                     </div>
 
 

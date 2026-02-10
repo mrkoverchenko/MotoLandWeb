@@ -79,6 +79,8 @@ function checkUserName(_this) {
 
 function startItem(item) {
     let container = document.getElementById("subcontainer");
+    history.pushState({}, '', 'index.php');
+    //history.replaceState({}, '', 'index.php');
     var param = "";
     var req = new XMLHttpRequest();
     req.open("POST", item + ".php", true);
@@ -92,8 +94,48 @@ function startItem(item) {
 }
 
 
+function removePart(_this) {
 
+    if (confirm("Biztos, hogy törölni akarod a kosaradból?")) {
 
+        // REMOVED PART ID
+        let idDET = document.getElementsByName("idDET")[0].value;
+        let idMSTR = document.getElementsByName("idMSTR")[0].value;
+        let lockedID = document.getElementsByName("lockedID")[0].value;
+        let sessionID = document.getElementsByName("sessionID")[0].value;
+        let qua = document.getElementsByName("qua")[0].value;
+        let partID = document.getElementsByName("partID")[0].value;
+        var param = `idDET=${idDET}&idMSTR=${idMSTR}&lockedID=${lockedID}&sessionID=${sessionID}&qua=${qua}&partID=${partID}`;
+        var req = new XMLHttpRequest();
+        req.open("POST", "removePart.php", true);
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.onreadystatechange = function () {
+            if (req.readyState === 4 && req.status === 200) {
+                if (req.responseText) {
+                    let removedChild = document.getElementById("row_" + _this.id);
+                    document.getElementById("cartBody").removeChild(removedChild);
+
+                    let subTotalField = document.getElementsByName("partSubTotal");
+                    let newSubTotal = 0;
+                    subTotalField.forEach((totalfield) => {
+                        newSubTotal += Number(totalfield.value);
+                    });
+
+                    subTotalField = document.getElementsByName("partSubTotal").length;
+                    if (subTotalField == 0)
+                        location.href = "index.php?shoppingcart=cleared";
+
+                    document.getElementById("total").innerHTML = `Fizetendő: ${newSubTotal}.- HUF.`;
+                }
+            }
+        }
+        req.send(param);
+    }
+}
+
+function que() {
+    return confirm("Biztos, hogy kiüríted a kosarad?");
+}
 
 let magniBig = false;
 function changeSize(clear) {

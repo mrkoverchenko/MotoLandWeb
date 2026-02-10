@@ -10,20 +10,23 @@
      * CHECK SESSION DEADLINE
      */   
     if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 1200) {
+        unset($_SESSION['cartdeadline']);
+        unset($_SESSION['cartid']);
         session_unset();
         session_destroy();
         session_start();
 
         header('Location: index.php?session=out');
     }
+
     
-    if (!isset($_SESSION["cartid"]) && !isset($_SESSION["cartdeadline"])) {
+    if (!isset($_SESSION["cartid"], $_SESSION["cartdeadline"])) {
         $date = new DateTime();
         $milliseconds = (int) $date->format('Uv');
         $_SESSION["cartid"] = $milliseconds; 
-        $_SESSION['cartdeadline'] = time();
     }
 
+    $_SESSION['cartdeadline'] = time();
 
 
 	if (isset($_POST["motoparts"]) && 
@@ -95,11 +98,13 @@
                     shoppingcart_det (
                         ShoppingCartMSTRID_DET, 
                         ShoppingCartMotoPartsID_DET, 
-                        ShoppingCartQuantity_DET
+                        ShoppingCartQuantity_DET,
+                        ShoppingCartSessionID_DET
                     ) VALUES (
                         '$lastID',
                         '$partId',
-                        '$partQuantity'
+                        '$partQuantity',
+                        '$cartID'
                     )";
         mysqli_query($connect, $sql);
         $shoppingCartDETID = mysqli_insert_id($connect);

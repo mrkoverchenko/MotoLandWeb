@@ -10,9 +10,9 @@
     $shoppingcartqua = 0;
 
 
-    if (isset($_SESSION["cartid"]))
+    if (isset($_SESSION["cartid"])) {
         $cartid = $_SESSION["cartid"];
-
+    }
 
     /*****************************************************************
      * SESSION CHECKING
@@ -23,16 +23,10 @@
         session_unset();
         session_destroy();
         session_start();
-
-        $hideTime = 10000;
-        $systemIsMessage = true;
-        $cartIs = false;
-        $alertType = "alert-danger";
-        $systemMessage = "<b>Lejárt a munkamenet!</b";
     }
 
-    //$_SESSION['cartdeadline'] = time();
 
+    //$_SESSION['cartdeadline'] = time();
 
     include "connect.php";
 
@@ -83,15 +77,14 @@
     /*******************************************************
      * ROLLBACK SHOPPING CART
     */
-    if (isset($_POST["formName"]) && ($_POST["formName"]    == "shoppingCartRollbackForm")) {
+    //if (isset($_POST["formName"]) && ($_POST["formName"] == "shoppingCartRollbackForm")) {
 
-	/*if (isset($_POST["idDET"]) && 
-            isset($_POST["idMSTR"]) && 
-                isset($_POST["lockedID"]) && 
-                    isset($_POST["sessionID"]) && 
-                        $_POST["formName"] === "shoppingCartRollbackForm") {*/
+	if (isset($_POST["idDET"], 
+            $_POST["idMSTR"], 
+                $_POST["lockedID"],
+                    $_POST["sessionID"]) &&
+                        $_POST["formName"] === "shoppingCartRollbackForm") {
             
-        header("Location: index.php?shoppingcart=cleared&page=sales");  
 
 
     	$idDET = $_POST["idDET"];
@@ -101,6 +94,8 @@
 
         /*************************************************
          * ROLLBACK TO PARTS TABLE
+         * SELECT TEMPORARY TABLE, QUANTITY FIELD,
+         * BY SESSION ID
          */
         $sqlstring = "SELECT
                         LockedQuantityPartsID_MSTR,
@@ -116,17 +111,49 @@
 
             $partID = $row["LockedQuantityPartsID_MSTR"];
             $partQua = $row["LockedQuantityQuantity_MSTR"];
-
+            // ROLLING BACK QUANTITY ROWS...
             $sql = "UPDATE motoparts_mstr 
-                    SET MotoPartsQuantity_MSTR = 88888 
-                    WHERE MotoPartsID_MSTR = 1";
+                    SET MotoPartsQuantity_MSTR = MotoPartsQuantity_MSTR + $partQua 
+                    WHERE MotoPartsID_MSTR = $partID";
             mysqli_query($connect, $sql);
-
         }
-        mysqli_close($connect);
+        // ...THEN REMOVE ROWS FROM TEMPORARY TABLE...BY SESSION ID
+        $sql = "DELETE FROM lockedquantity_mstr WHERE LockedQuantitySessionID_MSTR = '$sessionID'";
+        mysqli_query($connect, $sql);
+
+        // ...THEN REMOVE ROWS FROM SHOPPINGCART_DET TABLE...BY SESSION ID
+        $sql = "DELETE FROM shoppingcart_det WHERE ShoppingCartSessionID_DET = '$sessionID'";
+        mysqli_query($connect, $sql);
+
+        // ...THEN REMOVE ROWS FROM SHOPPINGCART_MSTR TABLE...BY SESSION ID
+        $sql = "DELETE FROM shoppingcart_mstr WHERE ShoppingCartSessionID_MSTR = '$sessionID'";
+        mysqli_query($connect, $sql);
+
+        //mysqli_close($connect);
         //unset($_POST);
+        header("Location: index.php?shoppingcart=cleared&page=sales");  
         
     }
+
+
+    /**************************************************************
+     * SHOPPINGCART PARTS QUANTITY
+     */
+    if (isset($_SESSION["cartid"])) {
+
+        $cartid = $_SESSION["cartid"];
+        $sql = "SELECT ShoppingCartID_DET
+                FROM shoppingcart_mstr, shoppingcart_det
+                WHERE 
+                    ShoppingCartID_MSTR = ShoppingCartMSTRID_DET AND 
+                    ShoppingCartSessionID_MSTR = '$cartid'";
+
+        $result = mysqli_query($connect, $sql);
+        $shoppingcartqua = mysqli_num_rows($result);
+        //mysqli_close($connect);
+    }
+
+
 
 
 
@@ -139,9 +166,6 @@
 
         if ($_GET["shoppingcart"] === "added") {
 
-            $shoppingcartqua = $_SESSION["shoppingcartquantity"] + 1;
-            $_SESSION["shoppingcartquantity"] = $shoppingcartqua;
-
             $cartIs = true;
             $alertType = "alert-dismissible";
             $systemMessage = "<b>Sikeresen a kosárba raktad!</b></br>Folytathatod a vásárlást vagy megtekintheted <a href='#shoppingCart' data-toggle='modal'>kosarad</a> tartalmát.";
@@ -152,8 +176,8 @@
         }
 
         if ($_GET["shoppingcart"] === "cleared") {
-            unset($_SESSION["shoppingcartquantity"]);
             unset($_SESSION['cartdeadline']);
+            //unset($_SESSION['cartid']);
             $shoppingcartqua = 0;
 
             $alertType = "alert-danger";
@@ -226,7 +250,7 @@
             $_POST = array();
             unset($_POST);
 		}
-        mysqli_close($connect);
+        //mysqli_close($connect);
 
 
 
@@ -387,7 +411,7 @@
         $passwordmstr = ($lastPWID != "") ? true : false;
 
 
-        mysqli_close($connect);
+        //mysqli_close($connect);
 
         if ($usermstr && $userdet && $passwordmstr) { 
             $hideTime = 10000;
@@ -425,7 +449,7 @@
                         MotoSystemID_MSTR = '1'";
         mysqli_query($connect, $sqlstring);
 
-        mysqli_close($connect);
+        //mysqli_close($connect);
 
         $hideTime = 10000;
         $alertType = "alert-dismissible";
@@ -490,7 +514,7 @@
                         UserMSTRID_DET = '$userid'";
 
         mysqli_query($connect, $sqlstring);
-        mysqli_close($connect);
+        //mysqli_close($connect);
         $_SESSION['userfullname'] = $firstname." ".$middlename." ".$lastname;
 
         //$_POST = array();
@@ -565,6 +589,11 @@
 
         </style>
 
+        <script>
+            window.onload = (event) => {
+                startItem("<?php echo $activePage;?>");
+            };
+        </script>
 
     </head>
 
@@ -722,7 +751,6 @@
 
 
 
-
         <!-- LOGIN -->
         <div class="modal fade" data-backdrop="static" data-keyboard="false" id="loginForm" role="dialog">
             <div class="modal-dialog">
@@ -864,20 +892,21 @@
 
                     <div class="modal-body" style="padding:5px 30px;">
 
-                        <form id="rollbackForm" action="index.php" method="POST">
+                        <form id="rollbackForm" action="index.php" method="POST" onsubmit="return que();">
                             <input type="hidden" name="formName" value="shoppingCartRollbackForm">
-                            <div id="cartBody"></div>
+
+                            <div id="cartBody" style="max-height:400px; overflow-x: auto; overflow-y: none; margin-bottom:10px;"></div>
 
                             <button type="button" class="btn btn-success">
                                 <span class="glyphicon glyphicon-piggy-bank"></span> 
-                                Fizetés és szállítás
+                                Fizetés
                             </button>
                                 
-                            <button type="submit" class="btn btn-primary" data-dismiss="modal" >
+                            <button type="submit" class="btn btn-primary" >
                                 <span class="glyphicon glyphicon-trash"></span> 
                                 Kosár törlés
                             </button>
-                            <!--onclick="clearSC()"-->
+
                             <button class="btn btn-primary" data-dismiss="modal" >
                                 <span class="glyphicon glyphicon-trash"></span> 
                                 Bezárás
@@ -1509,10 +1538,9 @@
 
     </body>
 
-    <script>
-        window.onload = (event) => {
-            startItem("<?php echo $activePage;?>");
-        };
-    </script>
 
 </html>
+
+<?php
+    mysqli_close($connect);
+?>

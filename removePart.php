@@ -1,7 +1,7 @@
 <?php
     session_start(); 
 
-    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 1200) {
+    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - $_SESSION["sessionDeadline"]) {
         unset($_SESSION['cartdeadline']);
         unset($_SESSION['cartid']);
         session_unset();
@@ -26,7 +26,7 @@
         $qua = $_POST["qua"];
         $partID = $_POST["partID"];
 
-/*
+
         // ROLLING BACK QUANTITY ROWS...
         $sql = "UPDATE motoparts_mstr 
                 SET MotoPartsQuantity_MSTR = MotoPartsQuantity_MSTR + $qua 
@@ -50,10 +50,10 @@
         $c = 0;
         $c = mysqli_num_rows($result);
         if ($c === 0) {
-            $sql = "DELETE FROM shoppingcart_mstr WHERE ShoppingCartID_MSTR = '$idMSTR' AND ShoppingCartSessionID_DET = '$sessionID'";
+            $sql = "DELETE FROM shoppingcart_mstr WHERE ShoppingCartID_MSTR = '$idMSTR' AND ShoppingCartSessionID_MSTR = '$sessionID'";
             mysqli_query($connect, $sql);
         }
-        */
+        
         $ret = true;
     }
     mysqli_close($connect);

@@ -9,7 +9,7 @@
     /************************************************
      * CHECK SESSION DEADLINE
      */   
-    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 1200) {
+    if (isset($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - $_SESSION["sessionDeadline"]) {
         unset($_SESSION['cartdeadline']);
         unset($_SESSION['cartid']);
         session_unset();

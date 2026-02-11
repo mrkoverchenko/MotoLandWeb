@@ -5,10 +5,22 @@
         $_SESSION["systemPath"] = "http://localhost/mrkoverchenko/MotoLandWeb/";
     }
 
+    include "connect.php";
+
+    /***************************************************************
+     * SESSION DEADLINE SETTING
+     */
+    if (!isset($_SESSION["sessionDeadline"])) {   
+        $sql = "SELECT MotoSystemSessionDeadline_MSTR, MotoSystemWebPath_MSTR FROM motosystem_mstr WHERE MotoSystemID_MSTR = '1'";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION["sessionDeadline"] = $row["MotoSystemSessionDeadline_MSTR"];
+        $_SESSION["systemPath"] = $row["MotoSystemWebPath_MSTR"];
+    }
+
     $cartid = "";
     $activePage = "sales";
     $shoppingcartqua = 0;
-
 
     if (isset($_SESSION["cartid"])) {
         $cartid = $_SESSION["cartid"];
@@ -17,7 +29,7 @@
     /*****************************************************************
      * SESSION CHECKING
     */
-    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 1200) {
+    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - $_SESSION["sessionDeadline"]) {
         unset($_SESSION['cartdeadline']);
         unset($_SESSION['cartid']);
         session_unset();
@@ -27,8 +39,6 @@
 
 
     //$_SESSION['cartdeadline'] = time();
-
-    include "connect.php";
 
     $systemIsMessage = false;
     $systemMessage = "";
@@ -71,7 +81,52 @@
     
 
 
+    if (isset($_SESSION["sessionDeadline"])) {
+        /**********************************************************
+         * SELECT EXPIRED SESSION RECORDS
+         */
+        //$c = 0;
+        $dl = $_SESSION["sessionDeadline"];
+        $sql = "SELECT * FROM lockedquantity_mstr
+                WHERE LockedQuantityDateTime_MSTR < (NOW() - $dl)";
+        $result = mysqli_query($connect, $sql);
+        //$c = mysqli_num_rows($result);
+        $dt = "";
+        $sessionIDArray = array();
+        while ($row = mysqli_fetch_assoc($result)) {    
+            /**********************************************
+             * RESERVED PARTS QUANTITY ROLLBACING
+             */
+            $sessionID = $row["LockedQuantitySessionID_MSTR"];
+            array_push($sessionIDArray, $sessionID);
+            $qua = $row["LockedQuantityQuantity_MSTR"];
+            $partID = $row["LockedQuantityPartsID_MSTR"];
 
+            // ROLLING BACK QUANTITY ROWS...
+            $sql = "UPDATE motoparts_mstr 
+                    SET MotoPartsQuantity_MSTR = MotoPartsQuantity_MSTR + $qua  
+                    WHERE MotoPartsID_MSTR = '$partID'";
+            mysqli_query($connect, $sql);
+
+        }
+
+        // ...THEN REMOVE ROWS FROM TEMPORARY TABLE...BY SESSION ID, ...
+        $sql = "DELETE FROM lockedquantity_mstr 
+                WHERE LockedQuantityDateTime_MSTR < (NOW() - $dl) ";
+        mysqli_query($connect, $sql);
+
+        for ($ic =0; $ic < count($sessionIDArray); $ic++) {
+
+            // ... DELETE FROM SHOPPINGCART_DET TABLE BY SESSION ID AND ...
+            $sql = "DELETE FROM shoppingcart_det WHERE ShoppingCartSessionID_DET = '$sessionIDArray[$ic]'";
+            mysqli_query($connect, $sql);
+
+            // ... DELETE FROM SHOPPINGCART_MSTR TABLE BY SESSION ID
+            $sql = "DELETE FROM shoppingcart_mstr WHERE ShoppingCartSessionID_MSTR = '$sessionIDArray[$ic]'";
+            mysqli_query($connect, $sql);
+        }
+
+    }
 
 
     /*******************************************************
@@ -193,9 +248,9 @@
 
 
 
-    ////////////////////////////////////////////////////////
-    // LOGIN
-    ////////////////////////////////////////////////////////
+    /*******************************************************
+     * LOGIN
+     */
 	if (isset($_POST["loginUserName"]) && 
             isset($_POST["loginPassword"]) && 
                 $_POST["formName"] == "logForm") {
@@ -214,19 +269,20 @@
                     UserID_MSTR,
                     UserMail_MSTR,
                     UserNickName_MSTR,
-                    UserTypeID_MSTR,
+                    UserTypeType_MSTR,
                     UserFlagID_MSTR,
                     PasswordSalt_MSTR,
                     PasswordPassword_MSTR,
                     CONCAT(UserFirstName_DET,' ',UserMiddleName_DET,' ',UserLastName_DET) AS UserFullName
 
                 FROM 
-                    user_mstr, user_det, password_mstr
+                    user_mstr, user_det, password_mstr, usertype_mstr
                 WHERE 
                     LOWER(UserNickName_MSTR) = '$uname' AND 
+                    user_mstr.UserTypeID_MSTR = usertype_mstr.UserTypeID_MSTR AND 
                     UserMSTRID_DET = UserID_MSTR AND 
                     UserID_MSTR = PasswordUserID_MSTR AND 
-                    UserTypeID_MSTR <> '6'";
+                    usertype_mstr.UserTypeType_MSTR <> 'törölve'";
 
         $isUser = false;
         $result = mysqli_query($connect, $sql);
@@ -240,9 +296,9 @@
                 $isUser = true;
 
                 $_SESSION['usernickname'] = $row['UserNickName_MSTR'];
+                $_SESSION['usertype'] = strtolower($row['UserTypeType_MSTR']);
                 $_SESSION['userid'] = $row['UserID_MSTR'];
                 $_SESSION['userfullname'] = $row['UserFullName'];
-                $_SESSION['userdeadline'] = time();
 
             } else {
                 $isUser = false;
@@ -250,7 +306,6 @@
             $_POST = array();
             unset($_POST);
 		}
-        //mysqli_close($connect);
 
 
 
@@ -269,9 +324,9 @@
 
 
 
-    ////////////////////////////////////////////////////////
-    // REGISTRATION
-    ////////////////////////////////////////////////////////
+    /*********************************************************
+     * REGISTRATION
+     */
 	if (isset($_POST["regUserName"]) && 
             isset($_POST["regPassword"]) && 
                 isset($_POST["regFirstName"]) && 
@@ -433,23 +488,26 @@
 
 
 
-    ////////////////////////////////////////////////////////
-    // SYSTEM
-    ////////////////////////////////////////////////////////
-	if (isset($_POST["systemPath"]) && 
+    /******************************************************
+     * SYSTEM
+     */
+	if (isset($_POST["systemPath"], $_POST["systemSessionDeadline"]) && 
         isset($_POST["formName"]) && $_POST["formName"] == "systemForm") {
 
 	    $systemPath = $_POST["systemPath"];
+	    $systemSessionDeadline = $_POST["systemSessionDeadline"];
 
         $sqlstring = "UPDATE
                         motosystem_mstr
                       SET  
-                        MotoSystemWebPath_MSTR = '$systemPath'
+                        MotoSystemWebPath_MSTR = '$systemPath',
+                        MotoSystemSessionDeadline_MSTR = '$systemSessionDeadline'
                       WHERE  
                         MotoSystemID_MSTR = '1'";
         mysqli_query($connect, $sqlstring);
 
-        //mysqli_close($connect);
+        $_SESSION["sessionDeadline"] = $systemSessionDeadline;
+
 
         $hideTime = 10000;
         $alertType = "alert-dismissible";
@@ -460,9 +518,9 @@
 
 
 
-    ////////////////////////////////////////////////////////
-    // PROFILE FORM
-    ////////////////////////////////////////////////////////
+    /******************************************************
+     * PROFILE FORM
+     */
 	if (isset($_POST["profileFirstName"]) && 
             isset($_POST["profileMiddleName"]) && 
                 isset($_POST["profileLastName"]) && 
@@ -647,11 +705,6 @@
                                 aria-haspopup="true" 
                                 aria-expanded="false">
                                 Szolgáltatások 
-                                <?php
-                                    echo "cartid: ".$cartid." - "; 
-                                    if (isset($_SESSION['cartdeadline']))
-                                        echo("time left: ".$_SESSION['cartdeadline'] - (time() - 1200)." sec."); 
-                                ?>
                                 <span class="caret"></span>
                             </a>
 
@@ -670,14 +723,6 @@
                                     </a>
                                 </li>
 
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Egyéb</li>
-                                <li>
-                                    <a href="#systemRows" data-toggle="modal">
-                                        <span class="glyphicon glyphicon-cog" style="margin-right:20px;"></span>
-                                        Rendszerbeállítások
-                                    </a>
-                                </li>
                             </ul>
 
                         </li>
@@ -708,8 +753,20 @@
                                             <li><a href='#mySecurityForm' data-toggle='modal' ><span class='glyphicon glyphicon-lock' style='margin-right:20px;'></span>Biztonság</a></li>
                                             <li role='separator' class='divider'></li>
                                             <li><a href='#'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalásaim</a></li>
-                                            <li><a href='#'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>
-                                            <li role='separator' class='divider'></li>
+                                            <li><a href='#'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>";
+
+                                            if (isset($_SESSION['usertype']) && ($_SESSION['usertype'] == "admin" || $_SESSION["usertype"] == "root")) {
+                                                echo "<li role='separator' class='divider'></li>
+                                                        <li class='dropdown-header'>Admin</li>
+                                                        <li>
+                                                            <a href='#systemRows' data-toggle='modal'>
+                                                                <span class='glyphicon glyphicon-cog' style='margin-right:20px;'></span>
+                                                                Rendszerbeállítások
+                                                            </a>
+                                                        </li>";
+                                            }
+
+                                            echo "<li role='separator' class='divider'></li>
                                             <li><a href='logout.php'><span class='glyphicon glyphicon-log-out' style='margin-right:20px;'></span>Kijelentkezés</a></li>
                                         </ul>
                                     </li>";
@@ -788,6 +845,11 @@
                                 <span class="glyphicon glyphicon-off"></span> 
                                 Bejelentkezés
                             </button>
+                            <button class="btn btn-primary" data-dismiss="modal" >
+                                <span class="glyphicon glyphicon-remove"></span> 
+                                Bezárás
+                            </button>
+
                         </form>
 
                     </div>
@@ -813,65 +875,84 @@
         </div> 
 
 
-
         <!-- SYSTEM -->
-        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="systemRows" role="dialog">
-            <div class="modal-dialog">
+        <?php 
+            if (isset($_SESSION['usertype']) && ($_SESSION['usertype'] == "admin" || $_SESSION["usertype"] == "root")) {
+                echo "  <div class='modal fade' data-backdrop='static' data-keyboard='false' id='systemRows' role='dialog'>
+                            <div class='modal-dialog'>
     
-                <div class="modal-content">
+                                <div class='modal-content'>
 
-                    <div class="modal-header" style="padding:5px 50px;">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4><span class="glyphicon glyphicon-cog"></span> Rendszerbeállítások</h4>
-                    </div>
+                                    <div class='modal-header' style='padding:5px 50px;'>
+                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                        <h4><span class='glyphicon glyphicon-cog'></span> Rendszerbeállítások</h4>
+                                    </div>
 
-                    <div class="modal-body" style="padding:40px 50px;">
+                                    <div class='modal-body' style='padding:40px 50px;'>
 
-                        <form id="systemForm" action="index.php" method="POST">
+                                        <form id='systemForm' action='index.php' method='POST'>
 
-                            <div class="form-group">
-                                <input type="hidden" name="formName" value="systemForm">
+                                            <div class='form-group'>
+                                                <input type='hidden' name='formName' value='systemForm'>
 
-                                <label for="systemPath">Rendszer útvonal</label>
-                                <input type="text" 
-                                        class="form-control" 
-                                        required 
-                                        id="systemPath" 
-                                        name="systemPath" 
-                                        placeholder="web cím">
+                                                <label for='systemPath'>Rendszer útvonal</label>
+                                                <input type='text' 
+                                                        class='form-control' 
+                                                        required 
+                                                        id='systemPath' 
+                                                        name='systemPath' 
+                                                        placeholder='web cím'>
+
+                                                <label for='systemSessionDeadline'>Session határidő</label>
+                                                <div>
+                                                    <input type='number' 
+                                                            min='60'
+                                                            class='form-control' 
+                                                            required 
+                                                            style='width:100px;display:inline-block;'
+                                                            id='systemSessionDeadline' 
+                                                            name='systemSessionDeadline' 
+                                                            placeholder='session'>
+                                                    sec.
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <button type='submit' class='btn btn-success '>
+                                                <span class='glyphicon glyphicon-floppy-disk'></span> 
+                                                Mentés
+                                            </button>
+
+                                            <button type='reset' class='btn btn-primary' data-dismiss='modal' >
+                                                <span class='glyphicon glyphicon-remove'></span> 
+                                                Mégsem
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                    <script>
+                                        // ONCLOSE
+                                        $('#systemRows').on('hidden.bs.modal', function () {
+                                        });
+
+                                        // BEFORE ON SHOW
+                                        $('#systemRows').on('show.bs.modal', function (e) {
+                                            initFields('systemPath');
+                                            initFields('systemSessionDeadline');
+                                        })
+                                    </script>
+
+                                </div>
+
                             </div>
 
-                            <button type="submit" class="btn btn-success ">
-                                <span class="glyphicon glyphicon-floppy-disk"></span> 
-                                Mentés
-                            </button>
-
-                            <button type="reset" class="btn btn-primary" data-dismiss="modal" >
-                                <span class="glyphicon glyphicon-remove"></span> 
-                                Mégsem
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                    <script>
-                        // ONCLOSE
-                        $('#systemRows').on('hidden.bs.modal', function () {
-                        });
-
-                        // BEFORE ON SHOW
-                        $('#systemRows').on('show.bs.modal', function (e) {
-                            initFields("systemPath");
-                        })
-                    </script>
-
-                </div>
-
-            </div>
-
-        </div> 
-
+                        </div> ";
+            }
+        ?>
 
 
 
@@ -897,7 +978,7 @@
 
                             <div id="cartBody" style="max-height:400px; overflow-x: auto; overflow-y: none; margin-bottom:10px;"></div>
 
-                            <button type="button" class="btn btn-success">
+                            <button type="button" class="btn btn-success" onclick="startItem('payments');" data-dismiss="modal">
                                 <span class="glyphicon glyphicon-piggy-bank"></span> 
                                 Fizetés
                             </button>
@@ -908,9 +989,10 @@
                             </button>
 
                             <button class="btn btn-primary" data-dismiss="modal" >
-                                <span class="glyphicon glyphicon-trash"></span> 
+                                <span class="glyphicon glyphicon-remove"></span> 
                                 Bezárás
                             </button>
+
                         
                         </form>    
                         
@@ -1190,214 +1272,218 @@
 
 
         <!-- MY PROFILE -->
-        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="myProfileForm" role="dialog">
-            <div class="modal-dialog">
+        <?php 
+            if (isset($_SESSION["usertype"])) {
+
+                echo "  <div class='modal fade' data-backdrop='static' data-keyboard='false' id='myProfileForm' role='dialog'>
+                            <div class='modal-dialog'>
     
-                <div class="modal-content">
+                                <div class='modal-content'>
 
-                    <div class="modal-header" style="padding:5px 50px;">
-                        <button type="button" class="close" style="margin-top:13px" data-dismiss="modal" style="margin-top:3px">&times;</button>
-                        <h4><span class="glyphicon glyphicon-lock"></span> Profil</h4>
-                    </div>
+                                    <div class='modal-header' style='padding:5px 50px;'>
+                                        <button type='button' class='close' style='margin-top:13px' data-dismiss='modal' style='margin-top:3px'>&times;</button>
+                                        <h4><span class='glyphicon glyphicon-lock'></span> Profil</h4>
+                                    </div>
 
-                    <div class="modal-body" style="padding:10px 50px;">
+                                    <div class='modal-body' style='padding:10px 50px;'>
 
 
 
-                        <form id="profileForm" 
-                                action="index.php"
-                                method="POST" 
-                                onsubmit="return checkForms(this)" >
+                                        <form id='profileForm' 
+                                                action='index.php'
+                                                method='POST' 
+                                                onsubmit='return checkForms(this)' >
 
-                            <div class="form-group row">
-                                <label for="profileUserName" class="col-sm-4 col-form-label" style="margin-top:5px">
-                                    <span class="glyphicon glyphicon-user"></span> Felhasználónév *
-                                </label>
-                                <div class="col-sm-6">
+                                            <div class='form-group row'>
+                                                <label for='profileUserName' class='col-sm-4 col-form-label' style='margin-top:5px'>
+                                                    <span class='glyphicon glyphicon-user'></span> Felhasználónév *
+                                                </label>
+                                                <div class='col-sm-6'>
 
-                                    <input type="hidden" name="formName" value="profileForm">
+                                                    <input type='hidden' name='formName' value='profileForm'>
 
-                                    <input type="text" 
-                                            readonly 
-                                            disabled 
-                                            class="form-control-plaintext" 
-                                            id="profileUserName" 
-                                            name="profileUserName" 
-                                            placeholder="email cím vagy felhasználónév"  
-                                            style="width:300px">
+                                                    <input type='text' 
+                                                            readonly 
+                                                            disabled 
+                                                            class='form-control-plaintext' 
+                                                            id='profileUserName' 
+                                                            name='profileUserName' 
+                                                            placeholder='email cím vagy felhasználónév'  
+                                                            style='width:300px'>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class='form-group row'>
+                                                <label for='profileFirstName' class='col-sm-4 col-form-label' style='margin-top:5px'> Vezetéknév *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required
+                                                            class='form-control-plaintext' 
+                                                            id='profileFirstName' 
+                                                            name='profileFirstName' 
+                                                            placeholder='vezetéknév'
+                                                            style='width:300px'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profileMiddleName' class='col-sm-4 col-form-label' style='margin-top:5px' > Keresztnév *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required
+                                                            class='form-control-plaintext' 
+                                                            id='profileMiddleName' 
+                                                            name='profileMiddleName' 
+                                                            placeholder='keresztnév'
+                                                            style='width:300px'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profileLastName' class='col-sm-4 col-form-label' style='margin-top:5px'> Keresztnév</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            alt='noChecking'
+                                                            class='form-control-plaintext' 
+                                                            id='profileLastName' 
+                                                            name='profileLastName' 
+                                                            placeholder='keresztnév'
+                                                            style='width:300px'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profileCountryID' class='col-sm-4 col-form-label' style='margin-top:5px'> Ország *</label>
+                                                <div class='col-sm-6'>
+                                                    <select class='form-select form-select-sm' id='profileCountryID' name='profileCountryID' aria-label='.form-select-sm example'></select>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profilePostCode' class='col-sm-4 col-form-label'> Irányítószám *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required 
+                                                            class='form-control-plaintext' 
+                                                            id='profilePostCode' 
+                                                            name='profilePostCode' 
+                                                            placeholder='irányítószám' 
+                                                            style='width:300px' 
+                                                            onkeypress='return onlyNumber(event)' 
+                                                            maxlength='8'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profileCity' class='col-sm-4 col-form-label'> Város *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required
+                                                            class='form-control-plaintext' 
+                                                            id='profileCity' 
+                                                            name='profileCity' 
+                                                            placeholder='város'
+                                                            style='width:300px'
+                                                            maxlength='30'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profileStreet' class='col-sm-4 col-form-label'> Utca *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required
+                                                            class='form-control-plaintext' 
+                                                            id='profileStreet' 
+                                                            name='profileStreet' 
+                                                            placeholder='út/utca/tér ...stb'
+                                                            style='width:300px'
+                                                            maxlength='30'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profileAddress' class='col-sm-4 col-form-label'> Házszám/emelet *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required
+                                                            class='form-control-plaintext' 
+                                                            id='profileAddress' 
+                                                            name='profileAddress' 
+                                                            placeholder='házszám/emelet/ajtó...stb'
+                                                            style='width:300px'
+                                                            maxlength='50'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profilePhone' class='col-sm-4 col-form-label'> Telefonszám *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required
+                                                            class='form-control-plaintext' 
+                                                            id='profilePhone' 
+                                                            name='profilePhone' 
+                                                            placeholder='telefonszám'
+                                                            style='width:300px'
+                                                            maxlength='30'
+                                                            onkeypress='return onlyPhone(event)'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='profileEmail' class='col-sm-4 col-form-label'> E-mail cím *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='email' 
+                                                            required
+                                                            class='form-control-plaintext' 
+                                                            id='profileEmail' 
+                                                            name='profileEmail' 
+                                                            placeholder='e-mail cím'
+                                                            style='width:300px'
+                                                            maxlength='64'>
+                                                </div>
+                                            </div>
+
+                                            <button type='submit' class='btn btn-success'>
+                                                <span class='glyphicon glyphicon-ok'></span> Mentés
+                                            </button>
+
+                                            <button type='reset' class='btn btn-primary' data-dismiss='modal' >
+                                                <span class='glyphicon glyphicon-remove'></span> Mégsem
+                                            </button>
+
+                                            <div class='modal-footer' style='text-align:left '>
+                                                <span id='profileMessage'>A *-al jelszett mezők kitöltése kötelező!</span>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
                                 </div>
-                            </div>
-
-
-
-                            <div class="form-group row">
-                                <label for="profileFirstName" class="col-sm-4 col-form-label" style="margin-top:5px"> Vezetéknév *</label>
-                                <div class="col-sm-6">
-                                    <input type="text" 
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="profileFirstName" 
-                                            name="profileFirstName" 
-                                            placeholder="vezetéknév"
-                                            style="width:300px">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profileMiddleName" class="col-sm-4 col-form-label" style="margin-top:5px" > Keresztnév *</label>
-                                <div class="col-sm-6">
-                                    <input type="text" 
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="profileMiddleName" 
-                                            name="profileMiddleName" 
-                                            placeholder="keresztnév"
-                                            style="width:300px">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profileLastName" class="col-sm-4 col-form-label" style="margin-top:5px"> Keresztnév</label>
-                                <div class="col-sm-6">
-                                    <input type="text" 
-                                            alt="noChecking"
-                                            class="form-control-plaintext" 
-                                            id="profileLastName" 
-                                            name="profileLastName" 
-                                            placeholder="keresztnév"
-                                            style="width:300px">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profileCountryID" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
-                                <div class="col-sm-6">
-                                    <select class="form-select form-select-sm" id="profileCountryID" name="profileCountryID" aria-label=".form-select-sm example"></select>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profilePostCode" class="col-sm-4 col-form-label"> Irányítószám *</label>
-                                <div class="col-sm-6">
-                                    <input type="text" 
-                                            required 
-                                            class="form-control-plaintext" 
-                                            id="profilePostCode" 
-                                            name="profilePostCode" 
-                                            placeholder="irányítószám" 
-                                            style="width:300px" 
-                                            onkeypress="return onlyNumber(event)" 
-                                            maxlength="8">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profileCity" class="col-sm-4 col-form-label"> Város *</label>
-                                <div class="col-sm-6">
-                                    <input type="text" 
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="profileCity" 
-                                            name="profileCity" 
-                                            placeholder="város"
-                                            style="width:300px"
-                                            maxlength="30">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profileStreet" class="col-sm-4 col-form-label"> Utca *</label>
-                                <div class="col-sm-6">
-                                    <input type="text" 
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="profileStreet" 
-                                            name="profileStreet" 
-                                            placeholder="út/utca/tér ...stb"
-                                            style="width:300px"
-                                            maxlength="30">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profileAddress" class="col-sm-4 col-form-label"> Házszám/emelet *</label>
-                                <div class="col-sm-6">
-                                    <input type="text" 
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="profileAddress" 
-                                            name="profileAddress" 
-                                            placeholder="házszám/emelet/ajtó...stb"
-                                            style="width:300px"
-                                            maxlength="50">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profilePhone" class="col-sm-4 col-form-label"> Telefonszám *</label>
-                                <div class="col-sm-6">
-                                    <input type="text" 
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="profilePhone" 
-                                            name="profilePhone" 
-                                            placeholder="telefonszám"
-                                            style="width:300px"
-                                            maxlength="30"
-                                            onkeypress="return onlyPhone(event)">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="profileEmail" class="col-sm-4 col-form-label"> E-mail cím *</label>
-                                <div class="col-sm-6">
-                                    <input type="email" 
-                                            required
-                                            class="form-control-plaintext" 
-                                            id="profileEmail" 
-                                            name="profileEmail" 
-                                            placeholder="e-mail cím"
-                                            style="width:300px"
-                                            maxlength="64">
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-success">
-                                <span class="glyphicon glyphicon-ok"></span> Mentés
-                            </button>
-
-                            <button type="reset" class="btn btn-primary" data-dismiss="modal" >
-                                <span class="glyphicon glyphicon-remove"></span> Mégsem
-                            </button>
-
-                            <div class="modal-footer" style="text-align:left ">
-                                <span id="profileMessage">A *-al jelszett mezők kitöltése kötelező!</span>
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
       
-            </div>
+                            </div>
 
-            <script>
-                // ONCLOSE
-                $('#myProfileForm').on('hidden.bs.modal', function () {
-                    //clearForm("regForm");
-                });
+                            <script>
+                                // ONCLOSE
+                                $('#myProfileForm').on('hidden.bs.modal', function () {
+                                    //clearForm('regForm');
+                                });
 
-                // BEFORE ON SHOW
-                $('#myProfileForm').on('show.bs.modal', function (e) {
-                    initFields("profileCountryID");
-                    initProfileEditor(<?php echo $_SESSION['userid']; ?>);
-                })
+                                // BEFORE ON SHOW
+                                $('#myProfileForm').on('show.bs.modal', function (e) {
+                                    initFields('profileCountryID');
+                                    initProfileEditor('".$_SESSION["userid"]."');
+                                })
 
-            </script>
+                            </script>
 
-        </div> 
-
+                        </div>";
+            }
+        ?>
 
 
 

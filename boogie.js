@@ -14,7 +14,7 @@ function checkForms(_this) {
         if (thisFormInputElements[ic].alt != "noChecking") {
 
             if (thisFormInputElements[ic].value.length === 0) {
-                alert("Ez a mező nem maradhat üresen!\n"+thisFormInputElements[ic]+"\nCsak mondom!");
+                alert("Ez a mező nem maradhat üresen!\n" + thisFormInputElements[ic] + "\nCsak mondom!");
                 thisFormInputElements[ic].focus();
                 return false;
             }
@@ -181,7 +181,7 @@ function manSelect(_this) {
     changeSize(true);
 
     clearMTCP;
-    if (_this.selectedIndex > 0) man = true; else man = type = cat = part = false; 
+    if (_this.selectedIndex > 0) man = true; else man = type = cat = part = false;
     setSubmitButton();
 
 
@@ -204,7 +204,7 @@ function typeSelect(_this) {
     clearDetailFields();
     changeSize(true);
 
-    if (_this.selectedIndex > 0) type = true; else type = cat = part = false; 
+    if (_this.selectedIndex > 0) type = true; else type = cat = part = false;
     setSubmitButton();
 
     let container = document.getElementById("motopartscategory");
@@ -228,7 +228,7 @@ function categorySelect(_this) {
     clearDetailFields();
     changeSize(true);
 
-    if (_this.selectedIndex > 0) cat = true; else cat = part = false; 
+    if (_this.selectedIndex > 0) cat = true; else cat = part = false;
     setSubmitButton();
 
     let manID = document.getElementById("motoman").value;
@@ -259,7 +259,7 @@ function partSelect(_this) {
     let catID = document.getElementById("motopartscategory").value;
     clearDetailFields();
 
-    if (_this.selectedIndex > 0) part = true; else part = false; 
+    if (_this.selectedIndex > 0) part = true; else part = false;
     setSubmitButton();
 
     var param = "typeID=" + typeID + "&manID=" + manID + "&catID=" + catID + "&partID=" + _this.value;
@@ -277,7 +277,7 @@ function partSelect(_this) {
             var vat = myObj[0].MotoPartsVAT_MSTR;
             document.getElementById("motopartvat").value = vat * 100;
 
-            let bruttoEUR = myObj[0].MotoPartsBruttoEURPrice_MSTR;    
+            let bruttoEUR = myObj[0].MotoPartsBruttoEURPrice_MSTR;
             document.getElementById("motopartbruttoeurprice").value = Math.round(bruttoEUR * 100) / 100
 
             var disc = myObj[0].MotoPartsDiscount_MSTR;
@@ -287,7 +287,7 @@ function partSelect(_this) {
 
             let mee = myObj[0].QuantityUnitUnit_MSTR;
             document.getElementById("motopartquantityunit").value = mee;
-            document.getElementById("meeDiv").innerHTML = mee; 
+            document.getElementById("meeDiv").innerHTML = mee;
             document.getElementById("mee").innerHTML = "Raktári mennyiség: " + q + " " + mee;
 
             document.getElementById("motopartquantity").value = q;
@@ -341,11 +341,11 @@ function clearDetailFields() {
 }
 
 function onlyNumber(event) {
-    var chr = (event.which)? event.which: event.keyCode;
+    var chr = (event.which) ? event.which : event.keyCode;
     if (chr >= 48 && chr <= 57) //numbers
         return true;
     return false;
-}  
+}
 
 function checkPW() {
     let pws = document.getElementById("regPassword");
@@ -370,50 +370,50 @@ function checkPW() {
 let passwordIsOk;
 function chkp() {
     passwordIsOk = false;
-    var validCount = 0;  
+    var validCount = 0;
     let pws = document.getElementById("regPassword");
     let valid = document.getElementById("passwordValidator");
     var lower = /[a-z]/g;
-    if (pws.value.match(lower)) {  
+    if (pws.value.match(lower)) {
         validCount = validCount + 1;
     }
-    
+
     var upper = /[A-Z]/g;
-    if (pws.value.match(upper)) {  
+    if (pws.value.match(upper)) {
         validCount = validCount + 1;
     }
-    
+
     var numbers = /[0-9]/g;
-    if (pws.value.match(numbers)) {  
+    if (pws.value.match(numbers)) {
         validCount = validCount + 1;
     }
-    
+
     if (pws.value.length >= 8) {
         validCount = validCount + 1;
     }
 
     switch (validCount) {
         case 0: valid.style.backgroundColor = "red";
-        break;
+            break;
         case 1: valid.style.backgroundColor = "orange";
-        break;
+            break;
         case 2: valid.style.backgroundColor = "yellow";
-        break;
+            break;
         case 3: valid.style.backgroundColor = "lightgreen";
-        break;
+            break;
         case 4: valid.style.backgroundColor = "green";
-                passwordIsOk = true;
-        break;
+            passwordIsOk = true;
+            break;
     }
     if (validCount == 4) {
         valid.style.paddingLeft = "2px";
         valid.innerHTML = '\&#128077';
-    } else 
+    } else
         valid.innerHTML = '';
 }
 
 function onlyPhone(event) {
-    var chr = (event.which)? event.which: event.keyCode;
+    var chr = (event.which) ? event.which : event.keyCode;
     if (chr >= 48 && chr <= 57 || chr == 43 || chr == 45 || chr == 32 || chr == 44) //numbers, +, space, comma
         return true;
     return false;
@@ -435,6 +435,11 @@ function initFields(fieldID) {
         param = "field=7";
     }
 
+    if (fieldID == "systemSessionDeadline") {
+        fileName = "getSystem.php";
+        param = "field=8";
+    }
+
     if (fieldID == "cartBody") {
         fileName = "getShoppingCart.php";
         param = "field=0";
@@ -445,9 +450,9 @@ function initFields(fieldID) {
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
-            if (container.type === "text")
+            if (container.type === "text" || container.type === "number")
                 container.value = req.responseText;
-            else 
+            else
                 container.innerHTML = req.responseText;
         }
     }
@@ -481,7 +486,7 @@ function initProfileEditor(userID) {
         }
     }
     req.send(param);
-    
+
 }
 
 var arrow = false;

@@ -7,10 +7,7 @@
 
         $fieldNumber = $_POST["field"];
         
-        $sql = "SELECT * FROM 
-                    motosystem_mstr 
-                WHERE
-                    MotoSystemID_MSTR = '1'";
+        $sql = "SELECT * FROM motosystem_mstr WHERE MotoSystemID_MSTR = '1'";
 
         $result = mysqli_query($connect, $sql);
         while ($row = mysqli_fetch_row($result)) {                                    

@@ -3,7 +3,7 @@
     include "connect.php";
     $ret = "";
 
-    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - 1200) {
+    if (!empty($_SESSION['cartdeadline']) && $_SESSION['cartdeadline'] < time() - $_SESSION["sessionDeadline"]) {
         unset($_SESSION['cartdeadline']);
         unset($_SESSION['cartid']);
         session_unset();

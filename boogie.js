@@ -489,12 +489,25 @@ function initProfileEditor(userID) {
 
 }
 
-var arrow = false;
 function setArrow(_this) {
+
     let defaultText = _this.innerHTML.split(" ")[0];
-    if (arrow)
+
+    if (_this.id === "isOpen") {
         _this.innerHTML = defaultText + " &#11167;";
-    else
+        _this.id = "isClose";
+    } else {
         _this.innerHTML = defaultText + " &#11165;";
-    arrow = !arrow;
+        _this.id = "isOpen";
+    }
+}
+
+
+function clearOrder() {
+    if (confirm("Biztos, hogy törlöd a vásárlást?"))
+        location.href = "index.php?shoppingcart=cleared";
+}
+
+function aszfChange(e) {
+    document.getElementById("submitBtn").disabled = !e.target.checked;
 }

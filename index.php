@@ -38,7 +38,7 @@
     }
 
 
-    //$_SESSION['cartdeadline'] = time();
+    $_SESSION['cartdeadline'] = time();
 
     $systemIsMessage = false;
     $systemMessage = "";

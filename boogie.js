@@ -511,3 +511,4 @@ function clearOrder() {
 function aszfChange(e) {
     document.getElementById("submitBtn").disabled = !e.target.checked;
 }
+

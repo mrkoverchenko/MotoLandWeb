@@ -246,14 +246,14 @@
 
     
 
-
-
     /*******************************************************
      * LOGIN
      */
 	if (isset($_POST["loginUserName"]) && 
             isset($_POST["loginPassword"]) && 
-                $_POST["formName"] == "logForm") {
+                ($_POST["formName"] == "logForm" || $_POST["formName"] == "shoppingCartLoginForm")) {
+
+        
         
 		function validate($data){
 			$data = trim($data);
@@ -261,7 +261,9 @@
 			$data = htmlspecialchars($data); 
 			return $data;
 		}
-		 
+
+		$activePage = ($_POST["formName"] == "shoppingCartLoginForm") ?  "payments": "";
+
 		$uname = strtolower(validate($_POST['loginUserName']));          //User Mail address or Nick name
 		$passwordFromInput = validate($_POST['loginPassword']);
 			 
@@ -307,8 +309,6 @@
             unset($_POST);
 		}
 
-
-
         $hideTime = 10000;
         $systemIsMessage = true;
         if ($isUser) {
@@ -321,7 +321,149 @@
 
     }
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+        if (!empty($_POST['formName']) && $_POST['formName'] === 'shoppingCartLoginForm') {
+            // HANDLE LOGIN
+
+        } else if (!empty($_POST["formName"]) && $_POST["formName"] === "shoppingCartSendOrderForm") {
+
+            $sessionID = $_POST["shoppingCartSessionID"] ?? "";
+            $userID = $_POST["shoppingCartUserID"] ?? "";
+	        $email = $_POST["shoppingCartEMail"] ?? "";
+            $firstName = $_POST["shoppingCartFirstName"] ?? "";
+            $middleName = $_POST["shoppingCartMiddleName"] ?? "";
+            $lastName = $_POST["shoppingCartLastName"] ?? ""; 
+            $countryID = $_POST["shoppingCartCountryID"] ?? "";
+            $country = $_POST["shoppingCartUserCountry"] ?? "";
+            $postCode = $_POST["shoppingCartPostCode"] ?? "";
+            $city = $_POST["shoppingCartCity"] ?? "";
+            $street = $_POST["shoppingCartStreet"] ?? "";
+            $address = $_POST["shoppingCartAddress"] ?? "";
+            $phone = $_POST["shoppingCartPhone"] ?? "";
+            $fut = $_POST["shoppingCartFut"] ?? "";
+            $fiz = $_POST["shoppingCartFiz"] ?? ""; 
+            $total = $_POST["shoppingCartPartTotal"] ?? "0"; 
+            $usertype = ($userID === "") ? 1 : 2;
+
+            //ORDERS_MSTR TABLE HANDLING
+            $orderSQL = "INSERT INTO 
+                            orders_mstr (
+                                OrdersID_MSTR,
+                                OrdersUserID_MSTR, 
+                                OrdersDateTime_MSTR, 
+                                OrdersFullCost_MSTR, 
+                                OrdersStatusStatusID_MSTR, 
+                                OrdersUserTypeID_MSTR, 
+                                OrdersNote_MSTR
+                        ) VALUES (NULL, '$userID', NULL, '$total', 1, $usertype, '')";
+            mysqli_query($connect, $orderSQL);
+            $lastid = mysqli_insert_id($connect);
+
+            //GET PARTS DATAS
+            $ordersql = "SELECT 
+                            MotoPartsNumber_MSTR,
+                            MotoPartsName_MSTR,
+                            ROUND(MotoPartsBruttoEURPrice_MSTR,2) * ShoppingCartQuantity_DET AS bruttoEUR,
+                            ROUND(MotoPartsNettoPrice_MSTR, 0) AS netto,
+                            ROUND(MotoPartsVAT_MSTR * 100, 0) AS vat,
+                            ROUND((ROUND(MotoPartsNettoPrice_MSTR, 0) * MotoPartsVAT_MSTR) + ROUND(MotoPartsNettoPrice_MSTR, 0)) AS brutto,
+                            QuantityUnitUnit_MSTR AS mee,
+                            ShoppingCartQuantity_DET AS qua,
+                            ROUND((ROUND(MotoPartsNettoPrice_MSTR, 0) * MotoPartsVAT_MSTR) + ROUND(MotoPartsNettoPrice_MSTR, 0)) * ShoppingCartQuantity_DET AS subtotal
+                        FROM 
+                            shoppingcart_mstr, shoppingcart_det, motoparts_mstr, quantityunit_mstr
+                        WHERE 
+                            ShoppingCartSessionID_MSTR = '$sessionID' AND 
+                            ShoppingCartID_MSTR = ShoppingCartMSTRID_DET AND 
+                            ShoppingCartMotoPartsID_DET = MotoPartsID_MSTR AND
+                            MotoPartsQuantityUnitID_MSTR = QuantityUnitID_MSTR";
+
+            $res = mysqli_query($connect, $ordersql);
+            $c = mysqli_num_rows($res);
+            while ($row = mysqli_fetch_assoc($res)) {
+                $partNumber = $row["MotoPartsNumber_MSTR"];
+                $partName = $row["MotoPartsName_MSTR"];
+                $partNetto = $row["netto"];
+                $partVAT =  $row["vat"];
+                $partEUR = $row["bruttoEUR"];
+                $partBrutto = $row["brutto"];
+                $partMee = $row["mee"];
+                $partQua = $row["qua"];
+                $partSubtotal = $row["subtotal"];
+                $partTotal = $partTotal + $partSubtotal;
+
+
+                $orderSQL_B = "INSERT INTO 
+                                    orders_det (
+                                        OrdersID_DET, 
+                                        OrdersMSTRID_DET, 
+                                        OrdersPartsNumber_DET, 
+                                        OrdersPartsName_DET, 
+                                        OrdersNettoPrice_DET, 
+                                        OrdersVAT_DET, 
+                                        OrdersBruttoPrice_DET, 
+                                        OrdersBruttoEURPrice_DET, 
+                                        OrdersQuantity_MSTR, 
+                                        OrdersQuantityUnit_DET
+                                    ) VALUES (
+                                        NULL, 
+                                        '$lastid', 
+                                        '$partNumber', 
+                                        '$partName', 
+                                        '$partNetto', 
+                                        '$partVAT', 
+                                        '$partBrutto', 
+                                        '$partEUR', 
+                                        '$partQua', 
+                                        '$partMee')";
+                mysqli_query($connect, $orderSQL_B);
+            }
+
+
+            // NO REGISTRATED USER, USER DATA SAVING
+            if ($userID === "") {
+                $orderSQL = "INSERT INTO 
+                                ordersuser_mstr ( 
+                                    OrdersUserID_MSTR, 
+                                    OrdersUserOrdersMSTRID_MSTR,	
+                                    OrdersUserUserName_MSTR, 
+                                    OrdersUserCountry_MSTR,     
+                                    OrdersUserPostCode_MSTR,
+                                    OrdersUserCity_MSTR, 
+                                    OrdersUserStreet_MSTR,
+                                    OrdersUserAddress_MSTR,
+                                    OrdersUserPhone_MSTR, 
+                                    OrdersUserEmail_MSTR
+                                ) VALUES (
+                                    NULL,
+                                    '$lastid',
+                                    '$firstName $middleName $lastName',
+                                    '$country',
+                                    '$postCode',
+                                    '$city',
+                                    '$street',
+                                    '$address',
+                                    '$phone',
+	                                '$email')";
+                mysqli_query($connect, $orderSQL);
+
+            }
+
+
+
+
+
+
+
+            $orderNumber = "gatya0001";
+            $hideTime = 20000;
+            $alertType = "alert-dismissible";
+            $systemIsMessage = true;
+            $systemMessage = "<b>Megrendelés sikeresen elküldve!</br>Rendelési azonosító: $orderNumber   darab: $c</b>";
+        }
+
+    }
 
 
     /*********************************************************

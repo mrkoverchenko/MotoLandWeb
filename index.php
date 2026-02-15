@@ -10,7 +10,7 @@
     /***************************************************************
      * SESSION DEADLINE SETTING
      */
-    if (!isset($_SESSION["sessionDeadline"])) {   
+    if (!isset($_SESSION["sessionDeadline"])) {    
         $sql = "SELECT MotoSystemSessionDeadline_MSTR, MotoSystemWebPath_MSTR FROM motosystem_mstr WHERE MotoSystemID_MSTR = '1'";
         $result = mysqli_query($connect, $sql);
         $row = mysqli_fetch_assoc($result);

@@ -47,6 +47,10 @@ function clearForm(formID) {
     }
 }
 
+function changeCountry(_this) {
+    document.getElementById("shoppingCartUserCountry").value = _this.value;
+}
+
 
 function checkUserName(_this) {
 

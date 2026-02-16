@@ -404,7 +404,7 @@
                                         OrdersVAT_DET, 
                                         OrdersBruttoPrice_DET, 
                                         OrdersBruttoEURPrice_DET, 
-                                        OrdersQuantity_MSTR, 
+                                        OrdersQuantity_DET, 
                                         OrdersQuantityUnit_DET
                                     ) VALUES (
                                         NULL, 

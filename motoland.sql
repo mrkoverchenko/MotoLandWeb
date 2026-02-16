@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 13. 17:14
+-- Létrehozás ideje: 2026. Feb 16. 12:40
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -3381,9 +3381,12 @@ CREATE TABLE `lockedquantity_mstr` (
 --
 
 INSERT INTO `lockedquantity_mstr` (`LockedQuantityID_MSTR`, `LockedQuantitySessionID_MSTR`, `LockedQuantityShoppingCartDETID_MSTR`, `LockedQuantityQuantity_MSTR`, `LockedQuantityDateTime_MSTR`, `LockedQuantityPartsID_MSTR`) VALUES
-(167, '1770995348844', 230, 2, '2026-02-13 16:46:01', 1),
-(168, '1770995348844', 231, 1, '2026-02-13 16:46:07', 308),
-(169, '1770998084169', 232, 1, '2026-02-13 16:54:44', 1);
+(170, '1771238399226', 233, 1, '2026-02-16 11:39:59', 1),
+(171, '1771238902296', 234, 1, '2026-02-16 11:48:22', 1),
+(172, '1771238902296', 235, 2, '2026-02-16 11:56:31', 1),
+(173, '1771238902296', 236, 2, '2026-02-16 11:56:43', 2),
+(174, '1771238902296', 237, 3, '2026-02-16 11:56:52', 10),
+(175, '1771238902296', 238, 1, '2026-02-16 11:56:58', 308);
 
 -- --------------------------------------------------------
 
@@ -3630,8 +3633,8 @@ CREATE TABLE `motoparts_mstr` (
 --
 
 INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPartsTypeID_MSTR`, `MotoPartsCategoryID_MSTR`, `MotoPartsNumber_MSTR`, `MotoPartsName_MSTR`, `MotoPartsNettoPrice_MSTR`, `MotoPartsVAT_MSTR`, `MotoPartsBruttoPrice_MSTR`, `MotoPartsBruttoEURPrice_MSTR`, `MotoPartsDiscount_MSTR`, `MotoPartsQuantity_MSTR`, `MotoPartsQuantityUnitID_MSTR`, `MotoPartsInfo_MSTR`) VALUES
-(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 1500.0000, 0.2700, 116.7900, 3.7500, 0.0000, 97.0000, 1, 'Próba'),
-(2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 3750.0000, 0.2700, 0.0000, 2.0000, 0.0000, 50.0000, 1, 'No longer available'),
+(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 1500.0000, 0.2700, 116.7900, 3.7500, 0.0000, 96.0000, 1, 'Próba'),
+(2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 3750.0000, 0.2700, 0.0000, 2.0000, 0.0000, 48.0000, 1, 'No longer available'),
 (3, 43, 1, 1, '14091-0919-17N', 'COVER,SIDE BAG,LH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 11.0000, 1, 'No longer available'),
 (4, 43, 1, 1, '14091-0920-17K', 'COVER,SIDE BAG,RH,M.BLAC', 0.0000, 0.2700, 398.2000, 0.0000, 0.0000, 25.0000, 1, ''),
 (5, 43, 1, 1, '14091-0920-17N', 'COVER,SIDE BAG,RH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
@@ -3639,7 +3642,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (7, 43, 1, 1, '27012-0110', 'HOOK,LH', 0.0000, 0.2700, 17.0700, 0.0000, 0.0000, 25.0000, 1, ''),
 (8, 43, 1, 1, '27012-0111', 'HOOK,RH', 0.0000, 0.2700, 17.0700, 0.0000, 0.0000, 25.0000, 1, ''),
 (9, 43, 1, 1, '43049-0010', 'PACKING', 0.0000, 0.2700, 12.8600, 0.0000, 0.0000, 25.0000, 1, ''),
-(10, 43, 1, 1, '53009-0020', 'HINGE', 1000.0000, 0.2500, 0.0000, 2.5200, 0.1000, 135.0000, 1, 'gatya'),
+(10, 43, 1, 1, '53009-0020', 'HINGE', 1000.0000, 0.2500, 0.0000, 2.5200, 0.1000, 132.0000, 1, 'gatya'),
 (11, 43, 1, 1, '57003-0034-18N', 'BAG-ASSY,LH,BODY BLK+COV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (12, 43, 1, 1, '57003A', 'BAG-ASSY,LH,BODY BLK+COVER BLK', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (13, 43, 1, 1, '57003-0035-18N', 'BAG-ASSY,RH,BODY BLK+COV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
@@ -4131,6 +4134,14 @@ CREATE TABLE `ordersuser_mstr` (
   `OrdersUserEmail_MSTR` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `ordersuser_mstr`
+--
+
+INSERT INTO `ordersuser_mstr` (`OrdersUserID_MSTR`, `OrdersUserOrdersMSTRID_MSTR`, `OrdersUserUserName_MSTR`, `OrdersUserCountry_MSTR`, `OrdersUserPostCode_MSTR`, `OrdersUserCity_MSTR`, `OrdersUserStreet_MSTR`, `OrdersUserAddress_MSTR`, `OrdersUserPhone_MSTR`, `OrdersUserEmail_MSTR`) VALUES
+(14, 50, 'Lövei István ', '', '3533', 'Miskolc', 'Nádastó', '10', '+36 30', 'istvan.lovei@yahoo.com'),
+(15, 51, 'Lövei István ', 'Spanyolország', '3533', 'Miskolc', 'Nádastó', '10', '+36 30', 'istvan.lovei@yahoo.com');
+
 -- --------------------------------------------------------
 
 --
@@ -4146,9 +4157,22 @@ CREATE TABLE `orders_det` (
   `OrdersVAT_DET` double NOT NULL,
   `OrdersBruttoPrice_DET` double NOT NULL,
   `OrdersBruttoEURPrice_DET` double NOT NULL,
-  `OrdersQuantity_MSTR` double NOT NULL,
+  `OrdersQuantity_DET` double NOT NULL,
   `OrdersQuantityUnit_DET` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `orders_det`
+--
+
+INSERT INTO `orders_det` (`OrdersID_DET`, `OrdersMSTRID_DET`, `OrdersPartsNumber_DET`, `OrdersPartsName_DET`, `OrdersNettoPrice_DET`, `OrdersVAT_DET`, `OrdersBruttoPrice_DET`, `OrdersBruttoEURPrice_DET`, `OrdersQuantity_DET`, `OrdersQuantityUnit_DET`) VALUES
+(101, 50, '13151-0040', 'SWITCH-COMP', 1500, 27, 1905, 3.75, 1, 'DB.'),
+(102, 51, '13151-0040', 'SWITCH-COMP', 1500, 27, 1905, 3.75, 1, 'DB.'),
+(103, 52, '13151-0040', 'SWITCH-COMP', 1500, 27, 1905, 3.75, 1, 'DB.'),
+(104, 52, '13151-0040', 'SWITCH-COMP', 1500, 27, 1905, 7.5, 2, 'DB.'),
+(105, 52, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 3750, 27, 4762, 4, 2, 'DB.'),
+(106, 52, '53009-0020', 'HINGE', 1000, 25, 1250, 7.56, 3, 'DB.'),
+(107, 52, '1001531008', 'Tömítés', 110, 25, 138, 0.31, 1, 'DB.');
 
 -- --------------------------------------------------------
 
@@ -4165,6 +4189,15 @@ CREATE TABLE `orders_mstr` (
   `OrdersUserTypeID_MSTR` int(11) NOT NULL,
   `OrdersNote_MSTR` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `orders_mstr`
+--
+
+INSERT INTO `orders_mstr` (`OrdersID_MSTR`, `OrdersUserID_MSTR`, `OrdersDateTime_MSTR`, `OrdersFullCost_MSTR`, `OrdersStatusStatusID_MSTR`, `OrdersUserTypeID_MSTR`, `OrdersNote_MSTR`) VALUES
+(50, 0, '2026-02-16 10:40:34', 1905, 1, 1, ''),
+(51, 0, '2026-02-16 10:54:32', 1905, 1, 1, ''),
+(52, 73, '2026-02-16 11:12:55', 19127, 2, 2, 'Date:2026. 02. 16. 12:12:55, UserID:73, EventID:2\n');
 
 -- --------------------------------------------------------
 
@@ -4227,9 +4260,12 @@ CREATE TABLE `shoppingcart_det` (
 --
 
 INSERT INTO `shoppingcart_det` (`ShoppingCartID_DET`, `ShoppingCartMSTRID_DET`, `ShoppingCartMotoPartsID_DET`, `ShoppingCartQuantity_DET`, `ShoppingCartSessionID_DET`) VALUES
-(230, 158, 1, 2, '1770995348844'),
-(231, 158, 308, 1, '1770995348844'),
-(232, 159, 1, 1, '1770998084169');
+(233, 160, 1, 1, '1771238399226'),
+(234, 161, 1, 1, '1771238902296'),
+(235, 161, 1, 2, '1771238902296'),
+(236, 161, 2, 2, '1771238902296'),
+(237, 161, 10, 3, '1771238902296'),
+(238, 161, 308, 1, '1771238902296');
 
 -- --------------------------------------------------------
 
@@ -4262,8 +4298,8 @@ CREATE TABLE `shoppingcart_mstr` (
 --
 
 INSERT INTO `shoppingcart_mstr` (`ShoppingCartID_MSTR`, `ShoppingCartStatusID_MSTR`, `ShoppingCartDateTime_MSTR`, `ShoppingCartSessionID_MSTR`) VALUES
-(158, 0, '2026-02-13 16:46:01', '1770995348844'),
-(159, 0, '2026-02-13 16:54:44', '1770998084169');
+(160, 0, '2026-02-16 11:39:59', '1771238399226'),
+(161, 0, '2026-02-16 11:48:22', '1771238902296');
 
 -- --------------------------------------------------------
 
@@ -4319,8 +4355,8 @@ CREATE TABLE `user_det` (
 --
 
 INSERT INTO `user_det` (`UserID_DET`, `UserMSTRID_DET`, `UserFirstName_DET`, `UserMiddleName_DET`, `UserLastName_DET`, `UserGenderID_DET`, `UserPhone_DET`, `UserCountryID_DET`, `UserPostCode_DET`, `UserCity_DET`, `UserStreet_DET`, `UserAddress_DET`, `UserRegDate_DET`, `UserMotherName_DET`, `UserBirthPlace_DET`, `UserBirthDate_DET`, `UserLastModifiedDate_DET`) VALUES
-(48, 73, 'Lövei', 'István', '', 3, '+36 46 52899', 2, '3533', 'Miskolc', 'Nádastó', '7', '2026-02-08 13:54:09', '', '', '1900-01-01', '2026-02-11 12:56:44'),
-(49, 74, 'Lövei', 'István', '', 3, '', 2, '', '', '', '', '2026-02-08 14:28:12', '', '', '1900-01-01', '2026-02-08 14:28:12');
+(48, 73, 'Lövei', 'István', '', 3, '+36 46 52899', 2, '3533', 'Miskolc', 'Nádastó', '7', '2026-02-08 13:54:09', '', '', '1900-01-01', '2026-02-16 12:10:58'),
+(49, 74, 'Lövei', 'István', '', 3, '', 2, '', '', '', '', '2026-02-08 14:28:12', '', '', '1900-01-01', '2026-02-16 12:01:41');
 
 -- --------------------------------------------------------
 
@@ -4342,7 +4378,7 @@ CREATE TABLE `user_mstr` (
 --
 
 INSERT INTO `user_mstr` (`UserID_MSTR`, `UserNickName_MSTR`, `UserMail_MSTR`, `UserTypeID_MSTR`, `UserFlagID_MSTR`, `UserNote_MSTR`) VALUES
-(73, 'LoIs', 'istvan.lovei@yahoo.com', 5, 1, ''),
+(73, 'LoIs', 'istvan.lovei@yahoo.com', 4, 2, ''),
 (74, 'istvan.lovei@yahoo.com', 'istvan.lovei@yahoo.com', 1, 1, '');
 
 --
@@ -4572,7 +4608,7 @@ ALTER TABLE `holidays_mstr`
 -- AUTO_INCREMENT a táblához `lockedquantity_mstr`
 --
 ALTER TABLE `lockedquantity_mstr`
-  MODIFY `LockedQuantityID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
+  MODIFY `LockedQuantityID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
 
 --
 -- AUTO_INCREMENT a táblához `motomanufacturer_mstr`
@@ -4614,19 +4650,19 @@ ALTER TABLE `orderstatus_mstr`
 -- AUTO_INCREMENT a táblához `ordersuser_mstr`
 --
 ALTER TABLE `ordersuser_mstr`
-  MODIFY `OrdersUserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `OrdersUserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT a táblához `orders_det`
 --
 ALTER TABLE `orders_det`
-  MODIFY `OrdersID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `OrdersID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT a táblához `orders_mstr`
 --
 ALTER TABLE `orders_mstr`
-  MODIFY `OrdersID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `OrdersID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT a táblához `password_mstr`
@@ -4644,7 +4680,7 @@ ALTER TABLE `quantityunit_mstr`
 -- AUTO_INCREMENT a táblához `shoppingcart_det`
 --
 ALTER TABLE `shoppingcart_det`
-  MODIFY `ShoppingCartID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
+  MODIFY `ShoppingCartID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=239;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_hist`
@@ -4656,7 +4692,7 @@ ALTER TABLE `shoppingcart_hist`
 -- AUTO_INCREMENT a táblához `shoppingcart_mstr`
 --
 ALTER TABLE `shoppingcart_mstr`
-  MODIFY `ShoppingCartID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `ShoppingCartID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- AUTO_INCREMENT a táblához `usertype_mstr`

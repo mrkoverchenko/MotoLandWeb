@@ -265,7 +265,7 @@
                 <form action="index.php" method="POST" id="shopingCartSendOrderForm">
                     <input type="text" name="formName" value="shoppingCartSendOrderForm">
                     <input type="text" name="shoppingCartPartTotal" value="<?php echo $partTotal;?>">
-                    <input type="text" name="shoppingCartUserCountry" value="<?php echo $country ?? '';?>">
+                    <input type="text" name="shoppingCartUserCountry" value="<?php echo $country ?? '';?>" id="shoppingCartUserCountry">
                     <input type="text" name="shoppingCartSessionID" value="<?php echo $sessionID;?>">
                     <input type="text" name="shoppingCartUserID" value="<?php if (isset($userID)) echo $userID; else echo ''; ?>">
 
@@ -354,6 +354,7 @@
                                 <span style="display:inline-block; width:120px;">Ország</span>
                                 <select 
                                     required
+                                    onchange="changeCountry(this)"
                                     class="form-select form-select-sm" 
                                     id="shoppingCartCountryID" 
                                     name="shoppingCartCountryID" 
@@ -369,7 +370,7 @@
                                             $id = $row["CountriesID_MSTR"];
                                             $cntr = $row["CountriesCountry_MSTR"];
                                             
-                                            if ($user === "")
+                                            if ( !isset($_SESSION["userid"]) )
                                                 $ret .= "<option value = '$cntr'>$cntr</option>"; 
                                             else
                                                 $ret .= "<option ".(($countryID == $id)?"selected":"")." value = '$id'>$cntr</option>"; 

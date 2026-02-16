@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 16. 12:40
+-- Gép: localhost
+-- Létrehozás ideje: 2026. Feb 16. 20:16
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -3518,18 +3518,18 @@ CREATE TABLE `motopartscategory_mstr` (
 --
 
 INSERT INTO `motopartscategory_mstr` (`PartsCategoryID_MSTR`, `PartsCategoryManID_MSTR`, `PartsCategoryTypeID_MSTR`, `PartsCategoryCategory_MSTR`, `PartsCategoryCategoryImageFileName_MSTR`) VALUES
-(1, 43, 1, 'Accessory', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_1.png'),
-(2, 43, 1, 'Air Cleaner', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_2.png'),
-(3, 43, 1, 'Balancer', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_3.png'),
-(4, 43, 1, 'Battery Case', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_4.png'),
-(5, 43, 1, 'Brake Pedal', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_5.png'),
-(6, 43, 1, 'Brake Piping', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_6.png'),
-(7, 43, 1, 'Cables', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_7.png'),
-(8, 43, 1, 'Camshaft(s)/Tensioner', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_8.png'),
-(9, 43, 1, 'Chassis Electrical Equipment', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_9.png'),
-(10, 43, 1, 'Clutch', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_10.png'),
-(11, 43, 1, 'Clutch Master Cylinder', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_11.png'),
-(12, 43, 1, 'Cowling Lowers', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/43_1_12.png'),
+(1, 43, 1, 'Accessory', 'http://localhost/MotoLandWeb/categories/43_1_1.png'),
+(2, 43, 1, 'Air Cleaner', 'http://localhost/MotoLandWeb/categories/43_1_2.png'),
+(3, 43, 1, 'Balancer', 'http://localhost/MotoLandWeb/categories/43_1_3.png'),
+(4, 43, 1, 'Battery Case', 'http://localhost/MotoLandWeb/categories/43_1_4.png'),
+(5, 43, 1, 'Brake Pedal', 'http://localhost/MotoLandWeb/categories/43_1_5.png'),
+(6, 43, 1, 'Brake Piping', 'http://localhost/MotoLandWeb/categories/43_1_6.png'),
+(7, 43, 1, 'Cables', 'http://localhost/MotoLandWeb/categories/43_1_7.png'),
+(8, 43, 1, 'Camshaft(s)/Tensioner', 'http://localhost/MotoLandWeb/categories/43_1_8.png'),
+(9, 43, 1, 'Chassis Electrical Equipment', 'http://localhost/MotoLandWeb/categories/43_1_9.png'),
+(10, 43, 1, 'Clutch', 'http://localhost/MotoLandWeb/categories/43_1_10.png'),
+(11, 43, 1, 'Clutch Master Cylinder', 'http://localhost/MotoLandWeb/categories/43_1_11.png'),
+(12, 43, 1, 'Cowling Lowers', 'http://localhost/MotoLandWeb/categories/43_1_12.png'),
 (13, 43, 1, 'Cowling(Center)', ''),
 (14, 43, 1, 'Cowling(Upper)', ''),
 (15, 43, 1, 'Crankcase', ''),
@@ -3592,18 +3592,18 @@ INSERT INTO `motopartscategory_mstr` (`PartsCategoryID_MSTR`, `PartsCategoryManI
 (72, 43, 1, 'Valve(s)', ''),
 (73, 43, 1, 'Water Pipe', ''),
 (74, 43, 1, 'Windshield', ''),
-(93, 37, 29, 'CYLINDER HEAD COVER', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_1.png'),
-(94, 37, 29, 'GENERATOR COVER', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_2.png'),
-(95, 37, 29, 'GENERATOR', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_3.png'),
-(96, 37, 29, 'STARTER MOTOR', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_4.png'),
-(97, 37, 29, 'OIL PAN, OIL PUMP', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_5.png'),
-(98, 37, 29, 'CRANKCASE', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_6.png'),
-(99, 37, 29, 'CRANKSHAFT PISTON', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_7.png'),
-(100, 37, 29, 'TRANSMISSION', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_8.png'),
-(101, 37, 29, 'GEARSHIFT DRUM', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_9.png'),
-(102, 37, 29, 'CYLINDER HEAD', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_10.png'),
-(103, 37, 29, 'THROTTLE BODY', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_11.png'),
-(104, 37, 29, 'CAMSHAFT', 'http://localhost/mrkoverchenko/MotoLandWeb/categories/37_1_12.png');
+(93, 37, 29, 'CYLINDER HEAD COVER', 'http://localhost/MotoLandWeb/categories/37_1_1.png'),
+(94, 37, 29, 'GENERATOR COVER', 'http://localhost/MotoLandWeb/categories/37_1_2.png'),
+(95, 37, 29, 'GENERATOR', 'http://localhost/MotoLandWeb/categories/37_1_3.png'),
+(96, 37, 29, 'STARTER MOTOR', 'http://localhost/MotoLandWeb/categories/37_1_4.png'),
+(97, 37, 29, 'OIL PAN, OIL PUMP', 'http://localhost/MotoLandWeb/categories/37_1_5.png'),
+(98, 37, 29, 'CRANKCASE', 'http://localhost/MotoLandWeb/categories/37_1_6.png'),
+(99, 37, 29, 'CRANKSHAFT PISTON', 'http://localhost/MotoLandWeb/categories/37_1_7.png'),
+(100, 37, 29, 'TRANSMISSION', 'http://localhost/MotoLandWeb/categories/37_1_8.png'),
+(101, 37, 29, 'GEARSHIFT DRUM', 'http://localhost/MotoLandWeb/categories/37_1_9.png'),
+(102, 37, 29, 'CYLINDER HEAD', 'http://localhost/MotoLandWeb/categories/37_1_10.png'),
+(103, 37, 29, 'THROTTLE BODY', 'http://localhost/MotoLandWeb/categories/37_1_11.png'),
+(104, 37, 29, 'CAMSHAFT', 'http://localhost/MotoLandWeb/categories/37_1_12.png');
 
 -- --------------------------------------------------------
 
@@ -4040,7 +4040,7 @@ CREATE TABLE `motosystem_mstr` (
 --
 
 INSERT INTO `motosystem_mstr` (`MotoSystemID_MSTR`, `MotoSystemEUR_MSTR`, `MotoSystemVAT_MSTR`, `MotoSystemDiscount_MSTR`, `MotoSystemImagePath_MSTR`, `MotoSystemHourPrice_MSTR`, `MotoSystemDateTime_MSTR`, `MotoSystemWebPath_MSTR`, `MotoSystemSessionDeadline_MSTR`) VALUES
-(1, 402.5700, 0.2500, 0.1000, 'https://ssdd', 6780.00, '2025-10-22 14:11:33', 'http://localhost/mrkoverchenko/MotoLandWeb/', 3600);
+(1, 402.5700, 0.2500, 0.1000, 'https://ssdd', 6780.00, '2025-10-22 14:11:33', 'http://localhost/MotoLandWeb/', 3600);
 
 -- --------------------------------------------------------
 

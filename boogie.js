@@ -1,6 +1,23 @@
 
 const defaultFieldMesage = "A *-al jelszett mezők kitöltése kötelező!";
-const defaultPath = "http://localhost/mrkoverchenko/MotoLandWeb/";
+
+var defaultPath = "http://localhost/errorfile/";
+
+function getSystem() {
+    param = "field=7";
+
+    var req = new XMLHttpRequest();
+    req.open("POST", "getSystem.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200)  {
+            defaultPath = req.responseText;
+        }
+    }
+    req.send(param);
+}
+
+
 
 function checkForms(_this) {
     let thisForm = document.getElementById(_this.id);
@@ -82,6 +99,9 @@ function checkUserName(_this) {
 }
 
 function startItem(item) {
+
+    getSystem();
+
     let container = document.getElementById("subcontainer");
     history.pushState({}, '', 'index.php');
     //history.replaceState({}, '', 'index.php');

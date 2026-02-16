@@ -2,7 +2,7 @@
 
     if (session_status() != PHP_SESSION_ACTIVE) {
         session_start();
-        $_SESSION["systemPath"] = "http://localhost/mrkoverchenko/MotoLandWeb/";
+        $_SESSION["systemPath"] = "http://localhost/MotoLandWeb/";
     }
 
     include "connect.php";

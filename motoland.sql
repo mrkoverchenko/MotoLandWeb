@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Gép: localhost
--- Létrehozás ideje: 2026. Feb 16. 20:16
+-- Gép: 127.0.0.1
+-- Létrehozás ideje: 2026. Feb 17. 15:09
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -3376,18 +3376,6 @@ CREATE TABLE `lockedquantity_mstr` (
   `LockedQuantityPartsID_MSTR` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
---
--- A tábla adatainak kiíratása `lockedquantity_mstr`
---
-
-INSERT INTO `lockedquantity_mstr` (`LockedQuantityID_MSTR`, `LockedQuantitySessionID_MSTR`, `LockedQuantityShoppingCartDETID_MSTR`, `LockedQuantityQuantity_MSTR`, `LockedQuantityDateTime_MSTR`, `LockedQuantityPartsID_MSTR`) VALUES
-(170, '1771238399226', 233, 1, '2026-02-16 11:39:59', 1),
-(171, '1771238902296', 234, 1, '2026-02-16 11:48:22', 1),
-(172, '1771238902296', 235, 2, '2026-02-16 11:56:31', 1),
-(173, '1771238902296', 236, 2, '2026-02-16 11:56:43', 2),
-(174, '1771238902296', 237, 3, '2026-02-16 11:56:52', 10),
-(175, '1771238902296', 238, 1, '2026-02-16 11:56:58', 308);
-
 -- --------------------------------------------------------
 
 --
@@ -3518,18 +3506,18 @@ CREATE TABLE `motopartscategory_mstr` (
 --
 
 INSERT INTO `motopartscategory_mstr` (`PartsCategoryID_MSTR`, `PartsCategoryManID_MSTR`, `PartsCategoryTypeID_MSTR`, `PartsCategoryCategory_MSTR`, `PartsCategoryCategoryImageFileName_MSTR`) VALUES
-(1, 43, 1, 'Accessory', 'http://localhost/MotoLandWeb/categories/43_1_1.png'),
-(2, 43, 1, 'Air Cleaner', 'http://localhost/MotoLandWeb/categories/43_1_2.png'),
-(3, 43, 1, 'Balancer', 'http://localhost/MotoLandWeb/categories/43_1_3.png'),
-(4, 43, 1, 'Battery Case', 'http://localhost/MotoLandWeb/categories/43_1_4.png'),
-(5, 43, 1, 'Brake Pedal', 'http://localhost/MotoLandWeb/categories/43_1_5.png'),
-(6, 43, 1, 'Brake Piping', 'http://localhost/MotoLandWeb/categories/43_1_6.png'),
-(7, 43, 1, 'Cables', 'http://localhost/MotoLandWeb/categories/43_1_7.png'),
-(8, 43, 1, 'Camshaft(s)/Tensioner', 'http://localhost/MotoLandWeb/categories/43_1_8.png'),
-(9, 43, 1, 'Chassis Electrical Equipment', 'http://localhost/MotoLandWeb/categories/43_1_9.png'),
-(10, 43, 1, 'Clutch', 'http://localhost/MotoLandWeb/categories/43_1_10.png'),
-(11, 43, 1, 'Clutch Master Cylinder', 'http://localhost/MotoLandWeb/categories/43_1_11.png'),
-(12, 43, 1, 'Cowling Lowers', 'http://localhost/MotoLandWeb/categories/43_1_12.png'),
+(1, 43, 1, 'Accessory', 'categories/43_1_1.png'),
+(2, 43, 1, 'Air Cleaner', 'categories/43_1_2.png'),
+(3, 43, 1, 'Balancer', 'categories/43_1_3.png'),
+(4, 43, 1, 'Battery Case', 'categories/43_1_4.png'),
+(5, 43, 1, 'Brake Pedal', 'categories/43_1_5.png'),
+(6, 43, 1, 'Brake Piping', 'categories/43_1_6.png'),
+(7, 43, 1, 'Cables', 'categories/43_1_7.png'),
+(8, 43, 1, 'Camshaft(s)/Tensioner', 'categories/43_1_8.png'),
+(9, 43, 1, 'Chassis Electrical Equipment', 'categories/43_1_9.png'),
+(10, 43, 1, 'Clutch', 'categories/43_1_10.png'),
+(11, 43, 1, 'Clutch Master Cylinder', 'categories/43_1_11.png'),
+(12, 43, 1, 'Cowling Lowers', 'categories/43_1_12.png'),
 (13, 43, 1, 'Cowling(Center)', ''),
 (14, 43, 1, 'Cowling(Upper)', ''),
 (15, 43, 1, 'Crankcase', ''),
@@ -3592,18 +3580,18 @@ INSERT INTO `motopartscategory_mstr` (`PartsCategoryID_MSTR`, `PartsCategoryManI
 (72, 43, 1, 'Valve(s)', ''),
 (73, 43, 1, 'Water Pipe', ''),
 (74, 43, 1, 'Windshield', ''),
-(93, 37, 29, 'CYLINDER HEAD COVER', 'http://localhost/MotoLandWeb/categories/37_1_1.png'),
-(94, 37, 29, 'GENERATOR COVER', 'http://localhost/MotoLandWeb/categories/37_1_2.png'),
-(95, 37, 29, 'GENERATOR', 'http://localhost/MotoLandWeb/categories/37_1_3.png'),
-(96, 37, 29, 'STARTER MOTOR', 'http://localhost/MotoLandWeb/categories/37_1_4.png'),
-(97, 37, 29, 'OIL PAN, OIL PUMP', 'http://localhost/MotoLandWeb/categories/37_1_5.png'),
-(98, 37, 29, 'CRANKCASE', 'http://localhost/MotoLandWeb/categories/37_1_6.png'),
-(99, 37, 29, 'CRANKSHAFT PISTON', 'http://localhost/MotoLandWeb/categories/37_1_7.png'),
-(100, 37, 29, 'TRANSMISSION', 'http://localhost/MotoLandWeb/categories/37_1_8.png'),
-(101, 37, 29, 'GEARSHIFT DRUM', 'http://localhost/MotoLandWeb/categories/37_1_9.png'),
-(102, 37, 29, 'CYLINDER HEAD', 'http://localhost/MotoLandWeb/categories/37_1_10.png'),
-(103, 37, 29, 'THROTTLE BODY', 'http://localhost/MotoLandWeb/categories/37_1_11.png'),
-(104, 37, 29, 'CAMSHAFT', 'http://localhost/MotoLandWeb/categories/37_1_12.png');
+(93, 37, 29, 'CYLINDER HEAD COVER', 'categories/37_1_1.png'),
+(94, 37, 29, 'GENERATOR COVER', 'categories/37_1_2.png'),
+(95, 37, 29, 'GENERATOR', 'categories/37_1_3.png'),
+(96, 37, 29, 'STARTER MOTOR', 'categories/37_1_4.png'),
+(97, 37, 29, 'OIL PAN, OIL PUMP', 'categories/37_1_5.png'),
+(98, 37, 29, 'CRANKCASE', 'categories/37_1_6.png'),
+(99, 37, 29, 'CRANKSHAFT PISTON', 'categories/37_1_7.png'),
+(100, 37, 29, 'TRANSMISSION', 'categories/37_1_8.png'),
+(101, 37, 29, 'GEARSHIFT DRUM', 'categories/37_1_9.png'),
+(102, 37, 29, 'CYLINDER HEAD', 'categories/37_1_10.png'),
+(103, 37, 29, 'THROTTLE BODY', 'categories/37_1_11.png'),
+(104, 37, 29, 'CAMSHAFT', 'categories/37_1_12.png');
 
 -- --------------------------------------------------------
 
@@ -3633,8 +3621,8 @@ CREATE TABLE `motoparts_mstr` (
 --
 
 INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPartsTypeID_MSTR`, `MotoPartsCategoryID_MSTR`, `MotoPartsNumber_MSTR`, `MotoPartsName_MSTR`, `MotoPartsNettoPrice_MSTR`, `MotoPartsVAT_MSTR`, `MotoPartsBruttoPrice_MSTR`, `MotoPartsBruttoEURPrice_MSTR`, `MotoPartsDiscount_MSTR`, `MotoPartsQuantity_MSTR`, `MotoPartsQuantityUnitID_MSTR`, `MotoPartsInfo_MSTR`) VALUES
-(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 1500.0000, 0.2700, 116.7900, 3.7500, 0.0000, 96.0000, 1, 'Próba'),
-(2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 3750.0000, 0.2700, 0.0000, 2.0000, 0.0000, 48.0000, 1, 'No longer available'),
+(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 1500.0000, 0.2700, 116.7900, 3.7500, 0.0000, 100.0000, 1, 'Próba'),
+(2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 3750.0000, 0.2700, 0.0000, 2.0000, 0.0000, 50.0000, 1, 'No longer available'),
 (3, 43, 1, 1, '14091-0919-17N', 'COVER,SIDE BAG,LH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 11.0000, 1, 'No longer available'),
 (4, 43, 1, 1, '14091-0920-17K', 'COVER,SIDE BAG,RH,M.BLAC', 0.0000, 0.2700, 398.2000, 0.0000, 0.0000, 25.0000, 1, ''),
 (5, 43, 1, 1, '14091-0920-17N', 'COVER,SIDE BAG,RH,M.SILV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
@@ -3642,7 +3630,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (7, 43, 1, 1, '27012-0110', 'HOOK,LH', 0.0000, 0.2700, 17.0700, 0.0000, 0.0000, 25.0000, 1, ''),
 (8, 43, 1, 1, '27012-0111', 'HOOK,RH', 0.0000, 0.2700, 17.0700, 0.0000, 0.0000, 25.0000, 1, ''),
 (9, 43, 1, 1, '43049-0010', 'PACKING', 0.0000, 0.2700, 12.8600, 0.0000, 0.0000, 25.0000, 1, ''),
-(10, 43, 1, 1, '53009-0020', 'HINGE', 1000.0000, 0.2500, 0.0000, 2.5200, 0.1000, 132.0000, 1, 'gatya'),
+(10, 43, 1, 1, '53009-0020', 'HINGE', 1000.0000, 0.2500, 0.0000, 2.5200, 0.1000, 135.0000, 1, 'gatya'),
 (11, 43, 1, 1, '57003-0034-18N', 'BAG-ASSY,LH,BODY BLK+COV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (12, 43, 1, 1, '57003A', 'BAG-ASSY,LH,BODY BLK+COVER BLK', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
 (13, 43, 1, 1, '57003-0035-18N', 'BAG-ASSY,RH,BODY BLK+COV', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 25.0000, 1, 'No longer available'),
@@ -3927,7 +3915,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (292, 43, 1, 12, '92200-0157', '5 pc - Washer (plastic)', 0.0000, 0.2700, 11.3000, 0.0000, 0.0000, 25.0000, 1, ''),
 (293, 43, 1, 12, '92200-0284', '5 pc - WASHER,5.5X20X1.2', 0.0000, 0.2700, 11.2000, 0.0000, 0.0000, 25.0000, 1, ''),
 (294, 43, 1, 12, '92210-0351', 'NUT,5MM', 0.0000, 0.2700, 6.9200, 0.0000, 0.0000, 25.0000, 1, ''),
-(308, 37, 29, 93, '1001531008', 'Tömítés', 110.0000, 0.2500, 125.0000, 0.3100, 0.1000, 4.0000, 1, '2 db. kell belőle'),
+(308, 37, 29, 93, '1001531008', 'Tömítés', 110.0000, 0.2500, 125.0000, 0.3100, 0.1000, 5.0000, 1, '2 db. kell belőle'),
 (309, 37, 29, 93, '1002725058', 'Szelepfedél', 0.0000, 0.2500, 0.0000, 0.0400, 0.1000, 2.0000, 1, ' '),
 (310, 37, 29, 93, '1000619335', 'Terelő lemez', 6700.0000, 0.2500, 6715.0000, 16.6800, 0.1000, 10.0000, 1, '2 db. kell belőle'),
 (311, 37, 29, 93, '1001531016', 'Tömítés - szelepfedél', 16420.0000, 0.0000, 16420.0000, 40.7900, 0.0000, 4.0000, 1, ' '),
@@ -4028,7 +4016,7 @@ CREATE TABLE `motosystem_mstr` (
   `MotoSystemEUR_MSTR` double(14,4) NOT NULL,
   `MotoSystemVAT_MSTR` double(14,4) NOT NULL,
   `MotoSystemDiscount_MSTR` double(14,4) NOT NULL,
-  `MotoSystemImagePath_MSTR` varchar(100) NOT NULL,
+  `MotoSystemShowID_MSTR` varchar(1) NOT NULL,
   `MotoSystemHourPrice_MSTR` double(10,2) NOT NULL,
   `MotoSystemDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp(),
   `MotoSystemWebPath_MSTR` varchar(200) NOT NULL,
@@ -4039,8 +4027,8 @@ CREATE TABLE `motosystem_mstr` (
 -- A tábla adatainak kiíratása `motosystem_mstr`
 --
 
-INSERT INTO `motosystem_mstr` (`MotoSystemID_MSTR`, `MotoSystemEUR_MSTR`, `MotoSystemVAT_MSTR`, `MotoSystemDiscount_MSTR`, `MotoSystemImagePath_MSTR`, `MotoSystemHourPrice_MSTR`, `MotoSystemDateTime_MSTR`, `MotoSystemWebPath_MSTR`, `MotoSystemSessionDeadline_MSTR`) VALUES
-(1, 402.5700, 0.2500, 0.1000, 'https://ssdd', 6780.00, '2025-10-22 14:11:33', 'http://localhost/MotoLandWeb/', 3600);
+INSERT INTO `motosystem_mstr` (`MotoSystemID_MSTR`, `MotoSystemEUR_MSTR`, `MotoSystemVAT_MSTR`, `MotoSystemDiscount_MSTR`, `MotoSystemShowID_MSTR`, `MotoSystemHourPrice_MSTR`, `MotoSystemDateTime_MSTR`, `MotoSystemWebPath_MSTR`, `MotoSystemSessionDeadline_MSTR`) VALUES
+(1, 402.5700, 0.2500, 0.1000, '0', 6780.00, '2025-10-22 14:11:33', 'http://localhost/MotoLandWeb/', 3600);
 
 -- --------------------------------------------------------
 
@@ -4255,18 +4243,6 @@ CREATE TABLE `shoppingcart_det` (
   `ShoppingCartSessionID_DET` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
---
--- A tábla adatainak kiíratása `shoppingcart_det`
---
-
-INSERT INTO `shoppingcart_det` (`ShoppingCartID_DET`, `ShoppingCartMSTRID_DET`, `ShoppingCartMotoPartsID_DET`, `ShoppingCartQuantity_DET`, `ShoppingCartSessionID_DET`) VALUES
-(233, 160, 1, 1, '1771238399226'),
-(234, 161, 1, 1, '1771238902296'),
-(235, 161, 1, 2, '1771238902296'),
-(236, 161, 2, 2, '1771238902296'),
-(237, 161, 10, 3, '1771238902296'),
-(238, 161, 308, 1, '1771238902296');
-
 -- --------------------------------------------------------
 
 --
@@ -4292,14 +4268,6 @@ CREATE TABLE `shoppingcart_mstr` (
   `ShoppingCartDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Vásárlás kezdetének időpontja',
   `ShoppingCartSessionID_MSTR` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `shoppingcart_mstr`
---
-
-INSERT INTO `shoppingcart_mstr` (`ShoppingCartID_MSTR`, `ShoppingCartStatusID_MSTR`, `ShoppingCartDateTime_MSTR`, `ShoppingCartSessionID_MSTR`) VALUES
-(160, 0, '2026-02-16 11:39:59', '1771238399226'),
-(161, 0, '2026-02-16 11:48:22', '1771238902296');
 
 -- --------------------------------------------------------
 

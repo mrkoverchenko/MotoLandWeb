@@ -290,6 +290,7 @@
                             <div class="col-sm-2 mrg" >Fizetendő</div>
                             <div class="col-sm-2">
                                 <div class="form-group">
+                                    <input type="hidden" readonly id="brutto"/>
                                     <input type="text" 
                                         class="form-control" 
                                         disabled 

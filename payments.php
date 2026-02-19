@@ -81,7 +81,7 @@
                         if (isset($_SESSION["userid"]))
                             $userID = $_SESSION["userid"];
 
-                        $sql = "SELECT 
+/*                        $sql = "SELECT 
                                     MotoPartsNumber_MSTR,
                                     MotoPartsName_MSTR,
                                     ROUND(MotoPartsBruttoEURPrice_MSTR,2) * ShoppingCartQuantity_DET AS bruttoEUR,
@@ -97,19 +97,43 @@
                                     ShoppingCartSessionID_MSTR = '$sessionID' AND 
                                     ShoppingCartID_MSTR = ShoppingCartMSTRID_DET AND 
                                     ShoppingCartMotoPartsID_DET = MotoPartsID_MSTR AND
+                                    MotoPartsQuantityUnitID_MSTR = QuantityUnitID_MSTR";*/
+
+
+
+                        $sql = "SELECT 
+                                    MotoPartsNumber_MSTR,
+                                    MotoPartsName_MSTR,
+                                    ROUND(MotoPartsBruttoEURPrice_MSTR, 2) AS bruttoEUR,
+                                    ROUND(MotoPartsNettoPrice_MSTR, 0) AS netto,
+                                    ROUND(MotoPartsVAT_MSTR * 100, 0) AS vat,
+                                    ROUND(MotoPartsDiscount_MSTR * 100, 0) AS disc,
+                                    ROUND(MotoPartsBruttoPrice_MSTR, 0) AS brutto,
+                                    QuantityUnitUnit_MSTR AS mee,
+                                    ShoppingCartQuantity_DET AS qua,
+                                    ROUND(MotoPartsBruttoPrice_MSTR * ShoppingCartQuantity_DET, 0) AS subtotal
+                                FROM 
+                                    shoppingcart_mstr, shoppingcart_det, motoparts_mstr, quantityunit_mstr
+                                WHERE 
+                                    ShoppingCartSessionID_MSTR = '$sessionID' AND 
+                                    ShoppingCartID_MSTR = ShoppingCartMSTRID_DET AND 
+                                    ShoppingCartMotoPartsID_DET = MotoPartsID_MSTR AND
                                     MotoPartsQuantityUnitID_MSTR = QuantityUnitID_MSTR";
+
+
 
                         $tbl = " <div class='row brdr'>
                                     <table class='table table-hover' style='color: gray;'>
                                         <thead>
                                             <tr>
-                                                <th scope='col'></th>
+                                                <th scope='col'>No.</th>
                                                 <th scope='col'>Cikkszám</th>
                                                 <th scope='col'>Terméknév</th>
                                                 <th scope='col'>Netto</th>
                                                 <th scope='col'>Áfa</th>
-                                                <th scope='col'>&euro;</th>
+                                                <th scope='col'>Kedv.</th>
                                                 <th scope='col'>Egységár</th>
+                                                <th scope='col'>&euro;</th>
                                                 <th scope='col'>Menny.</th>
                                                 <th scope='col'>Összesen</th>
                                             </tr>
@@ -125,8 +149,9 @@
                             $partName = $row["MotoPartsName_MSTR"];
                             $partNetto = $row["netto"].".-";
                             $partVAT =  $row["vat"]."%";
-                            $partEUR = $row["bruttoEUR"]."&euro;";
+                            $partDISC =  $row["disc"]."%";
                             $partBrutto = $row["brutto"].".-";
+                            $partEUR = $row["bruttoEUR"]."&euro;";
                             $partMee = $row["mee"];
                             $partQua = $row["qua"]." $partMee";
                             $partSubtotal = $row["subtotal"];
@@ -137,8 +162,9 @@
                                     <td>$partName</td>
                                     <td>$partNetto</td>
                                     <td>$partVAT</td>
-                                    <td>$partEUR</td>
+                                    <td>$partDISC</td>
                                     <td>$partBrutto</td>
+                                    <td>$partEUR</td>
                                     <td>$partQua</td>
                                     <td>$partSubtotal.-</td>
                                     </tr>";
@@ -152,8 +178,9 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td>Fizetendő:</td>
-                                    <td><u><strong>$partTotal.- Ft.</strong></u></td>
+                                    <td></td>
+                                    <td style='color:green'><b>Fizetendő:</b></td>
+                                    <td style='color:green'><u><strong>$partTotal.- Ft.</strong></u></td>
                                 </tr>
                             </tbody></table></div>";
                         //TermékBrutto (&euro;)
@@ -263,11 +290,11 @@
 
 
                 <form action="index.php" method="POST" id="shopingCartSendOrderForm">
-                    <input type="text" name="formName" value="shoppingCartSendOrderForm">
-                    <input type="text" name="shoppingCartPartTotal" value="<?php echo $partTotal;?>">
-                    <input type="text" name="shoppingCartUserCountry" value="<?php echo $country ?? '';?>" id="shoppingCartUserCountry">
-                    <input type="text" name="shoppingCartSessionID" value="<?php echo $sessionID;?>">
-                    <input type="text" name="shoppingCartUserID" value="<?php if (isset($userID)) echo $userID; else echo ''; ?>">
+                    <input type="hidden" name="formName" value="shoppingCartSendOrderForm">
+                    <input type="hidden" name="shoppingCartPartTotal" value="<?php echo $partTotal;?>">
+                    <input type="hidden" name="shoppingCartUserCountry" value="<?php echo $country ?? '';?>" id="shoppingCartUserCountry">
+                    <input type="hidden" name="shoppingCartSessionID" value="<?php echo $sessionID;?>">
+                    <input type="hidden" name="shoppingCartUserID" value="<?php if (isset($userID)) echo $userID; else echo ''; ?>">
 
 
                     <!--------------------------------------------------------------

@@ -99,7 +99,6 @@ function checkUserName(_this) {
 }
 
 function startItem(item) {
-
     getSystem();
 
     let container = document.getElementById("subcontainer");
@@ -116,6 +115,22 @@ function startItem(item) {
     }
     req.send(param);
 }
+
+
+
+function getMyOrders() {
+    var param = "orderID=" + document.getElementById("myorderslist").value;
+    var req = new XMLHttpRequest();
+    req.open("POST", "getMyOrders.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            document.getElementById("orderedTBody").innerHTML = req.responseText;
+        }
+    }
+    req.send(param);
+}
+
 
 
 function removePart(_this) {
@@ -321,16 +336,23 @@ function partSelect(_this) {
 
             document.getElementById("motopartinfo").value = myObj[0].MotoPartsInfo_MSTR;
 
-            document.getElementById("totalcost").value = ((Number(netto) * Number(vat)) + Number(netto)) * selectedQuantity.value;
+            let brutto = myObj[0].MotoPartsBruttoPrice_MSTR;
+            document.getElementById("brutto").value = brutto;
+            document.getElementById("totalcost").value = brutto * selectedQuantity.value;
+
+            //document.getElementById("totalcost").value = ((Number(netto) * Number(vat)) + Number(netto)) * selectedQuantity.value;
         }
     }
     req.send(param);
 }
 
+
+
 function setCost(_this) {
-    var netto = document.getElementById("motopartnettoprice").value;
-    var vat = document.getElementById("motopartvat").value / 100;
-    document.getElementById("totalcost").value = ((Number(netto) * Number(vat)) + Number(netto)) * _this.value;
+    var brutto = document.getElementById("brutto").value;
+    //var netto = document.getElementById("motopartnettoprice").value;
+    //var vat = document.getElementById("motopartvat").value / 100;
+    document.getElementById("totalcost").value = brutto * _this.value;
 }
 
 

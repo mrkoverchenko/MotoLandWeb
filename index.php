@@ -232,6 +232,7 @@
 
         if ($_GET["shoppingcart"] === "cleared") {
             unset($_SESSION['cartdeadline']);
+            unset($_SESSION["cartid"]);
             //unset($_SESSION['cartid']);
             $shoppingcartqua = 0;
 
@@ -346,6 +347,7 @@
             $total = $_POST["shoppingCartPartTotal"] ?? "0"; 
             $usertype = ($userID === "") ? 1 : 2;
 
+            $orderDateTime = date("Y-m-d H:i:s");
             //ORDERS_MSTR TABLE HANDLING
             $orderSQL = "INSERT INTO 
                             orders_mstr (
@@ -356,7 +358,7 @@
                                 OrdersStatusStatusID_MSTR, 
                                 OrdersUserTypeID_MSTR, 
                                 OrdersNote_MSTR
-                        ) VALUES (NULL, '$userID', NULL, '$total', 1, $usertype, '')";
+                        ) VALUES (NULL, '$userID', '$orderDateTime', '$total', 1, $usertype, '')";
             mysqli_query($connect, $orderSQL);
             $lastid = mysqli_insert_id($connect);
 
@@ -367,6 +369,7 @@
                             ROUND(MotoPartsBruttoEURPrice_MSTR,2) * ShoppingCartQuantity_DET AS bruttoEUR,
                             ROUND(MotoPartsNettoPrice_MSTR, 0) AS netto,
                             ROUND(MotoPartsVAT_MSTR * 100, 0) AS vat,
+                            ROUND(MotoPartsDiscount_MSTR * 100, 0) AS disc,
                             ROUND((ROUND(MotoPartsNettoPrice_MSTR, 0) * MotoPartsVAT_MSTR) + ROUND(MotoPartsNettoPrice_MSTR, 0)) AS brutto,
                             QuantityUnitUnit_MSTR AS mee,
                             ShoppingCartQuantity_DET AS qua,
@@ -386,6 +389,7 @@
                 $partName = $row["MotoPartsName_MSTR"];
                 $partNetto = $row["netto"];
                 $partVAT =  $row["vat"];
+                $partDISC =  $row["disc"];
                 $partEUR = $row["bruttoEUR"];
                 $partBrutto = $row["brutto"];
                 $partMee = $row["mee"];
@@ -402,6 +406,7 @@
                                         OrdersPartsName_DET, 
                                         OrdersNettoPrice_DET, 
                                         OrdersVAT_DET, 
+                                        OrdersDiscount_DET,
                                         OrdersBruttoPrice_DET, 
                                         OrdersBruttoEURPrice_DET, 
                                         OrdersQuantity_DET, 
@@ -413,6 +418,7 @@
                                         '$partName', 
                                         '$partNetto', 
                                         '$partVAT', 
+                                        '$partDisc',
                                         '$partBrutto', 
                                         '$partEUR', 
                                         '$partQua', 
@@ -452,15 +458,17 @@
 
 
 
+            unset($_SESSION['cartdeadline']);
+            unset($_SESSION["cartid"]);
+            $cartid = "";
+            $activePage = "sales";
+            $shoppingcartqua = 0;
 
 
-
-
-            $orderNumber = "gatya0001";
             $hideTime = 20000;
             $alertType = "alert-dismissible";
             $systemIsMessage = true;
-            $systemMessage = "<b>Megrendelés sikeresen elküldve!</br>Rendelési azonosító: $orderNumber   darab: $c</b>";
+            $systemMessage = "<b>Megrendelés sikeresen elküldve!</br>Időpont: $orderDateTime</br>Rendelési azonosító: $lastid</br>$c tétel </b>";
         }
 
     }
@@ -894,8 +902,10 @@
                                             <li><a href='#myProfileForm' data-toggle='modal' ><span class='glyphicon glyphicon-user' style='margin-right:20px;'></span>Profil</a></li>
                                             <li><a href='#mySecurityForm' data-toggle='modal' ><span class='glyphicon glyphicon-lock' style='margin-right:20px;'></span>Biztonság</a></li>
                                             <li role='separator' class='divider'></li>
+
                                             <li><a href='#'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalásaim</a></li>
-                                            <li><a href='#'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>";
+
+                                            <li><a href='#' onclick='startItem(\"orderedItems\")'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>";
 
                                             if (isset($_SESSION['usertype']) && ($_SESSION['usertype'] == "admin" || $_SESSION["usertype"] == "root")) {
                                                 echo "<li role='separator' class='divider'></li>

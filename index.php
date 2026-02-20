@@ -322,6 +322,10 @@
 
     }
 
+
+
+
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($_POST['formName']) && $_POST['formName'] === 'shoppingCartLoginForm') {
@@ -346,7 +350,7 @@
             $fiz = $_POST["shoppingCartFiz"] ?? ""; 
             $total = $_POST["shoppingCartPartTotal"] ?? "0"; 
             $usertype = ($userID === "") ? 1 : 2;
-
+               
             $orderDateTime = date("Y-m-d H:i:s");
             //ORDERS_MSTR TABLE HANDLING
             $orderSQL = "INSERT INTO 
@@ -418,7 +422,7 @@
                                         '$partName', 
                                         '$partNetto', 
                                         '$partVAT', 
-                                        '$partDisc',
+                                        '$partDISC',
                                         '$partBrutto', 
                                         '$partEUR', 
                                         '$partQua', 
@@ -440,7 +444,8 @@
                                     OrdersUserStreet_MSTR,
                                     OrdersUserAddress_MSTR,
                                     OrdersUserPhone_MSTR, 
-                                    OrdersUserEmail_MSTR
+                                    OrdersUserEmail_MSTR,
+                                    OrdersUserRegDateTime_MSTR
                                 ) VALUES (
                                     NULL,
                                     '$lastid',
@@ -451,7 +456,8 @@
                                     '$street',
                                     '$address',
                                     '$phone',
-	                                '$email')";
+	                                '$email',
+                                    '$orderDateTime')";
                 mysqli_query($connect, $orderSQL);
 
             }

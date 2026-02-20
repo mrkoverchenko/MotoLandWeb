@@ -5,6 +5,7 @@
         exit();
     }
     include "connect.php";
+    $userID = $_SESSION["userid"];
 
 ?>
         <style>
@@ -57,7 +58,7 @@
                                         WHERE 
                                             OrdersUserID_MSTR = '$userID' AND
                                             OrdersStatusStatusID_MSTR = OrderStatusID_MSTR 
-                                        GROUP BY
+                                        ORDER BY
                                             OrdersDateTime_MSTR DESC";
                                 $result = mysqli_query($connect, $sql);
 
@@ -66,7 +67,7 @@
                                     $date = $row["OrdersDateTime_MSTR"];
                                     $cost = $row["OrdersFullCost_MSTR"];
                                     $status = $row["OrderStatusStatus_MSTR"];
-                                    echo "<option value='$id'>$date - $status ($cost.- Ft.)</option>";
+                                    echo "<option value='$id'>$id - $date - $status ($cost.- Ft.)</option>";
                                 }
                                 mysqli_close($connect);
                             ?>

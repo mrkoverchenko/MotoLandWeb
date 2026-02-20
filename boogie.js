@@ -558,3 +558,6 @@ function aszfChange(e) {
     document.getElementById("submitBtn").disabled = !e.target.checked;
 }
 
+function setBookingMessage(_this) {
+    alert(_this.title);
+}

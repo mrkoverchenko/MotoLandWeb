@@ -2,10 +2,15 @@
 
     if (session_status() != PHP_SESSION_ACTIVE) {
         session_start();
-        $_SESSION["systemPath"] = "http://localhost/MotoLandWeb/";
+        $_SESSION["systemPath"] = "http://localhost/mrkoverchenko/MotoLandWeb/";
     }
 
     include "connect.php";
+
+
+
+
+
 
     /***************************************************************
      * SESSION DEADLINE SETTING
@@ -73,7 +78,7 @@
        
         $systemIsMessage = true;
         $systemMessage = "";
-        $hideTime = 10000;
+        $hideTime = 5000;
         $alertType = "alert-dismissible";
         $systemMessage = "<b>Sikeres kijelentkezés!</b>";
 
@@ -216,7 +221,7 @@
      * ADDED TO SHOPPING CART IS SUCCESSFUL MESSAGE OR NOT
      */
     if (isset($_GET["shoppingcart"])) { 
-        $hideTime = 10000;
+        $hideTime = 5000;
         $systemIsMessage = true;
 
         if ($_GET["shoppingcart"] === "added") {
@@ -310,7 +315,7 @@
             unset($_POST);
 		}
 
-        $hideTime = 10000;
+        $hideTime = 5000;
         $systemIsMessage = true;
         if ($isUser) {
             $alertType = "alert-dismissible";
@@ -325,7 +330,9 @@
 
 
 
-
+    /************************************************
+     * SENDING ORDERED ITEMS
+     */
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($_POST['formName']) && $_POST['formName'] === 'shoppingCartLoginForm') {
@@ -362,7 +369,8 @@
                                 OrdersStatusStatusID_MSTR, 
                                 OrdersUserTypeID_MSTR, 
                                 OrdersNote_MSTR
-                        ) VALUES (NULL, '$userID', '$orderDateTime', '$total', 1, $usertype, '')";
+                            ) VALUES (NULL, '$userID', '$orderDateTime', '$total', 1, $usertype, '')";
+
             mysqli_query($connect, $orderSQL);
             $lastid = mysqli_insert_id($connect);
 
@@ -430,9 +438,10 @@
                 mysqli_query($connect, $orderSQL_B);
             }
 
-
+            $reg = true;
             // NO REGISTRATED USER, USER DATA SAVING
             if ($userID === "") {
+                $reg = false;
                 $orderSQL = "INSERT INTO 
                                 ordersuser_mstr ( 
                                     OrdersUserID_MSTR, 
@@ -462,7 +471,8 @@
 
             }
 
-
+            //MAIL SENDING TO CUSTOMER
+            include "sendmail.php";
 
             unset($_SESSION['cartdeadline']);
             unset($_SESSION["cartid"]);
@@ -470,11 +480,13 @@
             $activePage = "sales";
             $shoppingcartqua = 0;
 
-
-            $hideTime = 20000;
+            
+            
+            $hideTime = 10000;
             $alertType = "alert-dismissible";
             $systemIsMessage = true;
             $systemMessage = "<b>Megrendelés sikeresen elküldve!</br>Időpont: $orderDateTime</br>Rendelési azonosító: $lastid</br>$c tétel </b>";
+            
         }
 
     }
@@ -625,7 +637,7 @@
         //mysqli_close($connect);
 
         if ($usermstr && $userdet && $passwordmstr) { 
-            $hideTime = 10000;
+            $hideTime = 5000;
             $alertType = "alert-dismissible";
             $systemIsMessage = true;
             $systemMessage = "<b>Sikeres regisztráció!</b>".
@@ -633,7 +645,7 @@
                                     ? "Bejelentkezéshez előbb lépj ki a jelenlegi accountod-ból!"
                                     : "</br>Kérlek <a href='#loginForm' data-toggle='modal' title='Bejelentkezés'>jelentkezz be</a> a felhasználóneveddel és jelszavaddal.";
         } else {
-            $hideTime = 10000;
+            $hideTime = 5000;
             $alertType = "alert-danger";
             $systemIsMessage = true;
             $systemMessage = "<b>Sikertelen regisztráció!</b></br>".
@@ -665,7 +677,7 @@
         $_SESSION["sessionDeadline"] = $systemSessionDeadline;
 
 
-        $hideTime = 10000;
+        $hideTime = 5000;
         $alertType = "alert-dismissible";
         $systemIsMessage = true;
         $systemMessage = "<b>Sikeres mentés!</b>";
@@ -734,7 +746,7 @@
         //$_POST = array();
         //unset($_POST);
 
-        $hideTime = 10000;
+        $hideTime = 5000;
         $alertType = "alert-dismissible";
         $systemIsMessage = true;
         $systemMessage = "<b>Sikeres profil módosítás!</b>";
@@ -850,7 +862,7 @@
                 <div id="navbar" class="navbar-collapse collapse"> 
 
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Értékesítés</a></li>
+                        <li><a href="#" onclick="startItem('mailtest')">Értékesítés</a></li>
                         <li><a href="#">Kapcsolat</a></li>
 
                         <li class="dropdown">
@@ -996,7 +1008,7 @@
 
                             <div class="form-group">
                                 <label for="loginpassword"><span class="glyphicon glyphicon-eye-open"></span> Jelszó</label>
-                                <input type="password" class="form-control" value="" required id="loginPassword" name="loginPassword" placeholder="jelszó">
+                                <input type="password" class="form-control" value="Gatya101" required id="loginPassword" name="loginPassword" placeholder="jelszó">
                             </div>
 
                             <button type="submit" class="btn btn-success ">
@@ -1764,7 +1776,7 @@
     
         <div class="footer">
             <div style="margin-top:10px;">
-                <p>&copy; 2026 Company, Inc. All rights reserved.</p>
+                <p>&copy; 2025-<?php echo Date("Y"); ?> MotoLand, Inc. All rights reserved.</p>
                 <a href="https://facebook.com" target="new"><img class="footer-icon" src="imgs/facebook.png" title="FaceBook"></a>
                 <a href="https://instagram.com" target="new"><img class="footer-icon" src="imgs/instagram.png" title="Instagram"></a>
                 <a href="https://x.com" target="new"><img class="footer-icon" src="imgs/twitter.png" title="Twitter"></a>

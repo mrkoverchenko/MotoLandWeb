@@ -525,37 +525,28 @@
                             <p class="form-check-label" style="margin:20px"><u><b>Kérlek válassz az alábbi futárszolgálatok közül:</b></u></p>
 
                             <div style="margin:20px">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="shoppingCartFut" id="fut1" required value="option1">
-                                    <label class="form-check-label" for="fut1" title="GLS Futárszolgálat">
-                                        <img src="imgs/gls.png" style="width:50px;">
-                                        GLS
-                                    </label>
-                                </div>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="shoppingCartFut" id="fut2" required value="option2">
-                                    <label class="form-check-label" for="fut2" title="Express One Futárszolgálat">
-                                        <img src="imgs/express_one.png" style="width:50px;">
-                                        Express One
-                                    </label>
-                                </div>
+                                <?php
+                                    $supps = "";
+                                    $sql = "SELECT * FROM suppliers_mstr";
+                                    $value = mysqli_query($connect, $sql);
+                                    $s = 0;
+                                    while ($row = mysqli_fetch_assoc($value)) {
+                                        $s++;
+                                        $supplierID = $row["SupplierID_MSTR"];
+                                        $supplierName = $row["SupplierName_MSTR"];
+                                        $supplierCost = $row["SupplierCost_MSTR"];
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="shoppingCartFut" id="fut3" required value="option3">
-                                    <label class="form-check-label" for="fut3" title="DHL Futárszolgálat">
-                                        <img src="imgs/dhl.png" style="width:50px;">
-                                        DHL
-                                    </label>
-                                </div>
+                                        $supps.= "  <div class='form-check'>
+                                                        <input class='form-check-input' type='radio' name='shoppingCartSupplier' id='sup$s' required value='$supplierID'>
+                                                        <label class='form-check-label' style='margin-left:20px;' for='sup$s' title='$supplierName'>
+                                                            $supplierName ($supplierCost.- Ft.)
+                                                        </label>
+                                                    </div>";
+                                    }
+                                    echo $supps;
+                                ?>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="shoppingCartFut" id="fut4" required value="option4">
-                                    <label class="form-check-label" for="fut4" title="Foxpost Futárszolgálat">
-                                        <img src="imgs/foxpost.png" style="width:20px;">
-                                        Foxpost
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div><!-- class="collapse row" id="delivery"> -->
@@ -587,34 +578,31 @@
 
                             <div style="display:block; margin:5px;">
 
-
                                 <p class="form-check-label" style="margin:20px"><u><b>Hogyan szeretnéd kifizetni a rendelésed?</b></u></p>
 
                                 <div style="margin:20px">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="shoppingCartFiz" id="fiz1" required value="option1">
-                                        <label class="form-check-label" for="fiz1">Előreutalással</label>
-                                    </div>
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="shoppingCartFiz" id="fiz2" required value="option2">
-                                        <label class="form-check-label" for="fiz2">Leülöm a Fazekason</label>
-                                    </div>
+                                    <?php
+                                        $pays = "";
+                                        $sql = "SELECT * FROM paymenttype_mstr";
+                                        $value = mysqli_query($connect, $sql);
+                                        $s = 0;
+                                        while ($row = mysqli_fetch_assoc($value)) {
+                                            $s++;
+                                            $paymentID = $row["PaymentTypeID_MSTR"];
+                                            $paymentName = $row["PaymentTypeName_MSTR"];
+                                            $paymentCost = $row["PaymentTypeCost_MSTR"];
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="shoppingCartFiz" id="fiz3" required value="option3">
-                                        <label class="form-check-label" for="fiz3">Szépkártyával és/vagy üres flakonokkal</label>
-                                    </div>
+                                            $pays.= "   <div class='form-check'>
+                                                            <input class='form-check-input' type='radio' name='shoppingCartPaymentType' id='pay$s' required value='$paymentID'>
+                                                            <label class='form-check-label' style='margin-left:20px;' for='pay$s' title='$paymentName'>
+                                                                $paymentName ($paymentCost.- Ft.)
+                                                            </label>
+                                                        </div>";
+                                        }
+                                        echo $pays;
+                                    ?>
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="shoppingCartFiz" id="fiz4" required value="option4">
-                                        <label class="form-check-label" for="fiz4">Utánvéttel a futárnál</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="shoppingCartFiz" id="fiz5" required value="option5">
-                                        <label class="form-check-label" for="fiz5">Készpénzzel a futárnál</label>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -648,6 +636,20 @@
                         <div class="brdr" style="color: gray">
 
                             <div style="display:block; margin:5px;">
+
+
+                                <div style="display:block; margin:5px;">
+                                    <span style="display:inline-block; width:120px; vertical-align:top; margin-top:5px; ">Megjegyzés</span>
+                                    <textarea class="form-control" 
+                                                rows='3'
+                                                cols='50'
+                                                maxlength='255'
+                                                name="shoppingCartNote" 
+                                                style="display:inline-block; width:500px; resize: none"                                                
+                                                placeholder="megjegyzés"></textarea>       
+                                </div>
+
+
 
                                 <div class="form-check" style="margin:10px;">
                                     <input class="form-check-input" 

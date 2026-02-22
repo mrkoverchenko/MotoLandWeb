@@ -548,6 +548,9 @@ function setArrow(_this) {
     }
 }
 
+//    var element = document.getElementById("submitBtn");
+    //element.scrollTop = element.scrollHeight;    
+
 
 function clearOrder() {
     if (confirm("Biztos, hogy törlöd a vásárlást?"))

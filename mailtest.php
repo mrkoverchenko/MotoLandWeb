@@ -3,7 +3,7 @@
     include "connect.php";
 
 
-
+            $p = "";
             $serverName = "http://".$_SERVER['SERVER_NAME'];
             $url = $_SERVER['REQUEST_URI'];
             $req = explode("/", $url);
@@ -17,10 +17,13 @@
             $res = mysqli_query($connect, $sql);
             $row = mysqli_fetch_assoc($res);
             $welcometext = $row["MotoSystemMailText_MSTR"];
-            $mailbody = "<div style='margin-top:80px'>";
+            $mailbody = "<div style='margin-top:10px'>";
 
-            $mailbody .= "  <span style='color:gray'>$welcometext</span>";
-            $mailbody .=    "<div style='margin-top:20px; width:100%; height:40px; background-color:lightgray; padding:2px 10px; border-radius:3px;'>
+            $mailbody .= "  <pre style='color:gray; font-family: Helvetica Neue,Helvetica,Arial,sans-serif; font-size: 14px; line-height: 1.42857143;'    >
+                                $welcometext
+                            </pre>
+
+                            <div style='margin-top:20px; width:100%; height:40px; background-color:lightgray; padding:2px 10px; border-radius:3px;'>
                                 <h4><strong>Rendelésed részletei</strong></h4>
                             </div>
 
@@ -39,30 +42,39 @@
                             </div>
 
 
-                            <div style='margin:5px;'>
-                                <div class='row brdr'>
-                                    <table class='table table-hover' style='color: gray;'>
-                                        <thead>
-                                            <tr>
-                                                <th scope='col'>No.</th>
-                                                <th scope='col'>Cikkszám</th>
-                                                <th scope='col'>Terméknév</th>
-                                                <th scope='col'>Netto</th>
-                                                <th scope='col'>Áfa</th>
-                                                <th scope='col'>Kedv.</th>
-                                                <th scope='col'>Egységár</th>
-                                                <th scope='col'>&euro;</th>
-                                                <th scope='col'>Menny.</th>
-                                                <th scope='col'>Összesen</th>
-                                            </tr>
-                                        </thead>
+                            <table class='table table-hover' style='color: gray;'>
+                                <thead>
+                                    <tr>
+                                        <th style='width:30px;'>No.</th>
+                                        <th style='width:60px;'>Cikkszám</th>
+                                        <th style='width:60px;'>Terméknév</th>
+                                        <th style='width:60px;'>Netto</th>
+                                        <th style='width:30px;'>Áfa</th>
+                                        <th style='width:30px;'>Kedv.</th>
+                                        <th style='width:60px;'>Egységár</th>
+                                        <th style='width:60px;'>&euro;</th>
+                                        <th style='width:30px;'>Menny.</th>
+                                        <th style='width:30px;'>Összesen</th>
+                                    </tr>
+                                </thead>
 
-                                        <tbody>
-                                            
-                                        </tbody>
-                                    </table>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+
+                            <hr>
+
+                            <div style='width: 95%; margin-top: 20px;'>
+
+                                <div style='float: right; color: gray'>
+                                    <h5><strong>Fizetendő:  $$$$$$$$$$$ </strong></h5>
                                 </div>
                             </div>
+
+                            <div style='width: 100%; height:1px; background-color: gray; margin-bottom: 100px;'>  </div>    
+
+
 
                             <div style='float: left; width: 40%; margin : 2px; margin-top: 20px;'>
                                 <div style='height:40px; background-color:lightgray; padding:3px 10px; border-radius:3px;'>

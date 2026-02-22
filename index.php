@@ -353,9 +353,12 @@
             $street = $_POST["shoppingCartStreet"] ?? "";
             $address = $_POST["shoppingCartAddress"] ?? "";
             $phone = $_POST["shoppingCartPhone"] ?? "";
-            $fut = $_POST["shoppingCartFut"] ?? "";
-            $fiz = $_POST["shoppingCartFiz"] ?? ""; 
             $total = $_POST["shoppingCartPartTotal"] ?? "0"; 
+            $supplierID = $_POST["shoppingCartSupplier"] ?? "0"; 
+            $paymentTypeID = $_POST["shoppingCartPaymentType"] ?? "0"; 
+
+            $shoppingCartNote = $_POST["shoppingCartNote"] ?? ""; 
+            
             $usertype = ($userID === "") ? 1 : 2;
                
             $orderDateTime = date("Y-m-d H:i:s");
@@ -368,8 +371,9 @@
                                 OrdersFullCost_MSTR, 
                                 OrdersStatusStatusID_MSTR, 
                                 OrdersUserTypeID_MSTR, 
-                                OrdersNote_MSTR
-                            ) VALUES (NULL, '$userID', '$orderDateTime', '$total', 1, $usertype, '')";
+                                OrdersNote_MSTR,
+                                OrdersASZFIsOK_MSTR 
+                            ) VALUES (NULL, '$userID', '$orderDateTime', '$total', 1, $usertype, '$shoppingCartNote', '1')";
 
             mysqli_query($connect, $orderSQL);
             $lastid = mysqli_insert_id($connect);
@@ -409,7 +413,6 @@
                 $partSubtotal = $row["subtotal"];
                 $partTotal = $partTotal + $partSubtotal;
 
-
                 $orderSQL_B = "INSERT INTO 
                                     orders_det (
                                         OrdersID_DET, 
@@ -422,7 +425,9 @@
                                         OrdersBruttoPrice_DET, 
                                         OrdersBruttoEURPrice_DET, 
                                         OrdersQuantity_DET, 
-                                        OrdersQuantityUnit_DET
+                                        OrdersQuantityUnit_DET,
+                                        OrdersSupplierID_MSTR,
+                                        OrdersPaymentTypeID_MSTR
                                     ) VALUES (
                                         NULL, 
                                         '$lastid', 
@@ -434,7 +439,9 @@
                                         '$partBrutto', 
                                         '$partEUR', 
                                         '$partQua', 
-                                        '$partMee')";
+                                        '$partMee',
+                                        '$supplierID',
+                                        '$paymentTypeID')";
                 mysqli_query($connect, $orderSQL_B);
             }
 
@@ -479,13 +486,15 @@
             $cartid = "";
             $activePage = "sales";
             $shoppingcartqua = 0;
-
-            
             
             $hideTime = 10000;
             $alertType = "alert-dismissible";
             $systemIsMessage = true;
-            $systemMessage = "<b>Megrendelés sikeresen elküldve!</br>Időpont: $orderDateTime</br>Rendelési azonosító: $lastid</br>$c tétel </b>";
+            $systemMessage = "<b>A megrendelés sikeresen rögzítve!</br>".
+                             "A részleteket regisztrált e-mail címére küldtük!</br>".
+                             "Időpont: $orderDateTime</br>".
+                             "Rendelési azonosító: $lastid".
+                             "</br>$c tétel </b>";
             
         }
 
@@ -787,6 +796,12 @@
                 margin: auto;
             }   
 
+            .ellipsis {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
             .footer {
                 position: fixed;
                 left: 0;
@@ -862,7 +877,7 @@
                 <div id="navbar" class="navbar-collapse collapse"> 
 
                     <ul class="nav navbar-nav">
-                        <li><a href="#" onclick="startItem('mailtest')">Értékesítés</a></li>
+                        <li><a href="#">Értékesítés</a></li>
                         <li><a href="#">Kapcsolat</a></li>
 
                         <li class="dropdown">

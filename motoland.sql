@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 22. 20:32
+-- Létrehozás ideje: 2026. Feb 23. 13:50
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -3298,7 +3298,7 @@ CREATE TABLE `gender_mstr` (
 INSERT INTO `gender_mstr` (`GenderID_MSTR`, `GenderGender_MSTR`) VALUES
 (1, 'férfi'),
 (2, 'nő'),
-(3, 'ratyirambó');
+(3, 'mindegy');
 
 -- --------------------------------------------------------
 
@@ -3381,18 +3381,8 @@ CREATE TABLE `lockedquantity_mstr` (
 --
 
 INSERT INTO `lockedquantity_mstr` (`LockedQuantityID_MSTR`, `LockedQuantitySessionID_MSTR`, `LockedQuantityShoppingCartDETID_MSTR`, `LockedQuantityQuantity_MSTR`, `LockedQuantityDateTime_MSTR`, `LockedQuantityPartsID_MSTR`) VALUES
-(255, '1771784839173', 318, 3, '2026-02-22 19:27:19', 43),
-(256, '1771785126720', 319, 3, '2026-02-22 19:32:06', 204),
-(257, '1771785317412', 320, 3, '2026-02-22 19:35:17', 68),
-(258, '1771785317412', 321, 2, '2026-02-22 19:35:26', 308),
-(259, '1771785726229', 322, 1, '2026-02-22 19:42:06', 311),
-(260, '1771785726229', 323, 1, '2026-02-22 19:42:13', 94),
-(261, '1771785905657', 324, 1, '2026-02-22 19:45:05', 2),
-(262, '1771787802948', 325, 1, '2026-02-22 20:16:42', 316),
-(263, '1771787959932', 326, 1, '2026-02-22 20:19:19', 310),
-(264, '1771788067343', 327, 6, '2026-02-22 20:21:07', 1),
-(265, '1771788237838', 328, 2, '2026-02-22 20:23:57', 20),
-(266, '1771788339873', 329, 1, '2026-02-22 20:25:39', 5);
+(267, '1771850775799', 330, 2, '2026-02-23 13:46:15', 1),
+(268, '1771850775799', 331, 1, '2026-02-23 13:46:22', 2);
 
 -- --------------------------------------------------------
 
@@ -3639,11 +3629,11 @@ CREATE TABLE `motoparts_mstr` (
 --
 
 INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPartsTypeID_MSTR`, `MotoPartsCategoryID_MSTR`, `MotoPartsNumber_MSTR`, `MotoPartsName_MSTR`, `MotoPartsNettoPrice_MSTR`, `MotoPartsVAT_MSTR`, `MotoPartsBruttoPrice_MSTR`, `MotoPartsBruttoEURPrice_MSTR`, `MotoPartsDiscount_MSTR`, `MotoPartsQuantity_MSTR`, `MotoPartsQuantityUnitID_MSTR`, `MotoPartsInfo_MSTR`) VALUES
-(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 110855.0000, 0.2700, 133747.0000, 333.8900, 0.0500, 5.0000, 1, 'Próba'),
+(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 110855.0000, 0.2700, 133747.0000, 333.8900, 0.0500, 9.0000, 1, 'Próba'),
 (2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 55499.0000, 0.2700, 66960.0000, 167.1600, 0.0500, 2.0000, 1, 'No longer available'),
 (3, 43, 1, 1, '14091-0919-17N', 'COVER,SIDE BAG,LH,M.SILV', 57513.0000, 0.2700, 69389.0000, 173.2300, 0.0500, 9.0000, 1, 'No longer available'),
 (4, 43, 1, 1, '14091-0920-17K', 'COVER,SIDE BAG,RH,M.BLAC', 8487.0000, 0.2700, 10240.0000, 25.5600, 0.0500, 7.0000, 1, ''),
-(5, 43, 1, 1, '14091-0920-17N', 'COVER,SIDE BAG,RH,M.SILV', 95057.0000, 0.2700, 114686.0000, 286.3100, 0.0500, 9.0000, 1, 'No longer available'),
+(5, 43, 1, 1, '14091-0920-17N', 'COVER,SIDE BAG,RH,M.SILV', 95057.0000, 0.2700, 114686.0000, 286.3100, 0.0500, 10.0000, 1, 'No longer available'),
 (6, 43, 1, 1, '14091-1688', 'COVER,SIDE BAG,LID', 112083.0000, 0.2700, 135228.0000, 337.5900, 0.0500, 3.0000, 1, ''),
 (7, 43, 1, 1, '27012-0110', 'HOOK,LH', 50084.0000, 0.2700, 60426.0000, 150.8500, 0.0500, 12.0000, 1, ''),
 (8, 43, 1, 1, '27012-0111', 'HOOK,RH', 26750.0000, 0.2700, 32274.0000, 80.5700, 0.0500, 25.0000, 1, ''),
@@ -3658,7 +3648,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (17, 43, 1, 1, '92072-0082', 'BAND', 104712.0000, 0.2700, 126335.0000, 315.3900, 0.0500, 20.0000, 1, ''),
 (18, 43, 1, 1, '92072-1368', 'BAND', 5027.0000, 0.2700, 6065.0000, 15.1400, 0.0500, 1.0000, 1, ''),
 (19, 43, 1, 1, '92161-0573', 'Damper', 48742.0000, 0.2700, 58807.0000, 146.8100, 0.0500, 27.0000, 1, ''),
-(20, 43, 1, 1, '92172-0303', 'SCREW,4X12', 3467.0000, 0.2700, 4183.0000, 10.4400, 0.0500, 22.0000, 1, ''),
+(20, 43, 1, 1, '92172-0303', 'SCREW,4X12', 3467.0000, 0.2700, 4183.0000, 10.4400, 0.0500, 24.0000, 1, ''),
 (21, 43, 1, 1, '92172-0304', 'SCREW,5X15', 96271.0000, 0.2700, 116151.0000, 289.9600, 0.0500, 9.0000, 1, 'No longer available'),
 (22, 43, 1, 1, '92172-0306', 'SCREW,4X8', 20630.0000, 0.2700, 24890.0000, 62.1400, 0.0500, 1.0000, 1, ''),
 (23, 43, 1, 1, '92200-0373', 'WASHER,5MM', 39499.0000, 0.2700, 47656.0000, 118.9700, 0.0500, 8.0000, 1, ''),
@@ -3681,7 +3671,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (40, 43, 1, 2, '16126-0745', 'VALVE,AIR SWITCHING', 78458.0000, 0.2700, 94660.0000, 236.3100, 0.0500, 4.0000, 1, ''),
 (41, 43, 1, 2, '16181-0008', 'TANK-RESONATOR,LH', 43759.0000, 0.2700, 52795.0000, 131.8000, 0.0500, 21.0000, 1, ''),
 (42, 43, 1, 2, '16181-0009', 'TANK-RESONATOR,RH', 96002.0000, 0.2700, 115826.0000, 289.1500, 0.0500, 10.0000, 1, ''),
-(43, 43, 1, 2, '49006-1267', 'BOOT', 10991.0000, 0.2700, 13261.0000, 33.1000, 0.0500, 15.0000, 1, ''),
+(43, 43, 1, 2, '49006-1267', 'BOOT', 10991.0000, 0.2700, 13261.0000, 33.1000, 0.0500, 18.0000, 1, ''),
 (44, 43, 1, 2, '92005-0055', 'FITTING', 104694.0000, 0.2700, 126313.0000, 315.3300, 0.0500, 4.0000, 1, ''),
 (45, 43, 1, 2, '92015-1757', 'Nut (5 mm) (rubber)', 40174.0000, 0.2700, 48470.0000, 121.0000, 0.0500, 21.0000, 1, ''),
 (46, 43, 1, 2, '92171-1571', 'Clamp', 111950.0000, 0.2700, 135068.0000, 337.1900, 0.0500, 9.0000, 1, ''),
@@ -3706,7 +3696,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (65, 43, 1, 2, '92192-0399', 'TUBE,ASV-FRAME', 1925.0000, 0.2700, 2323.0000, 5.8000, 0.0500, 12.0000, 1, ''),
 (66, 43, 1, 2, '92192-0408', 'TUBE,ASV CAP', 41987.0000, 0.2700, 50657.0000, 126.4600, 0.0500, 10.0000, 1, ''),
 (67, 43, 1, 3, '610A0-410', 'ROLLER,4X10', 91581.0000, 0.2700, 110492.0000, 275.8400, 0.0500, 16.0000, 1, ''),
-(68, 43, 1, 3, '13041-0031', 'BALANCER', 106783.0000, 0.2700, 128834.0000, 321.6300, 0.0500, 20.0000, 1, ''),
+(68, 43, 1, 3, '13041-0031', 'BALANCER', 106783.0000, 0.2700, 128834.0000, 321.6300, 0.0500, 23.0000, 1, ''),
 (69, 43, 1, 3, '13168-0115', 'LEVER', 34010.0000, 0.2700, 41033.0000, 102.4400, 0.0500, 11.0000, 1, ''),
 (70, 43, 1, 3, '13234-0038', 'SHAFT-COMP', 74863.0000, 0.2700, 90322.0000, 225.4800, 0.0500, 13.0000, 1, ''),
 (71, 43, 1, 3, '16085-0084', 'GEAR,31T', 47123.0000, 0.2700, 56854.0000, 141.9300, 0.0500, 6.0000, 1, ''),
@@ -3732,7 +3722,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (91, 43, 1, 5, '180BA-0614', '10 pc - BOLT-UPSET-WS,6X14', 93304.0000, 0.2700, 112571.0000, 281.0300, 0.0500, 4.0000, 1, ''),
 (92, 43, 1, 5, '13236-0173', 'Brake pedal', 53297.0000, 0.2700, 64303.0000, 160.5300, 0.0500, 4.0000, 1, ''),
 (93, 43, 1, 5, '46123-0006', 'SPRING-COMP,BRAKE PEDAL', 99153.0000, 0.2700, 119628.0000, 298.6400, 0.0500, 7.0000, 1, ''),
-(94, 43, 1, 5, '92022-326', 'WASHER,15.3X24X1', 110714.0000, 0.2700, 133576.0000, 333.4700, 0.0500, 24.0000, 1, ''),
+(94, 43, 1, 5, '92022-326', 'WASHER,15.3X24X1', 110714.0000, 0.2700, 133576.0000, 333.4700, 0.0500, 25.0000, 1, ''),
 (95, 43, 1, 5, '92151-1295', 'Screw (6 mm)', 30946.0000, 0.2700, 37336.0000, 93.2100, 0.0500, 18.0000, 1, ''),
 (96, 43, 1, 5, '92200-0279', 'WASHER,7X28X1.6', 47754.0000, 0.2700, 57615.0000, 143.8300, 0.0500, 15.0000, 1, 'No longer available'),
 (97, 43, 1, 6, '120CA-0635', 'BOLT-SOCKET,6X35', 33352.0000, 0.2700, 40239.0000, 100.4500, 0.0500, 22.0000, 1, ''),
@@ -3842,7 +3832,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (201, 43, 1, 9, '92171-0813', 'Clamp', 84015.0000, 0.2700, 101364.0000, 253.0500, 0.0500, 16.0000, 1, ''),
 (202, 43, 1, 9, '92171-0864', 'Clamp', 78925.0000, 0.2700, 95223.0000, 237.7200, 0.0500, 23.0000, 1, ''),
 (203, 43, 1, 9, '92171-1706', 'Clamp', 30000.0000, 0.2700, 36195.0000, 90.3600, 0.0500, 12.0000, 1, ''),
-(204, 43, 1, 10, '92002-1166', 'Screw (6x16)', 25806.0000, 0.2700, 31135.0000, 77.7300, 0.0500, 14.0000, 1, 'nnn'),
+(204, 43, 1, 10, '92002-1166', 'Screw (6x16)', 25806.0000, 0.2700, 31135.0000, 77.7300, 0.0500, 17.0000, 1, 'nnn'),
 (205, 43, 1, 10, '13048-0015', 'CAM-DAMPER', 39029.0000, 0.2700, 47088.0000, 117.5500, 0.0500, 22.0000, 1, ''),
 (206, 43, 1, 10, '13087-0038', 'HUB-CLUTCH,MOVABLE', 5147.0000, 0.2700, 6210.0000, 15.5000, 0.0500, 5.0000, 1, ''),
 (207, 43, 1, 10, '13087-0044', 'HUB-CLUTCH,FIXED', 21231.0000, 0.2700, 25615.0000, 63.9500, 0.0500, 15.0000, 1, ''),
@@ -3933,15 +3923,15 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (292, 43, 1, 12, '92200-0157', '5 pc - Washer (plastic)', 49708.0000, 0.2700, 59973.0000, 149.7200, 0.0500, 24.0000, 1, ''),
 (293, 43, 1, 12, '92200-0284', '5 pc - WASHER,5.5X20X1.2', 63283.0000, 0.2700, 76351.0000, 190.6100, 0.0500, 2.0000, 1, ''),
 (294, 43, 1, 12, '92210-0351', 'NUT,5MM', 54709.0000, 0.2700, 66006.0000, 164.7800, 0.0500, 20.0000, 1, ''),
-(308, 37, 29, 93, '1001531008', 'Tömítés', 83696.0000, 0.2700, 100979.0000, 252.0900, 0.0500, 8.0000, 1, '2 db. kell belőle'),
+(308, 37, 29, 93, '1001531008', 'Tömítés', 83696.0000, 0.2700, 100979.0000, 252.0900, 0.0500, 10.0000, 1, '2 db. kell belőle'),
 (309, 37, 29, 93, '1002725058', 'Szelepfedél', 29192.0000, 0.2700, 35220.0000, 87.9300, 0.0500, 20.0000, 1, ' '),
-(310, 37, 29, 93, '1000619335', 'Terelő lemez', 7455.0000, 0.2700, 8994.0000, 22.4500, 0.0500, 13.0000, 1, '2 db. kell belőle'),
-(311, 37, 29, 93, '1001531016', 'Tömítés - szelepfedél', 62278.0000, 0.2700, 75138.0000, 187.5800, 0.0500, 8.0000, 1, ' '),
+(310, 37, 29, 93, '1000619335', 'Terelő lemez', 7455.0000, 0.2700, 8994.0000, 22.4500, 0.0500, 14.0000, 1, '2 db. kell belőle'),
+(311, 37, 29, 93, '1001531016', 'Tömítés - szelepfedél', 62278.0000, 0.2700, 75138.0000, 187.5800, 0.0500, 9.0000, 1, ' '),
 (312, 37, 29, 93, '1000610985', 'Reed szelep', 63863.0000, 0.2700, 77051.0000, 192.3500, 0.0500, 4.0000, 1, '2 db. kell belőle'),
 (313, 37, 29, 93, '1002202172', 'COVER, REED VALVE', 19901.0000, 0.2700, 24011.0000, 59.9400, 0.0500, 22.0000, 1, ' '),
 (314, 37, 29, 93, '1002727720', 'Csavar', 20496.0000, 0.2700, 24728.0000, 61.7300, 0.0500, 15.0000, 1, '2 db. kell belőle'),
 (315, 37, 29, 93, '1000635404', 'Szelepfedél csavar', 42779.0000, 0.2700, 48896.0000, 122.0700, 0.1000, 29.0000, 1, '3 db. kell belőle'),
-(316, 37, 29, 94, '1000647519', 'Tömítés - szelepfedél', 39825.0000, 0.2700, 48049.0000, 119.9500, 0.0500, 11.0000, 1, '3 db. kell belőle'),
+(316, 37, 29, 94, '1000647519', 'Tömítés - szelepfedél', 39825.0000, 0.2700, 48049.0000, 119.9500, 0.0500, 12.0000, 1, '3 db. kell belőle'),
 (317, 37, 29, 94, '1000655510', 'Illesztőcsap (10x16)', 70791.0000, 0.2700, 85409.0000, 213.2200, 0.0500, 8.0000, 1, '2 db. kell belőle'),
 (318, 37, 29, 94, '1002724810', 'COVER COMP., A.C. GENERAT', 9316.0000, 0.2700, 11240.0000, 28.0600, 0.0500, 4.0000, 1, 'rendelésre'),
 (319, 37, 29, 94, '1001530878', 'COVER COMP., L. RR.', 59373.0000, 0.2700, 71634.0000, 178.8300, 0.0500, 23.0000, 1, 'rendelésre'),
@@ -4165,6 +4155,14 @@ CREATE TABLE `orders_det` (
   `OrdersPaymentTypeID_MSTR` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `orders_det`
+--
+
+INSERT INTO `orders_det` (`OrdersID_DET`, `OrdersMSTRID_DET`, `OrdersPartsNumber_DET`, `OrdersPartsName_DET`, `OrdersNettoPrice_DET`, `OrdersVAT_DET`, `OrdersDiscount_DET`, `OrdersBruttoPrice_DET`, `OrdersBruttoEURPrice_DET`, `OrdersQuantity_DET`, `OrdersQuantityUnit_DET`, `OrdersSupplierID_MSTR`, `OrdersPaymentTypeID_MSTR`) VALUES
+(206, 138, '13151-0040', 'SWITCH-COMP', 110855.0000, 27.0000, 5.0000, 140786.0000, 667.7800, 2.0000, 'DB.', 4, 3),
+(207, 138, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 55499.0000, 27.0000, 5.0000, 70484.0000, 167.1600, 1.0000, 'DB.', 4, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -4181,6 +4179,13 @@ CREATE TABLE `orders_mstr` (
   `OrdersNote_MSTR` tinytext NOT NULL,
   `OrdersASZFIsOK_MSTR` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `orders_mstr`
+--
+
+INSERT INTO `orders_mstr` (`OrdersID_MSTR`, `OrdersUserID_MSTR`, `OrdersDateTime_MSTR`, `OrdersFullCost_MSTR`, `OrdersStatusStatusID_MSTR`, `OrdersUserTypeID_MSTR`, `OrdersNote_MSTR`, `OrdersASZFIsOK_MSTR`) VALUES
+(138, 73, '2026-02-23 12:46:49', 334454, 1, 2, '', 1);
 
 -- --------------------------------------------------------
 
@@ -4224,7 +4229,7 @@ INSERT INTO `paymenttype_mstr` (`PaymentTypeID_MSTR`, `PaymentTypeName_MSTR`, `P
 (1, 'Fizetés előreutalással', 0),
 (2, 'Fizetés kártyával a futárnál', 0),
 (3, 'Fizetés készpénzzel a futárnál', 200),
-(4, 'Leülöm a Fazekason', 0);
+(4, 'Leülöm a Fazekason', 1500);
 
 -- --------------------------------------------------------
 
@@ -4265,18 +4270,8 @@ CREATE TABLE `shoppingcart_det` (
 --
 
 INSERT INTO `shoppingcart_det` (`ShoppingCartID_DET`, `ShoppingCartMSTRID_DET`, `ShoppingCartMotoPartsID_DET`, `ShoppingCartQuantity_DET`, `ShoppingCartSessionID_DET`) VALUES
-(318, 235, 43, 3, '1771784839173'),
-(319, 236, 204, 3, '1771785126720'),
-(320, 237, 68, 3, '1771785317412'),
-(321, 237, 308, 2, '1771785317412'),
-(322, 238, 311, 1, '1771785726229'),
-(323, 238, 94, 1, '1771785726229'),
-(324, 239, 2, 1, '1771785905657'),
-(325, 240, 316, 1, '1771787802948'),
-(326, 241, 310, 1, '1771787959932'),
-(327, 242, 1, 6, '1771788067343'),
-(328, 243, 20, 2, '1771788237838'),
-(329, 244, 5, 1, '1771788339873');
+(330, 245, 1, 2, '1771850775799'),
+(331, 245, 2, 1, '1771850775799');
 
 -- --------------------------------------------------------
 
@@ -4309,16 +4304,7 @@ CREATE TABLE `shoppingcart_mstr` (
 --
 
 INSERT INTO `shoppingcart_mstr` (`ShoppingCartID_MSTR`, `ShoppingCartStatusID_MSTR`, `ShoppingCartDateTime_MSTR`, `ShoppingCartSessionID_MSTR`) VALUES
-(235, 0, '2026-02-22 19:27:19', '1771784839173'),
-(236, 0, '2026-02-22 19:32:06', '1771785126720'),
-(237, 0, '2026-02-22 19:35:17', '1771785317412'),
-(238, 0, '2026-02-22 19:42:06', '1771785726229'),
-(239, 0, '2026-02-22 19:45:05', '1771785905657'),
-(240, 0, '2026-02-22 20:16:42', '1771787802948'),
-(241, 0, '2026-02-22 20:19:19', '1771787959932'),
-(242, 0, '2026-02-22 20:21:07', '1771788067343'),
-(243, 0, '2026-02-22 20:23:57', '1771788237838'),
-(244, 0, '2026-02-22 20:25:39', '1771788339873');
+(245, 0, '2026-02-23 13:46:15', '1771850775799');
 
 -- --------------------------------------------------------
 
@@ -4401,7 +4387,7 @@ CREATE TABLE `user_det` (
 
 INSERT INTO `user_det` (`UserID_DET`, `UserMSTRID_DET`, `UserFirstName_DET`, `UserMiddleName_DET`, `UserLastName_DET`, `UserGenderID_DET`, `UserPhone_DET`, `UserCountryID_DET`, `UserPostCode_DET`, `UserCity_DET`, `UserStreet_DET`, `UserAddress_DET`, `UserRegDate_DET`, `UserMotherName_DET`, `UserBirthPlace_DET`, `UserBirthDate_DET`, `UserLastModifiedDate_DET`) VALUES
 (48, 73, 'Lövei', 'István', '', 3, '+36 46 52899', 2, '3533', 'Miskolc', 'Nádastó', '7', '2026-02-08 13:54:09', '', '', '1900-01-01', '2026-02-21 19:32:30'),
-(49, 74, 'Lövei', 'István', '', 3, '', 2, '', '', '', '', '2026-02-08 14:28:12', '', '', '1900-01-01', '2026-02-16 12:01:41');
+(49, 74, 'Lövei', 'István', '', 3, '', 2, '', '', '', '', '2026-02-08 14:28:12', '', '', '1900-01-01', '2026-02-23 13:45:20');
 
 -- --------------------------------------------------------
 
@@ -4647,7 +4633,7 @@ ALTER TABLE `flag_mstr`
 -- AUTO_INCREMENT a táblához `gender_mstr`
 --
 ALTER TABLE `gender_mstr`
-  MODIFY `GenderID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `GenderID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT a táblához `holidayfix_mstr`
@@ -4665,7 +4651,7 @@ ALTER TABLE `holidays_mstr`
 -- AUTO_INCREMENT a táblához `lockedquantity_mstr`
 --
 ALTER TABLE `lockedquantity_mstr`
-  MODIFY `LockedQuantityID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=267;
+  MODIFY `LockedQuantityID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=269;
 
 --
 -- AUTO_INCREMENT a táblához `motomanufacturer_mstr`
@@ -4713,13 +4699,13 @@ ALTER TABLE `ordersuser_mstr`
 -- AUTO_INCREMENT a táblához `orders_det`
 --
 ALTER TABLE `orders_det`
-  MODIFY `OrdersID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=206;
+  MODIFY `OrdersID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
 
 --
 -- AUTO_INCREMENT a táblához `orders_mstr`
 --
 ALTER TABLE `orders_mstr`
-  MODIFY `OrdersID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `OrdersID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT a táblához `password_mstr`
@@ -4731,7 +4717,7 @@ ALTER TABLE `password_mstr`
 -- AUTO_INCREMENT a táblához `paymenttype_mstr`
 --
 ALTER TABLE `paymenttype_mstr`
-  MODIFY `PaymentTypeID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `PaymentTypeID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT a táblához `quantityunit_mstr`
@@ -4743,7 +4729,7 @@ ALTER TABLE `quantityunit_mstr`
 -- AUTO_INCREMENT a táblához `shoppingcart_det`
 --
 ALTER TABLE `shoppingcart_det`
-  MODIFY `ShoppingCartID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=330;
+  MODIFY `ShoppingCartID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=332;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_hist`
@@ -4755,13 +4741,13 @@ ALTER TABLE `shoppingcart_hist`
 -- AUTO_INCREMENT a táblához `shoppingcart_mstr`
 --
 ALTER TABLE `shoppingcart_mstr`
-  MODIFY `ShoppingCartID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
+  MODIFY `ShoppingCartID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 
 --
 -- AUTO_INCREMENT a táblához `suppliers_mstr`
 --
 ALTER TABLE `suppliers_mstr`
-  MODIFY `SupplierID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `SupplierID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT a táblához `usertype_mstr`

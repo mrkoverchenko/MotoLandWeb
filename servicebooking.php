@@ -63,7 +63,6 @@
             <div style="margin:10px; ">
 
                 <?php
-//                    $holiday
                     $dNames = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
                     $yr = "2026";
                     $d = "";
@@ -77,12 +76,12 @@
                         //$holiday[] = ['date' => $row["HolidayDate_MSTR"], 'detail' => $row["HolidayDetail_MSTR"] ];                        
                     }
 
-//var_dump($holiday);
                     for ($monthIC = 1; $monthIC <= 12; $monthIC++) {
                         $date =  $yr."-".$monthIC."-01";
                         $daysCount = cal_days_in_month(CAL_GREGORIAN, $monthIC, $yr); 
 
                         for ($dayIC = 0; $dayIC <= $daysCount; $dayIC++) {
+                            $optional = true;
 
                             if ($dayIC === 0) {
 
@@ -108,6 +107,7 @@
                                     if (date('N', strtotime($rectDate)) >= 6) {
                                         $dayType = "weekend";
                                         $detail = "$rectDate, $dayName\nHétvége";
+                                        $optional = false;
                                     }
 
 
@@ -121,18 +121,18 @@
                                         if ($hDate === $rectDate) {
                                             $dayType = "holiday";
                                             $detail = "$rectDate, $dayName\n".$hDetail."\nMunkaszüneti nap";
+                                            $optional = false;
                                             break;
                                         }
 
                                        
                                     }
 
+                                    if ($optional)
+                                        $d .= "<a href='#bookingService' data-toggle='modal'><div id='bookingrect' class='dayRect $dayType' title='$detail'>$dayIC</div></a>";
+                                    else
+                                        $d .= "<div class='dayRect $dayType' title='$detail'>$dayIC</div>";
 
-
-
-                                    $d .= "<div class='dayRect $dayType' ".
-                                            "title='$detail' ".
-                                            "onclick='setBookingMessage(this)'>$dayIC</div>";
                                 }
 
                             }
@@ -147,4 +147,13 @@
             </div>
 
 
-        </div>
+
+        <!-- BOOKING -->
+            <!--if (isset($_SESSION["usertype"])) {-->
+
+
+
+
+
+
+

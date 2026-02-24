@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 23. 13:50
+-- Létrehozás ideje: 2026. Feb 24. 15:13
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -3376,14 +3376,6 @@ CREATE TABLE `lockedquantity_mstr` (
   `LockedQuantityPartsID_MSTR` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
---
--- A tábla adatainak kiíratása `lockedquantity_mstr`
---
-
-INSERT INTO `lockedquantity_mstr` (`LockedQuantityID_MSTR`, `LockedQuantitySessionID_MSTR`, `LockedQuantityShoppingCartDETID_MSTR`, `LockedQuantityQuantity_MSTR`, `LockedQuantityDateTime_MSTR`, `LockedQuantityPartsID_MSTR`) VALUES
-(267, '1771850775799', 330, 2, '2026-02-23 13:46:15', 1),
-(268, '1771850775799', 331, 1, '2026-02-23 13:46:22', 2);
-
 -- --------------------------------------------------------
 
 --
@@ -3629,8 +3621,8 @@ CREATE TABLE `motoparts_mstr` (
 --
 
 INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPartsTypeID_MSTR`, `MotoPartsCategoryID_MSTR`, `MotoPartsNumber_MSTR`, `MotoPartsName_MSTR`, `MotoPartsNettoPrice_MSTR`, `MotoPartsVAT_MSTR`, `MotoPartsBruttoPrice_MSTR`, `MotoPartsBruttoEURPrice_MSTR`, `MotoPartsDiscount_MSTR`, `MotoPartsQuantity_MSTR`, `MotoPartsQuantityUnitID_MSTR`, `MotoPartsInfo_MSTR`) VALUES
-(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 110855.0000, 0.2700, 133747.0000, 333.8900, 0.0500, 9.0000, 1, 'Próba'),
-(2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 55499.0000, 0.2700, 66960.0000, 167.1600, 0.0500, 2.0000, 1, 'No longer available'),
+(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 110855.0000, 0.2700, 133747.0000, 333.8900, 0.0500, 11.0000, 1, 'Próba'),
+(2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 55499.0000, 0.2700, 66960.0000, 167.1600, 0.0500, 3.0000, 1, 'No longer available'),
 (3, 43, 1, 1, '14091-0919-17N', 'COVER,SIDE BAG,LH,M.SILV', 57513.0000, 0.2700, 69389.0000, 173.2300, 0.0500, 9.0000, 1, 'No longer available'),
 (4, 43, 1, 1, '14091-0920-17K', 'COVER,SIDE BAG,RH,M.BLAC', 8487.0000, 0.2700, 10240.0000, 25.5600, 0.0500, 7.0000, 1, ''),
 (5, 43, 1, 1, '14091-0920-17N', 'COVER,SIDE BAG,RH,M.SILV', 95057.0000, 0.2700, 114686.0000, 286.3100, 0.0500, 10.0000, 1, 'No longer available'),
@@ -4185,7 +4177,7 @@ CREATE TABLE `orders_mstr` (
 --
 
 INSERT INTO `orders_mstr` (`OrdersID_MSTR`, `OrdersUserID_MSTR`, `OrdersDateTime_MSTR`, `OrdersFullCost_MSTR`, `OrdersStatusStatusID_MSTR`, `OrdersUserTypeID_MSTR`, `OrdersNote_MSTR`, `OrdersASZFIsOK_MSTR`) VALUES
-(138, 73, '2026-02-23 12:46:49', 334454, 1, 2, '', 1);
+(138, 73, '2026-02-24 11:24:12', 334454, 2, 2, 'Date:2026. 02. 23. 14:36:15, UserID:74, EventID:2\nDate:2026. 02. 23. 14:36:46, UserID:74, EventID:2\nDate:2026. 02. 23. 14:39:41, UserID:74, EventID:4\nDate:2026. 02. 23. 14:43:12, UserID:74, EventID:3\nDate:2026. 02. 23. 14:58:22, UserID:74, EventID:2\nDate:', 1);
 
 -- --------------------------------------------------------
 
@@ -4265,14 +4257,6 @@ CREATE TABLE `shoppingcart_det` (
   `ShoppingCartSessionID_DET` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
---
--- A tábla adatainak kiíratása `shoppingcart_det`
---
-
-INSERT INTO `shoppingcart_det` (`ShoppingCartID_DET`, `ShoppingCartMSTRID_DET`, `ShoppingCartMotoPartsID_DET`, `ShoppingCartQuantity_DET`, `ShoppingCartSessionID_DET`) VALUES
-(330, 245, 1, 2, '1771850775799'),
-(331, 245, 2, 1, '1771850775799');
-
 -- --------------------------------------------------------
 
 --
@@ -4298,13 +4282,6 @@ CREATE TABLE `shoppingcart_mstr` (
   `ShoppingCartDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Vásárlás kezdetének időpontja',
   `ShoppingCartSessionID_MSTR` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `shoppingcart_mstr`
---
-
-INSERT INTO `shoppingcart_mstr` (`ShoppingCartID_MSTR`, `ShoppingCartStatusID_MSTR`, `ShoppingCartDateTime_MSTR`, `ShoppingCartSessionID_MSTR`) VALUES
-(245, 0, '2026-02-23 13:46:15', '1771850775799');
 
 -- --------------------------------------------------------
 

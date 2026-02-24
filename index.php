@@ -1,4 +1,11 @@
 <?php 
+    require_once('PHPMailer/src/PHPMailer.php');
+    require_once('PHPMailer/src/Exception.php');
+    require_once('PHPMailer/src/SMTP.php');
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
 
     if (session_status() != PHP_SESSION_ACTIVE) {
         session_start();
@@ -281,7 +288,8 @@
                     UserFlagID_MSTR,
                     PasswordSalt_MSTR,
                     PasswordPassword_MSTR,
-                    CONCAT(UserFirstName_DET,' ',UserMiddleName_DET,' ',UserLastName_DET) AS UserFullName
+                    CONCAT(UserFirstName_DET,' ',UserMiddleName_DET,' ',UserLastName_DET) AS UserFullName,
+                    UserPhone_DET
 
                 FROM 
                     user_mstr, user_det, password_mstr, usertype_mstr
@@ -307,6 +315,8 @@
                 $_SESSION['usertype'] = strtolower($row['UserTypeType_MSTR']);
                 $_SESSION['userid'] = $row['UserID_MSTR'];
                 $_SESSION['userfullname'] = $row['UserFullName'];
+                $_SESSION['usermail'] = $row['UserMail_MSTR'];
+                $_SESSION['userphone'] = $row['UserPhone_DET'];
 
             } else {
                 $isUser = false;
@@ -330,15 +340,104 @@
 
 
 
-    /************************************************
-     * SENDING ORDERED ITEMS
-     */
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($_POST['formName']) && $_POST['formName'] === 'shoppingCartLoginForm') {
             // HANDLE LOGIN
 
+
+
+        } else if (!empty($_POST["formName"]) && $_POST["formName"] === "bookingForm") {
+
+
+            /************************************************
+             * SENDING BOOKING DATA
+             */
+            $bookingDate = $_POST["bookingDate"] ?? "";
+            $bookingDay = $_POST["bookingDay"] ?? "";
+	        $bookingFullName = $_POST["bookingFullName"] ?? "";
+            $bookingPhone = $_POST["bookingPhone"] ?? "";
+            $bookingMail = $_POST["bookingMail"] ?? "";
+            $bookingRegDateTime = Date("Y-m-d H:i:s");
+
+            $sql = "INSERT INTO 
+                        prebooking_mstr (
+                            PreBookingID_MSTR, 
+                            PreBookingDate_MSTR, 
+                            PreBookingFullName_MSTR, 
+                            PreBookingPhone_MSTR, 
+                            PreBookingMail_MSTR,
+                            PreBookingRegDateTime_MSTR                            
+                    ) VALUES (
+                        NULL,
+                        '$bookingDate',
+                        '$bookingFullName',
+                        '$bookingPhone',
+                        '$bookingMail',
+                        '$bookingRegDateTime'
+                    )";
+            mysqli_query($connect, $sql);
+            //$lastid = mysqli_insert_id($connect);
+
+            $mailbody = "<pre style='color:gray; font-family: Helvetica Neue,Helvetica,Arial,sans-serif; font-size: 14px; line-height: 1.42857143;'>
+    Üdv!
+    Ezt az üzenetet azért kaptad, mert időpontot foglaltál a MotoLand szervíz és webshop rendszerében.
+
+    Lefoglalt időpontod: <b><u>$bookingDate ($bookingDay)</u></b>
+    Név : $bookingFullName
+    E-mail cím: $bookingMail
+    Telefonszám : $bookingPhone
+    Rögzítés időpontja: $bookingRegDateTime
+
+    A végleges egyeztetés miatt kollégánk a legrövidebb időn belül felkeres az általad megadott telefonszámon.
+
+    Ez egy automatikus üzenet, kérlek ne válaszolj rá!
+    Kérdés esetén keress bátran a weboldalunkon megtalálható információs telefonszámon, vagy e-mail címünkön.
+
+                        </pre>";
+
+
+            try {
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();
+                $mail->CharSet = "UTF-8";
+                //$mail->SMTPDebug = 1;
+                $mail->Host = "smtp.mail.yahoo.com";
+                $mail->SMTPAuth = true;
+                $mail->Username = "istvan.lovei@yahoo.com";
+                $mail->Password = "zopxdyyvskobaqjz";
+                $mail->SMTPSecure = "ssl"; 
+                $mail->Port = 465; 
+                $mail->setFrom("istvan.lovei@yahoo.com", "MotoLand");
+                $mail->addAddress($bookingMail, $bookingFullName);
+
+                $mail->isHTML(true);
+                $mail->Subject = "MotoLand időpontfoglalás: $bookingDate - no reply";
+                $mail->Body    = $mailbody;
+                if(!$mail->send()){
+                    echo 'Nincs küldés, szarakodás van: ' . $mail->ErrorInfo;
+                }
+            } catch (Exception $ex) {
+                echo "'Ha nincs net, nincs probléma': ".$ex;
+            }
+
+
+
+
+            $hideTime = 20000;
+            $alertType = "alert-dismissible";
+            $systemIsMessage = true;
+            $systemMessage = "<b>Az időpontfoglalás sikeresen rögzítve!</br>".
+                             "Kollégánk a megadott számon keresni fogja Önt ".
+                             "további egyeztetés céljából, a foglalás ".
+                             "részleteit pedig e-mail címére küldtük!";
+
+
+
         } else if (!empty($_POST["formName"]) && $_POST["formName"] === "shoppingCartSendOrderForm") {
+            /************************************************
+             * SENDING ORDERED ITEMS
+             */
 
             $sessionID = $_POST["shoppingCartSessionID"] ?? "";
             $userID = $_POST["shoppingCartUserID"] ?? "";
@@ -487,7 +586,7 @@
             $activePage = "sales";
             $shoppingcartqua = 0;
             
-            $hideTime = 10000;
+            $hideTime = 5000;
             $alertType = "alert-dismissible";
             $systemIsMessage = true;
             $systemMessage = "<b>A megrendelés sikeresen rögzítve!</br>".
@@ -994,132 +1093,145 @@
 
 
 
+        <!-- BOOKING SERVICE -->
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="bookingService" role="dialog">
 
-            <div class="modal fade" data-backdrop="static" data-keyboard="false" id="bookingService" role="dialog">
+            <div class='modal-dialog'>
 
-                <div class='modal-dialog'>
-    
-                    <div class='modal-content'>
+                <div class='modal-content'>
 
-                        <div class="modal-header" style="padding:5px 50px;">
-                            <button type="button" class="close" style="margin-top:13px" data-dismiss="modal" style="margin-top:3px">&times;</button>
-                            <h4><span class="glyphicon glyphicon-calendar"></span> Időpontfoglalás</h4>
+                    <div class="modal-header" style="padding:5px 50px;">
+                        <button type="button" class="close" style="margin-top:13px" data-dismiss="modal" style="margin-top:3px">&times;</button>
+                        <h4><span class="glyphicon glyphicon-calendar"></span> Időpontfoglalás</h4>
+                    </div>
+
+                    <div class='modal-body' style='padding:10px 50px;'>
+
+                        <div class='row' style='margin-bottom:10px'>
+                            <label class='col-sm-12 col-form-label' style='margin-top:5px'>
+                                Időpontfoglaláshoz kérlek töltsd ki az alábbi űrlapot, hogy egy későbbi időpontban keresni tudjunk egyeztetés céljából.
+                            </label>
                         </div>
+                        
 
-                        <div class='modal-body' style='padding:10px 50px;'>
+                        <form action='index.php' method='POST'>
+                            <input type="hidden" name="formName" value="bookingForm">
 
-                            <div class='row' style='margin-bottom:10px'>
-                                <label class='col-sm-12 col-form-label' style='margin-top:5px'>
-                                    Időpontfoglaláshoz kérlek töltsd ki az alábbi űrlapot, hogy egy későbbi időpontban keresni tudjunk egyeztetés céljából.
-                                </label>
+
+                            <div class='form-group row'>
+                                <label for='bookingDate' class='col-sm-4 col-form-label' style='margin-top:5px'> Dátum</label>
+                                <div class='col-sm-6'>
+                                    <input type='text' 
+                                            readonly
+                                            class='form-control-plaintext' 
+                                            id='bookingDate' 
+                                            name='bookingDate' 
+                                            style='width:100px'>
+
+                                    <input type='text' 
+                                            readonly
+                                            class='form-control-plaintext' 
+                                            id='bookingDay' 
+                                            name='bookingDay' 
+                                            style='width:100px'>
+                                </div>
                             </div>
-                            
-
-                            <form id='bookingForm' action='index.php' method='POST'>
 
 
-                                <div class='form-group row'>
-                                    <label for='bookingDate' class='col-sm-4 col-form-label' style='margin-top:5px'> Dátum</label>
-                                    <div class='col-sm-6'>
-                                        <input type='text' 
-                                                readonly
-                                                class='form-control-plaintext' 
-                                                id='bookingDate' 
-                                                name='bookingDate' 
-                                                style='width:100px'>
 
-                                        <input type='text' 
-                                                readonly
-                                                class='form-control-plaintext' 
-                                                id='bookingDay' 
-                                                name='bookingDay' 
-                                                style='width:100px'>
-                                    </div>
+
+                            <div class='form-group row'>
+                                <label for='bookingFullName' class='col-sm-4 col-form-label' style='margin-top:5px'> Név *</label>
+                                <div class='col-sm-6'>
+                                    <input type='text' 
+                                            required
+                                            <?php
+                                                if ($isUser) 
+                                                    echo " value = '".$_SESSION["userfullname"]."' ";
+                                            ?>
+                                            class='form-control-plaintext' 
+                                            id='bookingFullName' 
+                                            name='bookingFullName' 
+                                            placeholder='vezetéknév keresztnév'
+                                            style='width:300px'>
                                 </div>
+                            </div>
 
 
-
-
-                                <div class='form-group row'>
-                                    <label for='bookingFullName' class='col-sm-4 col-form-label' style='margin-top:5px'> Név *</label>
-                                    <div class='col-sm-6'>
-                                        <input type='text' 
-                                                required
-                                                class='form-control-plaintext' 
-                                                id='bookingFullName' 
-                                                name='bookingFullName' 
-                                                placeholder='vezetéknév keresztnév'
-                                                style='width:300px'>
-                                    </div>
+                            <div class='form-group row'>
+                                <label for='bookingPhone' class='col-sm-4 col-form-label'> Telefonszám *</label>
+                                <div class='col-sm-6'>
+                                    <input type='text' 
+                                            required
+                                            <?php
+                                                if ($isUser) 
+                                                    echo " value = '".$_SESSION["userphone"]."' ";
+                                            ?>
+                                            class='form-control-plaintext' 
+                                            id='bookingPhone' 
+                                            name='bookingPhone' 
+                                            placeholder='telefonszám - +xx xx xxxxxxx'
+                                            style='width:300px'
+                                            maxlength='30'
+                                            onkeypress='return onlyPhone(event)*/'>
                                 </div>
+                            </div>
 
-
-                                <div class='form-group row'>
-                                    <label for='bookingPhone' class='col-sm-4 col-form-label'> Telefonszám *</label>
-                                    <div class='col-sm-6'>
-                                        <input type='text' 
-                                                required
-                                                class='form-control-plaintext' 
-                                                id='bookingPhone' 
-                                                name='bookingPhone' 
-                                                placeholder='telefonszám - +xx xx xxxxxxx'
-                                                style='width:300px'
-                                                maxlength='30'
-                                                onkeypress='return onlyPhone(event)*/'>
-                                    </div>
+                            <div class='form-group row'>
+                                <label for='bookingMail' class='col-sm-4 col-form-label'> E-mail cím *</label>
+                                <div class='col-sm-6'>
+                                    <input type='email' 
+                                            required
+                                            <?php
+                                                if ($isUser) 
+                                                    echo " value = '".$_SESSION["usermail"]."' ";
+                                            ?>
+                                            class='form-control-plaintext' 
+                                            id='bookingMail' 
+                                            name='bookingMail' 
+                                            placeholder='e-mail cím'
+                                            style='width:300px'
+                                            maxlength='64'>
                                 </div>
+                            </div>
 
-                                <div class='form-group row'>
-                                    <label for='bookingEmail' class='col-sm-4 col-form-label'> E-mail cím *</label>
-                                    <div class='col-sm-6'>
-                                        <input type='email' 
-                                                required
-                                                class='form-control-plaintext' 
-                                                id='bookingEmail' 
-                                                name='bookingEmail' 
-                                                placeholder='e-mail cím'
-                                                style='width:300px'
-                                                maxlength='64'>
-                                    </div>
-                                </div>
+                            <button type='submit' class='btn btn-success'>
+                                <span class='glyphicon glyphicon-ok'></span> Mentés
+                            </button>
 
-                                <button type='submit' class='btn btn-success'>
-                                    <span class='glyphicon glyphicon-ok'></span> Mentés
-                                </button>
+                            <button type='reset' class='btn btn-primary' data-dismiss='modal' >
+                                <span class='glyphicon glyphicon-remove'></span> Mégsem
+                            </button>
 
-                                <button type='reset' class='btn btn-primary' data-dismiss='modal' >
-                                    <span class='glyphicon glyphicon-remove'></span> Mégsem
-                                </button>
+                            <div class='modal-footer' style='text-align:left '>
+                                <span>A *-al jelszett mezők kitöltése kötelező!</span>
+                            </div>
 
-                                <div class='modal-footer' style='text-align:left '>
-                                    <span>A *-al jelszett mezők kitöltése kötelező!</span>
-                                </div>
-
-                            </form>
-
-                        </div>
+                        </form>
 
                     </div>
-      
-                </div>
 
+                    <script>
+                        // ONCLOSE
+                        $('#bookingService').on('hidden.bs.modal', function (e) {
+                        });
+
+                        // BEFORE ON SHOW
+                        $('#bookingService').on('show.bs.modal', function (e) {
+                            document.getElementById("bookingDate").value = bookingDate;
+                            document.getElementById("bookingDay").value = bookingDay;
+                        })
+
+                    </script>
+                    
+                </div>
+    
             </div>
 
-            <script>
-                // ONCLOSE
-                $('#bookingService').on('hidden.bs.modal', function (e) {
-                });
-
-                // BEFORE ON SHOW
-                $('#bookingService').on('show.bs.modal', function (e) {
-                    let brt = document.getElementById("bookingrect").title; 
-                    document.getElementById("bookingDate").value = brt.split("\n")[0].split(",")[0];
-                })
-
-            </script>
-
-
         </div>
+
+
+
 
 
 
@@ -1190,8 +1302,6 @@
 
                         // BEFORE ON SHOW
                         $('#loginForm').on('show.bs.modal', function (e) {
-                                                alert("ki");
-
                         })
 
                     </script>

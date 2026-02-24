@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 24. 15:13
+-- Létrehozás ideje: 2026. Feb 24. 21:46
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -4226,6 +4226,36 @@ INSERT INTO `paymenttype_mstr` (`PaymentTypeID_MSTR`, `PaymentTypeName_MSTR`, `P
 -- --------------------------------------------------------
 
 --
+-- Tábla szerkezet ehhez a táblához `prebooking_mstr`
+--
+
+CREATE TABLE `prebooking_mstr` (
+  `PreBookingID_MSTR` int(11) NOT NULL,
+  `PreBookingDate_MSTR` date NOT NULL,
+  `PreBookingFullName_MSTR` varchar(50) NOT NULL,
+  `PreBookingPhone_MSTR` varchar(30) NOT NULL,
+  `PreBookingMail_MSTR` varchar(50) NOT NULL,
+  `PreBookingRegDateTime_MSTR` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `prebooking_mstr`
+--
+
+INSERT INTO `prebooking_mstr` (`PreBookingID_MSTR`, `PreBookingDate_MSTR`, `PreBookingFullName_MSTR`, `PreBookingPhone_MSTR`, `PreBookingMail_MSTR`, `PreBookingRegDateTime_MSTR`) VALUES
+(1, '2026-02-03', 's', 's', 's', '0000-00-00 00:00:00'),
+(2, '2025-01-15', 'sg', 'ds', 'sdfsngMail', '0000-00-00 00:00:00'),
+(3, '2026-02-04', '', '', '', '0000-00-00 00:00:00'),
+(4, '2026-09-04', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '0000-00-00 00:00:00'),
+(5, '2026-09-04', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '2026-02-24 21:24:12'),
+(6, '2026-09-04', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '2026-02-24 21:25:36'),
+(7, '2026-05-05', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '2026-02-24 21:28:01'),
+(8, '2026-10-05', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '2026-02-24 21:31:28'),
+(9, '2026-06-08', 'Gatya Terézia', '+36 20 555 55 55', 'mrkoverchenko@gmail.com', '2026-02-24 21:33:33');
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `quantityunit_mstr`
 --
 
@@ -4522,6 +4552,12 @@ ALTER TABLE `paymenttype_mstr`
   ADD PRIMARY KEY (`PaymentTypeID_MSTR`);
 
 --
+-- A tábla indexei `prebooking_mstr`
+--
+ALTER TABLE `prebooking_mstr`
+  ADD PRIMARY KEY (`PreBookingID_MSTR`);
+
+--
 -- A tábla indexei `quantityunit_mstr`
 --
 ALTER TABLE `quantityunit_mstr`
@@ -4586,7 +4622,7 @@ ALTER TABLE `user_mstr`
 -- AUTO_INCREMENT a táblához `booking_mstr`
 --
 ALTER TABLE `booking_mstr`
-  MODIFY `BookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `BookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT a táblához `cities_mstr`
@@ -4695,6 +4731,12 @@ ALTER TABLE `password_mstr`
 --
 ALTER TABLE `paymenttype_mstr`
   MODIFY `PaymentTypeID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT a táblához `prebooking_mstr`
+--
+ALTER TABLE `prebooking_mstr`
+  MODIFY `PreBookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT a táblához `quantityunit_mstr`

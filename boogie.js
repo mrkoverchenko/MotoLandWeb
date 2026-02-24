@@ -561,6 +561,12 @@ function aszfChange(e) {
     document.getElementById("submitBtn").disabled = !e.target.checked;
 }
 
-
-
+let bookingDate;
+let bookingDay;
+function setBooking(e) {
+    let bd = e.target.title.split("\n")[0].split(",");
+    bookingDate = bd[0].trim();
+    bookingDay = bd[1].trim();
+    //alert(bookingDate+"\n"+bookingDay);
+}
 

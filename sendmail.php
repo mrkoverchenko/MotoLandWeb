@@ -223,7 +223,11 @@
                                     $parts
                                 </tbody>
 
+
                                 <tfoot>
+                                    <tr>
+                                        <td colspan='9'></td>
+                                    </tr>
 
                                     <tr>
                                         <td colspan='6'></td>
@@ -231,13 +235,13 @@
                                         <td style='text-align: right'><b><u>$supplierCost.-</u></b></td>
                                     </tr>".
 
-                                        (($supplierCash > 0) 
-                                            ? "<tr>
-                                                <td colspan='7'></td>
-                                                <td colspan='2' style='text-align: right'>Készpénzes fizetés:</td>
-                                                <td style='text-align: right'><b><u>$supplierCash.-</u></b></td>
-                                              </tr>"
-                                            : "").
+                                    (($supplierCash > 0) 
+                                        ? "<tr>
+                                            <td colspan='7'></td>
+                                            <td colspan='2' style='text-align: right'>Készpénzes fizetés:</td>
+                                            <td style='text-align: right'><b><u>$supplierCash.-</u></b></td>
+                                            </tr>"
+                                        : "").
 
                                     "<tr>
                                         <td colspan='8'></td>

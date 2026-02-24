@@ -4,6 +4,10 @@
 ?>
 
         <style>
+            .minmrgn {
+                margin:3px;
+            }
+
             .mrg {
                 margin-top:55px; 
             }
@@ -54,6 +58,13 @@
                 <div class="col-sm-10 mrg">
                      Az alábbi táblázatban található szabad munkanapokra tud időpontot foglalni, egyeztetni.
                 </div>
+
+                <div class="col-sm-10" style="margin-top:10px;">
+                    <div><div class="dayRect holiday minmrgn">16</div> Ünnepnap - munkaszüneti nap</div>
+                    <div><div class="dayRect weekend minmrgn">04</div> Hétvége - munkaszüneti nap</div>
+                    <div><div class="dayRect workday minmrgn">10</div> Munkanap</div>
+                </div>
+
                 <div class="col-sm-5" >
                     <div class="form-group">
                     </div>                     
@@ -129,7 +140,7 @@
                                     }
 
                                     if ($optional)
-                                        $d .= "<a href='#bookingService' data-toggle='modal'><div id='bookingrect' class='dayRect $dayType' title='$detail'>$dayIC</div></a>";
+                                        $d .= "<a onclick='setBooking(event)' href='#bookingService' data-toggle='modal'><div id='bookingrect' class='dayRect $dayType' title='$detail'>$dayIC</div></a>";
                                     else
                                         $d .= "<div class='dayRect $dayType' title='$detail'>$dayIC</div>";
 
@@ -146,7 +157,7 @@
 
             </div>
 
-
+        </div>
 
         <!-- BOOKING -->
             <!--if (isset($_SESSION["usertype"])) {-->

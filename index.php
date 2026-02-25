@@ -926,6 +926,12 @@
                 border-radius: 50%;
                 background-color:red;
             }
+            body {
+                background-image: url('imgs/bg.png');
+                background-repeat: repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
 
         </style>
 

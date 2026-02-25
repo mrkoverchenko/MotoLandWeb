@@ -5,12 +5,20 @@
 
         <style>
             .minmrgn {
-                margin:3px;
+                margin: 3px;
+                width: 15px;
+                height: 15px;
             }
 
             .mrg {
                 margin-top:55px; 
             }
+
+            .reservedday {
+                background-color: gray;
+                color: white;
+            }
+
 
             .holiday {
                 background-color: red;
@@ -63,6 +71,7 @@
                     <div><div class="dayRect holiday minmrgn">16</div> Ünnepnap - munkaszüneti nap</div>
                     <div><div class="dayRect weekend minmrgn">04</div> Hétvége - munkaszüneti nap</div>
                     <div><div class="dayRect workday minmrgn">10</div> Munkanap</div>
+                    <div><div class="dayRect reservedday minmrgn">18</div> Foglalt munkanap</div>
                 </div>
 
                 <div class="col-sm-5" >
@@ -86,6 +95,19 @@
                         array_push($holiday, $row["HolidayDate_MSTR"]."ß".$row["HolidayDetail_MSTR"]);
                         //$holiday[] = ['date' => $row["HolidayDate_MSTR"], 'detail' => $row["HolidayDetail_MSTR"] ];                        
                     }
+
+
+                    $str = "SELECT DATE(BookingDateTime_MSTR) AS bookingDate ".
+                           "FROM booking_mstr ".
+                           "ORDER BY BookingDateTime_MSTR ASC";
+                    $result = mysqli_query($connect, $str);
+                    $reservedday = array();
+                    while ($row = mysqli_fetch_assoc($result)) {                    
+                        array_push($reservedday, $row["bookingDate"]);
+                    }
+
+
+
 
                     for ($monthIC = 1; $monthIC <= 12; $monthIC++) {
                         $date =  $yr."-".$monthIC."-01";
@@ -122,21 +144,29 @@
                                     }
 
 
+                                    //RESERVED DAY
+                                    for ($ic = 0; $ic < count($reservedday); $ic++) {
+                                        if ($reservedday[$ic] === $rectDate) {
+                                            $dayType = "reservedday";
+                                            $detail = "$rectDate, $dayName\nMár foglalt munkanap";
+                                            $optional = false;
+                                            break;
+                                        }
+                                    }
+
+
+
+                                    //HOLIDAY
                                     for ($ic = 0; $ic < count($holiday); $ic++) {
                                         $holi = explode("ß", $holiday[$ic]);
                                         $hDate = $holi[0];
                                         $hDetail = $holi[1];
-                                        
-
-                                        //HOLIDAY
                                         if ($hDate === $rectDate) {
                                             $dayType = "holiday";
-                                            $detail = "$rectDate, $dayName\n".$hDetail."\nMunkaszüneti nap";
+                                            $detail = "$rectDate, $dayName\n".$hDetail."\nÜnnepnap";
                                             $optional = false;
                                             break;
                                         }
-
-                                       
                                     }
 
                                     if ($optional)

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 24. 21:46
+-- Létrehozás ideje: 2026. Feb 25. 14:13
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -48,6 +48,13 @@ CREATE TABLE `booking_mstr` (
   `BookingLastModifiedDate_MSTR` datetime NOT NULL DEFAULT current_timestamp(),
   `BookingRegDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `booking_mstr`
+--
+
+INSERT INTO `booking_mstr` (`BookingID_MSTR`, `BookingDateTime_MSTR`, `BookingNote_MSTR`, `BookingUserID_MSTR`, `BookingMotoRegNumber_MSTR`, `BookingMotoManID_MSTR`, `BookingMotoTypeID_MSTR`, `BookingMotoYear_MSTR`, `BookingCheckList_MSTR`, `BookingMechanicCheckList_MSTR`, `BookingWorkStatusID_MSTR`, `BookingWorkBegin_MSTR`, `BookingWorkEnd_MSTR`, `BookingWorkHours_MSTR`, `BookingWorkCost_MSTR`, `BookingLastModifiedDate_MSTR`, `BookingRegDateTime_MSTR`) VALUES
+(42, '2026-06-04 12:00:00', '', 73, 'XXXXXX', 43, 1, 2008, 'dggydgydgbydgby', '', 1, '2026-06-04 12:00:00', '2026-06-04 13:00:00', 1.00, 6780.00, '2026-02-25 13:24:25', '2026-02-25 13:24:25');
 
 -- --------------------------------------------------------
 
@@ -4622,7 +4629,7 @@ ALTER TABLE `user_mstr`
 -- AUTO_INCREMENT a táblához `booking_mstr`
 --
 ALTER TABLE `booking_mstr`
-  MODIFY `BookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `BookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT a táblához `cities_mstr`

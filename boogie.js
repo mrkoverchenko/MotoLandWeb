@@ -132,6 +132,19 @@ function getMyOrders() {
 }
 
 
+function getMyBooking(_this) {
+    var param = "bookingID=" + _this.value;
+    var req = new XMLHttpRequest();
+    req.open("POST", "getMyBookings.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            document.getElementById("bookingTBody").innerHTML = req.responseText;
+        }
+    }
+    req.send(param);
+}
+
 
 function removePart(_this) {
 

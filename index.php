@@ -1035,7 +1035,7 @@
                                             <li><a href='#mySecurityForm' data-toggle='modal' ><span class='glyphicon glyphicon-lock' style='margin-right:20px;'></span>Biztonság</a></li>
                                             <li role='separator' class='divider'></li>
 
-                                            <li><a href='#'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalásaim</a></li>
+                                            <li><a href='#' onclick='startItem(\"myBooking\")'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalásaim</a></li>
 
                                             <li><a href='#' onclick='startItem(\"orderedItems\")'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>";
 

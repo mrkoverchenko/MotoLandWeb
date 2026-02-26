@@ -24,7 +24,7 @@
                 $partVAT = round($row["OrdersVAT_DET"], 0);
                 $partDISC = round($row["OrdersDiscount_DET"], 0);
                 $partBrutto = round($row["OrdersBruttoPrice_DET"], 0);
-                $partEUR = round($row["OrdersBruttoEURPrice_DET"], 2);
+                $partEUR = number_format($row["OrdersBruttoEURPrice_DET"], 2, ",", " ");
                 $partQua = round($row["OrdersQuantity_DET"], 0);
                 $partQuaUnit = $row["OrdersQuantityUnit_DET"];
                 $ic++;
@@ -32,16 +32,22 @@
                             <td>$ic</td>
                             <td>$partNumber</td>
                             <td>$partName</td>
-                            <td>$partNetto.- Ft.</td>
+                            <td>".number_format($partNetto, 0, ",", " ").".- Ft.</td>
                             <td>$partVAT %</td>
                             <td>$partDISC %</td>
-                            <td>$partBrutto.- Ft.</td>
+                            <td>".number_format($partBrutto, 0, ",", " ").".- Ft.</td>
                             <td>$partEUR &euro;</td>
                             <td>$partQua $partQuaUnit</td>
                             <td style='text-align: right'><b><u>".$partBrutto * $partQua.".- Ft.</u></b></td>
                        </tr>";
                 $fullTotal += ($partBrutto * $partQua);
             }
+
+            $fullTotal = number_format($fullTotal, 0, ",", " ");
+            //$fmt = new NumberFormatter( 'hu_HU', NumberFormatter::DECIMAL );
+            //$fullTotal = $fmt->format($fullTotal);
+
+
             $ret .= "<tfoot>
                         <tr>
                             <td colspan='10' style='text-align: right'></td>

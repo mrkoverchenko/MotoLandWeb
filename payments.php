@@ -154,7 +154,9 @@
                             $partEUR = $row["bruttoEUR"]."&euro;";
                             $partMee = $row["mee"];
                             $partQua = $row["qua"]." $partMee";
+
                             $partSubtotal = $row["subtotal"];
+
                             $partTotal = $partTotal + $partSubtotal;
                             $tbl.="<tr>
                                     <th scope='row'>$rowID</th>

@@ -4,10 +4,14 @@
 ?>
 
         <style>
-            .minmrgn {
-                margin: 3px;
-                width: 15px;
-                height: 15px;
+
+            .servicebookingbody {
+                margin:10px;
+                margin-top:60px; 
+
+                color:gray;
+                display: inline-block;
+                width: 100%;
             }
 
             .mrg {
@@ -19,6 +23,10 @@
                 color: white;
             }
 
+            .pastday {
+                background-color: lightgray;
+                color: white;
+            }
 
             .holiday {
                 background-color: red;
@@ -43,6 +51,17 @@
                 text-align: center;
                 cursor: pointer;
             }
+            .minDayRect {
+                display:inline-block;
+                width:20px;
+                height:20px;
+                padding-top:5px;
+                border: 0.5px solid gray;
+                margin-right: 5px;
+                text-align: center;
+                font-size:7px;
+            }
+
             .monthRect {
                 display:inline-block;
                 background-color:#d9f0b4;
@@ -53,7 +72,7 @@
             }
         </style>
 
-        <div class="ordereditemsbody">
+        <div class="servicebookingbody">
 
             <div class="row">
                 <div class="col-sm-2 mrg">
@@ -64,14 +83,15 @@
 
             <div class="row">
                 <div class="col-sm-10 mrg">
-                     Az alábbi táblázatban található szabad munkanapokra tud időpontot foglalni, egyeztetni.
+                     Az alábbi táblázatban található szabad munkanapokra ( <div class="minDayRect workday">18</div>) tud időpontot foglalni, egyeztetni.
                 </div>
 
                 <div class="col-sm-10" style="margin-top:10px;">
-                    <div><div class="dayRect holiday minmrgn">16</div> Ünnepnap - munkaszüneti nap</div>
-                    <div><div class="dayRect weekend minmrgn">04</div> Hétvége - munkaszüneti nap</div>
-                    <div><div class="dayRect workday minmrgn">10</div> Munkanap</div>
-                    <div><div class="dayRect reservedday minmrgn">18</div> Foglalt munkanap</div>
+                    <div class="minDayRect holiday">16</div><div style="vertical-align: bottom; display:inline; margin-right:15px; ">Ünnepnap-munkaszüneti nap</div>
+                    <div class="minDayRect weekend">10</div><div style="vertical-align: bottom; display:inline; margin-right:15px;">Hétvége-munkaszüneti nap</div>
+                    <div class="minDayRect workday">18</div><div style="vertical-align: bottom; display:inline; margin-right:15px;">Munkanap</div>
+                    <div class="minDayRect reservedday">13</div><div style="vertical-align: bottom; display:inline; margin-right:15px;">Foglalt munkanap</div>
+                    <div class="minDayRect pastday">07</div><div style="vertical-align: bottom; display:inline; margin-right:15px;">Múlt</div>
                 </div>
 
                 <div class="col-sm-5" >
@@ -126,7 +146,7 @@
                                 if ($dayIC > 0) {
                                     $rectDate = $yr."-".
                                                 (($monthIC < 9) ? "0".$monthIC : $monthIC)."-".
-                                                (($dayIC < 9) ? "0".$dayIC : $dayIC);
+                                                (($dayIC < 10) ? "0".$dayIC : $dayIC);
 
 
                                     $dayName = $dNames[date('w', strtotime($rectDate))];
@@ -134,39 +154,48 @@
                                     $detail = "$rectDate, $dayName\nMunkanap";
 
 
-
-                                    //WEEKEND
-                                    //$rectDayName = date("l", strtotime($rectDate));
-                                    if (date('N', strtotime($rectDate)) >= 6) {
-                                        $dayType = "weekend";
-                                        $detail = "$rectDate, $dayName\nHétvége";
+                                    if ( date("Y-m-d") > date($rectDate)) {
+                                        //PAST DAY
+                                        $dayType = "pastday";
+                                        $detail = "$rectDate, $dayName";
                                         $optional = false;
-                                    }
 
+                                    } else {
 
-                                    //RESERVED DAY
-                                    for ($ic = 0; $ic < count($reservedday); $ic++) {
-                                        if ($reservedday[$ic] === $rectDate) {
-                                            $dayType = "reservedday";
-                                            $detail = "$rectDate, $dayName\nMár foglalt munkanap";
+                                        //WEEKEND
+                                        //$rectDayName = date("l", strtotime($rectDate));
+                                        if (date('N', strtotime($rectDate)) >= 6) {
+                                            $dayType = "weekend";
+                                            $detail = "$rectDate, $dayName\nHétvége";
                                             $optional = false;
-                                            break;
                                         }
-                                    }
 
 
-
-                                    //HOLIDAY
-                                    for ($ic = 0; $ic < count($holiday); $ic++) {
-                                        $holi = explode("ß", $holiday[$ic]);
-                                        $hDate = $holi[0];
-                                        $hDetail = $holi[1];
-                                        if ($hDate === $rectDate) {
-                                            $dayType = "holiday";
-                                            $detail = "$rectDate, $dayName\n".$hDetail."\nÜnnepnap";
-                                            $optional = false;
-                                            break;
+                                        //RESERVED DAY
+                                        for ($ic = 0; $ic < count($reservedday); $ic++) {
+                                            if ($reservedday[$ic] === $rectDate) {
+                                                $dayType = "reservedday";
+                                                $detail = "$rectDate, $dayName\nMár foglalt munkanap";
+                                                $optional = false;
+                                                break;
+                                            }
                                         }
+
+
+
+                                        //HOLIDAY
+                                        for ($ic = 0; $ic < count($holiday); $ic++) {
+                                            $holi = explode("ß", $holiday[$ic]);
+                                            $hDate = $holi[0];
+                                            $hDetail = $holi[1];
+                                            if ($hDate === $rectDate) {
+                                                $dayType = "holiday";
+                                                $detail = "$rectDate, $dayName\n".$hDetail."\nÜnnepnap";
+                                                $optional = false;
+                                                break;
+                                            }
+                                        }
+
                                     }
 
                                     if ($optional)

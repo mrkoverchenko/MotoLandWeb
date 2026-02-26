@@ -12,6 +12,7 @@
         <style>
             .orderbody {
                 margin-top:55px; 
+                margin-bottom:60px; 
                 color:red;
                 display: inline-block;
                 width: 100%;
@@ -134,6 +135,7 @@
                                 </div>
                                 <div class="col-sm-1" >
                                     <div>
+                                        <input type="hidden" id="defpath" value="<?php echo $_SESSION["systemPath"];?>">
                                         <img title="Nagyítás" 
                                             id="magni"
                                             src="<?php echo $_SESSION["systemPath"];?>imgs/magni+.png" 

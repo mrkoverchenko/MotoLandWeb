@@ -14,6 +14,7 @@
             $sql = "SELECT * FROM orders_det WHERE OrdersMSTRID_DET = '$orderID'";
 
             $result = mysqli_query($connect, $sql);
+            $fullTotal = 0;
             $ic = 0;
             while ($row = mysqli_fetch_assoc($result)) {
                 //array_push($ret, $row);
@@ -27,7 +28,7 @@
                 $partQua = round($row["OrdersQuantity_DET"], 0);
                 $partQuaUnit = $row["OrdersQuantityUnit_DET"];
                 $ic++;
-                $ret .= "<tr>
+                $ret .= "<tr style='color: green'>
                             <td>$ic</td>
                             <td>$partNumber</td>
                             <td>$partName</td>
@@ -37,10 +38,19 @@
                             <td>$partBrutto.- Ft.</td>
                             <td>$partEUR &euro;</td>
                             <td>$partQua $partQuaUnit</td>
-                            <td>".$partBrutto * $partQua.".- Ft.</td>
+                            <td style='text-align: right'><b><u>".$partBrutto * $partQua.".- Ft.</u></b></td>
                        </tr>";
-                       
+                $fullTotal += ($partBrutto * $partQua);
             }
+            $ret .= "<tfoot>
+                        <tr>
+                            <td colspan='10' style='text-align: right'></td>
+                        </tr>
+                        <tr>
+                            <td colspan='9' style='text-align: right'><b>Fizetendő: </b></td>
+                            <td style='text-align: right; color: green' colspan='1'><b><u>$fullTotal.- Ft.</u></b></td>
+                        </tr>
+                    </tfoot>";
 
         }
 

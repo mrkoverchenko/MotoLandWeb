@@ -32,10 +32,10 @@
                     MotoPartsName_MSTR,
                     ROUND(MotoPartsNettoPrice_MSTR, 0) AS netto,
                     ROUND(MotoPartsVAT_MSTR * 100, 1) AS vat,
-                    ROUND((ROUND(MotoPartsNettoPrice_MSTR, 0) * MotoPartsVAT_MSTR) + ROUND(MotoPartsNettoPrice_MSTR, 0)) AS brutto,
+                    ROUND((MotoPartsNettoPrice_MSTR * MotoPartsVAT_MSTR) + MotoPartsNettoPrice_MSTR, 0) AS brutto,
                     QuantityUnitUnit_MSTR AS mee,
                     ShoppingCartQuantity_DET AS qua,
-                    ROUND((ROUND(MotoPartsNettoPrice_MSTR, 0) * MotoPartsVAT_MSTR) + ROUND(MotoPartsNettoPrice_MSTR, 0)) * ShoppingCartQuantity_DET AS subtotal
+                    MotoPartsDiscount_MSTR AS disc
                 FROM 
                     shoppingcart_mstr, shoppingcart_det, motoparts_mstr, quantityunit_mstr, lockedquantity_mstr
                 WHERE 
@@ -45,6 +45,7 @@
                     MotoPartsID_MSTR = ShoppingCartMotoPartsID_DET AND
                     MotoPartsQuantityUnitID_MSTR = QuantityUnitID_MSTR";
 
+                    //ROUND((MotoPartsNettoPrice_MSTR * MotoPartsVAT_MSTR) + MotoPartsNettoPrice_MSTR) * ShoppingCartQuantity_DET AS subtotal    
         $result = mysqli_query($connect, $sql);
         $total = 0;
         while ($row = mysqli_fetch_assoc($result)) {       
@@ -54,7 +55,10 @@
             $sessionID = $row["ShoppingCartSessionID_MSTR"];
             $qua = $row["qua"];
             $partID = $row["MotoPartsID_MSTR"];
-            $partSubTotal = $row["subtotal"];
+            $brutto = $row["brutto"];
+            $disc = $row["disc"];
+            $partSubTotal = round(($brutto -($brutto * $disc)) * $qua);
+            //$row["subtotal"];
             $total += $partSubTotal;
             $ret .= "<div class='card-body' style='margin-bottom:10px;' id='row_$idDET'>
                         <div>
@@ -88,11 +92,11 @@
                             </div>
 
                             <div style='float: left; margin-left:15px; '>
-                                <p class='card-text'><strong>Br.: <u>".$row["subtotal"]." HUF.</u> </strong></p>
+                                <p class='card-text'><strong>Br.: <u>".$partSubTotal." HUF.</u> </strong></p>
                             </div>
 
                             <div style='float: left; margin-left:20px;' title='törlés'>
-                                <a href='#' onclick='removePart(this)' id='$idDET' >
+                                <a href='#' onclick='removeFromShoppingCart(this)' id='$idDET' >
                                     <span class='glyphicon glyphicon-trash' style='font-size:14px;'></span>
                                 </a>
                             </div>

@@ -10,11 +10,12 @@
 ?>
         <style>
             .mybookingbody {
+                margin:10px;
                 margin-top:60px; 
+
                 color:gray;
                 display: inline-block;
                 width: 100%;
-                background-color: transparent;
             }
             .mrg {
                 margin-top: 5px;
@@ -37,9 +38,11 @@
 
 
             <div class="row">
+
                 <div class="col-sm-2 mrg">
-                     Előjegyzett időpontok
+                     <b>Előjegyzett időpontok</b>
                 </div>
+
                 <div class="col-sm-5" >
                     <div class="form-group">
                         <select class="form-control" id="mybookinglist" onchange="getMyBooking(this)">
@@ -70,26 +73,26 @@
             </div>
 
 
+            <div class="row" style="width:95%; margin:auto;">
+                <table class='table table-hover' style='color: gray'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>No.</th>
+                            <th scope='col'>Rendszám</th>
+                            <th scope='col'>Gyártó</th>
+                            <th scope='col'>Típus</th>
+                            <th scope='col'>Évjárat</th>
+                            <th scope='col'>Felvéve</th>
+                            <th scope='col'>Utolsó módosítás</th>
+                        </tr>
+                    </thead>
 
-            <div class="row">
-                <div class='row brdr'>
-                    <table class='table table-hover' style='color: gray;'>
-                        <thead>
-                            <tr>
-                                <th scope='col'>No.</th>
-                                <th scope='col'>Rendszám</th>
-                                <th scope='col'>Gyártó</th>
-                                <th scope='col'>Típus</th>
-                                <th scope='col'>Évjárat</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="bookingTBody">
+                    <tbody id="bookingTBody">
                                
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
+
         </div>
 
 

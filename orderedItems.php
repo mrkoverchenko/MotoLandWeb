@@ -10,14 +10,12 @@
 ?>
         <style>
             .ordereditemsbody {
+                margin:10px;
                 margin-top:60px; 
+
                 color:gray;
                 display: inline-block;
                 width: 100%;
-                background-color: transparent;
-            }
-            .tabcontain {
-                color: gray;
             }
             .mrg {
                 margin-top: 5px;
@@ -40,9 +38,11 @@
 
 
             <div class="row">
+
                 <div class="col-sm-2 mrg">
                      Rendelési tételek
                 </div>
+
                 <div class="col-sm-5" >
                     <div class="form-group">
                         <select class="form-control" id="myorderslist" onchange="getMyOrders()">
@@ -78,30 +78,28 @@
             </div>
 
 
+            <div class="row" style="width:95%; margin:auto;">
 
-            <div class="row">
-                <div class='row brdr'>
-                    <table class='table table-hover' style='color: gray;'>
-                        <thead>
-                            <tr>
-                                <th scope='col'>No.</th>
-                                <th scope='col'>Cikkszám</th>
-                                <th scope='col'>Terméknév</th>
-                                <th scope='col'>Netto</th>
-                                <th scope='col'>Áfa</th>
-                                <th scope='col'>Kedv.</th>
-                                <th scope='col'>Egységár</th>
-                                <th scope='col'>&euro;</th>
-                                <th scope='col'>Menny.</th>
-                                <th scope='col'>Összesen</th>
-                            </tr>
-                        </thead>
+                <table class='table table-hover' style='color: gray;'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>No.</th>
+                            <th scope='col'>Cikkszám</th>
+                            <th scope='col'>Terméknév</th>
+                            <th scope='col'>Netto</th>
+                            <th scope='col'>Áfa</th>
+                            <th scope='col'>Kedv.</th>
+                            <th scope='col'>Egységár</th>
+                            <th scope='col'>&euro;</th>
+                            <th scope='col'>Menny.</th>
+                            <th style='text-align: right' scope='col'>Összesen</th>
+                        </tr>
+                    </thead>
 
-                        <tbody id="orderedTBody">
+                    <tbody id="orderedTBody">
                                
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
 

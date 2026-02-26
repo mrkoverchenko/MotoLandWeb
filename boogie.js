@@ -146,7 +146,7 @@ function getMyBooking(_this) {
 }
 
 
-function removePart(_this) {
+function removeFromShoppingCart(_this) {
 
     if (confirm("Biztos, hogy törölni akarod a kosaradból?")) {
 
@@ -159,7 +159,7 @@ function removePart(_this) {
         let partID = document.getElementsByName("partID")[0].value;
         var param = `idDET=${idDET}&idMSTR=${idMSTR}&lockedID=${lockedID}&sessionID=${sessionID}&qua=${qua}&partID=${partID}`;
         var req = new XMLHttpRequest();
-        req.open("POST", "removePart.php", true);
+        req.open("POST", "removeFromShoppingCart.php", true);
         req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         req.onreadystatechange = function () {
             if (req.readyState === 4 && req.status === 200) {
@@ -195,6 +195,7 @@ function changeSize(clear) {
     if (clear)
         explodedViewIMG.src = "";
     else {
+        defaultPath = document.getElementById("defpath").value;
         let magni = document.getElementById("magni");
         if (!magniBig) {
             magni.src = defaultPath + "imgs/magni-.png";

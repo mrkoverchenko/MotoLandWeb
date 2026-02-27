@@ -133,7 +133,7 @@
                                                 <th scope='col'>Áfa</th>
                                                 <th scope='col'>Kedv.</th>
                                                 <th scope='col'>Egységár</th>
-                                                <th scope='col'>&euro;</th>
+                                                <th scope='col'>EUR</th>
                                                 <th scope='col'>Menny.</th>
                                                 <th scope='col'>Összesen</th>
                                             </tr>
@@ -147,13 +147,13 @@
                             $rowID++;
                             $partNumber = $row["MotoPartsNumber_MSTR"];
                             $partName = $row["MotoPartsName_MSTR"];
-                            $partNetto = $row["netto"].".-";
+                            $partNetto = number_format($row["netto"], 0, ",", " ").".- Ft.";
                             $partVAT =  $row["vat"]."%";
                             $partDISC =  $row["disc"]."%";
-                            $partBrutto = $row["brutto"].".-";
-                            $partEUR = $row["bruttoEUR"]."&euro;";
+                            $partBrutto = number_format($row["brutto"], 0, ",", " ").".- Ft.";
+                            $partEUR = number_format($row["bruttoEUR"], 2,","," ").".- &euro;";
                             $partMee = $row["mee"];
-                            $partQua = $row["qua"]." $partMee";
+                            $partQua = number_format($row["qua"], 1,","," ")." $partMee";
 
                             $partSubtotal = $row["subtotal"];
 
@@ -168,7 +168,7 @@
                                     <td>$partBrutto</td>
                                     <td>$partEUR</td>
                                     <td>$partQua</td>
-                                    <td>$partSubtotal.-</td>
+                                    <td>".number_format($partSubtotal, 0, ",", " ").".- Ft.</td>
                                     </tr>";
                                
                         }
@@ -182,7 +182,7 @@
                                     <td></td>
                                     <td></td>
                                     <td style='color:green'><b>Fizetendő:</b></td>
-                                    <td style='color:green'><u><strong>$partTotal.- Ft.</strong></u></td>
+                                    <td style='color:green'><u><strong>".number_format($partTotal, 0, ",", " ").".- Ft.</strong></u></td>
                                 </tr>
                             </tbody></table></div>";
                         //TermékBrutto (&euro;)
@@ -542,7 +542,7 @@
                                         $supps.= "  <div class='form-check'>
                                                         <input class='form-check-input' type='radio' name='shoppingCartSupplier' id='sup$s' required value='$supplierID'>
                                                         <label class='form-check-label' style='margin-left:20px;' for='sup$s' title='$supplierName'>
-                                                            $supplierName ($supplierCost.- Ft.)
+                                                            $supplierName (".number_format($supplierCost, 0, ",", " ").".- Ft.)
                                                         </label>
                                                     </div>";
                                     }
@@ -598,7 +598,7 @@
                                             $pays.= "   <div class='form-check'>
                                                             <input class='form-check-input' type='radio' name='shoppingCartPaymentType' id='pay$s' required value='$paymentID'>
                                                             <label class='form-check-label' style='margin-left:20px;' for='pay$s' title='$paymentName'>
-                                                                $paymentName ($paymentCost.- Ft.)
+                                                                $paymentName (".number_format($paymentCost, 0,",", " ").".- Ft.)
                                                             </label>
                                                         </div>";
                                         }

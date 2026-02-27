@@ -146,13 +146,13 @@
                                 <td style='text-align: center; margin:3px'>$ic.</td>
                                 <td style='text-align: center; margin:3px'>$partnumber</td>
                                 <td style='text-align: center; margin:3px'>$partname</td>
-                                <td style='text-align: center; margin:3px'>$netto.-</td>
+                                <td style='text-align: center; margin:3px'>".number_format($netto, 0, ",", " ").".- Ft.</td>
                                 <td style='text-align: center; margin:3px'>$vat%</td>
                                 <td style='text-align: center; margin:3px'>$disc%</td>
-                                <td style='text-align: center; margin:3px'>$brutto.-</td>
-                                <td style='text-align: center; margin:3px'>$bruttoEUR &euro;</td>
+                                <td style='text-align: center; margin:3px'>".number_format($brutto, 0, ",", " ").".- Ft.</td>
+                                <td style='text-align: center; margin:3px'>".number_format($bruttoEUR, 2, ",", " ").".- &euro;</td>
                                 <td style='text-align: center; margin:3px'>$qua $mee</td>
-                                <td style='text-align: right; margin:3px'><b><u>".$subtotal."</u></b>.-</td>
+                                <td style='text-align: right; margin:3px'><b><u>".number_format($subtotal, 0, ",", " ").".- Ft.</u></b></td>
                             </tr>";
                 $fulltotal += $subtotal;
 
@@ -188,7 +188,7 @@
                                 <div style='margin-top:0px;'>
                                     Fizetés: <b>$paymentName</b>".
                                         (($supplierCash > 0) 
-                                            ? " ($supplierCash.- Ft.)" 
+                                            ? " (".number_format($supplierCash, 0, ",", " ").".- Ft.)" 
                                             : "").
                                 "</div>
 
@@ -232,21 +232,21 @@
                                     <tr>
                                         <td colspan='6'></td>
                                         <td colspan='3' style='text-align: right'>Szállítási díj: $supplierName</td>
-                                        <td style='text-align: right'><b><u>$supplierCost.-</u></b></td>
+                                        <td style='text-align: right'><b><u>".number_format($supplierCost, 0, ",", " ").".- Ft.</u></b></td>
                                     </tr>".
 
                                     (($supplierCash > 0) 
                                         ? "<tr>
                                             <td colspan='7'></td>
                                             <td colspan='2' style='text-align: right'>Készpénzes fizetés:</td>
-                                            <td style='text-align: right'><b><u>$supplierCash.-</u></b></td>
+                                            <td style='text-align: right'><b><u>".number_format($supplierCash, 0, ",", " ").".- Ft.</u></b></td>
                                             </tr>"
                                         : "").
 
                                     "<tr>
                                         <td colspan='8'></td>
                                         <td style='text-align: right'>Fizetendő: </td>
-                                        <td style='text-align: right'><b><u>$fulltotal.-</u></b></td>
+                                        <td style='text-align: right'><b><u>".number_format($fulltotal, 0, ",", " ").".- Ft.</u></b></td>
                                     </tr>
                                 </tfoot>
 

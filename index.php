@@ -491,7 +491,7 @@
                             ROUND(MotoPartsNettoPrice_MSTR, 0) AS netto,
                             ROUND(MotoPartsVAT_MSTR * 100, 0) AS vat,
                             ROUND(MotoPartsDiscount_MSTR * 100, 0) AS disc,
-                            ROUND((ROUND(MotoPartsNettoPrice_MSTR, 0) * MotoPartsVAT_MSTR) + ROUND(MotoPartsNettoPrice_MSTR, 0)) AS brutto,
+                            ROUND(((MotoPartsNettoPrice_MSTR * MotoPartsVAT_MSTR) + MotoPartsNettoPrice_MSTR) - (((MotoPartsNettoPrice_MSTR * MotoPartsVAT_MSTR) + MotoPartsNettoPrice_MSTR) * MotoPartsDiscount_MSTR)) AS brutto,
                             QuantityUnitUnit_MSTR AS mee,
                             ShoppingCartQuantity_DET AS qua,
                             ROUND((ROUND(MotoPartsNettoPrice_MSTR, 0) * MotoPartsVAT_MSTR) + ROUND(MotoPartsNettoPrice_MSTR, 0)) * ShoppingCartQuantity_DET AS subtotal

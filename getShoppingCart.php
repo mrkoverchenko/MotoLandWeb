@@ -76,23 +76,23 @@
                             <input type='hidden' style='width:50px;' value='$partSubTotal' name='partSubTotal'>
 
                             <div style='float: left;'>
-                                <p class='card-text'>Nettó: ".$row["netto"]." HUF. </p>
+                                <p class='card-text'>Nettó: <b>".number_format($row["netto"],0,","," ").".- Ft.</b></p>
                             </div>
 
                             <div style='float: left; margin-left:15px;'>
-                                <p class='card-text'>ÁFA: ".$row["vat"]."%</p>
+                                <p class='card-text'>ÁFA: <b>".number_format($row["vat"],0)."%</b></p>
                             </div>
 
                             <div style='float: left; margin-left:15px;'>
-                                <p class='card-text'><strong>Egységár: ".$row["brutto"]." HUF.</strong></p>
+                                <p class='card-text'>Egységár: <b>".number_format($row["brutto"], 0,","," ").".- Ft.</b></p>
                             </div>
 
                             <div style='float: left; margin-left:15px;'>
-                                <p class='card-text'><strong>Menny.: ".$qua." ".$row["mee"]."</strong></p>
+                                <p class='card-text'>Menny.: <b>".number_format($qua,1,","," ")." ".$row["mee"]."</b></p>
                             </div>
 
                             <div style='float: left; margin-left:15px; '>
-                                <p class='card-text'><strong>Br.: <u>".$partSubTotal." HUF.</u> </strong></p>
+                                <p class='card-text'>Br.: <u><b>".number_format($partSubTotal, 0,","," ").".- Ft.</b></u></p>
                             </div>
 
                             <div style='float: left; margin-left:20px;' title='törlés'>
@@ -108,7 +108,7 @@
         }
         $ret .= "<div style='font-size:1em; display:inline-block;'>
                     <div style='margin-bottom:30px;'>
-                        <strong><u><p class='card-text' id='total'>Fizetendő: $total.- HUF.</p></u></strong>
+                        <strong><u><p class='card-text' id='total'>Fizetendő: ".number_format($total, 0, ",", " ").".- Ft.</p></u></strong>
                     </div>
                 </div>";
     

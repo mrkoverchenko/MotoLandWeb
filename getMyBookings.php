@@ -41,7 +41,7 @@
                 $workBegin = $row["BookingWorkBegin_MSTR"];
                 $workEnd = $row["BookingWorkEnd_MSTR"];
                 $workHours = $row["BookingWorkHours_MSTR"];
-                $workCost = $row["cost"];
+                $workCost = number_format($row["cost"], 0,","," ");
 
                 $ic++;
                 $ret .= "<tr style='color: green; border: 0px solid red'>

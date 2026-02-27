@@ -65,7 +65,7 @@
                                 while ($row = mysqli_fetch_assoc($result)) {                                    
                                     $id = $row["OrdersID_MSTR"];
                                     $date = $row["OrdersDateTime_MSTR"];
-                                    $cost = $row["OrdersFullCost_MSTR"];
+                                    $cost = number_format($row["OrdersFullCost_MSTR"], 0, ",", " ");
                                     $status = $row["OrderStatusStatus_MSTR"];
                                     echo "<option value='$id'>$id - $date - $status ($cost.- Ft.)</option>";
                                 }
@@ -90,7 +90,7 @@
                             <th scope='col'>Áfa</th>
                             <th scope='col'>Kedv.</th>
                             <th scope='col'>Egységár</th>
-                            <th scope='col'>&euro;</th>
+                            <th scope='col'>EUR</th>
                             <th scope='col'>Menny.</th>
                             <th style='text-align: right' scope='col'>Összesen</th>
                         </tr>

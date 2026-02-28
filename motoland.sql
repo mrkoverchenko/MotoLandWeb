@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 27. 14:27
+-- Létrehozás ideje: 2026. Feb 28. 22:51
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -54,7 +54,10 @@ CREATE TABLE `booking_mstr` (
 --
 
 INSERT INTO `booking_mstr` (`BookingID_MSTR`, `BookingDateTime_MSTR`, `BookingNote_MSTR`, `BookingUserID_MSTR`, `BookingMotoRegNumber_MSTR`, `BookingMotoManID_MSTR`, `BookingMotoTypeID_MSTR`, `BookingMotoYear_MSTR`, `BookingCheckList_MSTR`, `BookingMechanicCheckList_MSTR`, `BookingWorkStatusID_MSTR`, `BookingWorkBegin_MSTR`, `BookingWorkEnd_MSTR`, `BookingWorkHours_MSTR`, `BookingWorkCost_MSTR`, `BookingLastModifiedDate_MSTR`, `BookingRegDateTime_MSTR`) VALUES
-(42, '2026-06-04 12:00:00', 'csak ukrán fékolajunk van, enyhén radioaktiv', 73, 'XXXXXX', 43, 1, 2008, '- olajcsere\n- levegőszűrő csere\n- olajszűrő csere\n- fékolaj csere', '- olajcsere\n- szűrők cseréje\n- fékbetét csere', 1, '2026-06-04 12:00:00', '2026-06-04 13:00:00', 1.00, 6780.00, '2026-02-25 13:24:25', '2026-02-25 13:24:25');
+(42, '2026-06-04 12:00:00', 'csak ukrán fékolajunk van, enyhén radioaktiv', 73, 'XXXXXX', 43, 1, 2008, '- olajcsere\n- levegőszűrő csere\n- olajszűrő csere\n- fékolaj csere', '- olajcsere\n- szűrők cseréje\n- fékbetét csere', 1, '2026-06-04 12:00:00', '2026-06-04 13:00:00', 1.00, 6780.00, '2026-02-25 13:24:25', '2026-02-25 13:24:25'),
+(43, '2026-10-05 13:30:00', '', 74, 'IKS500', 43, 1, 2008, 'Lengéscsillapító beállítás', '', 1, '2026-10-05 13:30:00', '2026-10-05 16:30:00', 3.00, 20340.00, '2026-02-28 10:47:06', '2026-02-28 10:47:06'),
+(44, '2026-10-07 12:00:00', '', 74, 'WAT100', 37, 30, 1970, 'olajcsere', '', 1, '2026-10-07 12:00:00', '2026-10-07 13:00:00', 0.00, 0.00, '2026-02-28 10:49:13', '2026-02-28 10:49:13'),
+(45, '2026-10-09 12:00:00', '', 73, 'ABA123', 43, 3, 1985, 'semmi baj, csak tél van', '', 0, '2026-10-09 12:00:00', '2026-10-09 13:00:00', 0.00, 0.00, '2026-02-28 10:57:58', '2026-02-28 10:57:58');
 
 -- --------------------------------------------------------
 
@@ -3305,7 +3308,7 @@ CREATE TABLE `gender_mstr` (
 INSERT INTO `gender_mstr` (`GenderID_MSTR`, `GenderGender_MSTR`) VALUES
 (1, 'férfi'),
 (2, 'nő'),
-(3, 'mindegy');
+(3, 'üres');
 
 -- --------------------------------------------------------
 
@@ -3382,15 +3385,6 @@ CREATE TABLE `lockedquantity_mstr` (
   `LockedQuantityDateTime_MSTR` datetime NOT NULL,
   `LockedQuantityPartsID_MSTR` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `lockedquantity_mstr`
---
-
-INSERT INTO `lockedquantity_mstr` (`LockedQuantityID_MSTR`, `LockedQuantitySessionID_MSTR`, `LockedQuantityShoppingCartDETID_MSTR`, `LockedQuantityQuantity_MSTR`, `LockedQuantityDateTime_MSTR`, `LockedQuantityPartsID_MSTR`) VALUES
-(283, '1772194905523', 346, 1, '2026-02-27 13:21:45', 1),
-(284, '1772195367649', 347, 1, '2026-02-27 13:29:27', 1),
-(285, '1772195882476', 348, 1, '2026-02-27 13:38:02', 1);
 
 -- --------------------------------------------------------
 
@@ -3637,7 +3631,7 @@ CREATE TABLE `motoparts_mstr` (
 --
 
 INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPartsTypeID_MSTR`, `MotoPartsCategoryID_MSTR`, `MotoPartsNumber_MSTR`, `MotoPartsName_MSTR`, `MotoPartsNettoPrice_MSTR`, `MotoPartsVAT_MSTR`, `MotoPartsBruttoPrice_MSTR`, `MotoPartsBruttoEURPrice_MSTR`, `MotoPartsDiscount_MSTR`, `MotoPartsQuantity_MSTR`, `MotoPartsQuantityUnitID_MSTR`, `MotoPartsInfo_MSTR`) VALUES
-(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 110855.0000, 0.2700, 133747.0000, 333.8900, 0.0500, 3246.0000, 1, 'Próba'),
+(1, 43, 1, 1, '13151-0040', 'SWITCH-COMP', 110855.0000, 0.2700, 133747.0000, 333.8900, 0.0500, 3249.0000, 1, 'Próba'),
 (2, 43, 1, 1, '14091-0919-17K', 'COVER,SIDE BAG,LH,M.BLAC', 55499.0000, 0.2700, 66960.0000, 167.1600, 0.0500, 8044.0000, 1, 'No longer available'),
 (3, 43, 1, 1, '14091-0919-17N', 'COVER,SIDE BAG,LH,M.SILV', 57513.0000, 0.2700, 69389.0000, 173.2300, 0.0500, 474.0000, 1, 'No longer available'),
 (4, 43, 1, 1, '14091-0920-17K', 'COVER,SIDE BAG,RH,M.BLAC', 8487.0000, 0.2700, 10240.0000, 25.5600, 0.0500, 8236.0000, 1, ''),
@@ -3938,7 +3932,7 @@ INSERT INTO `motoparts_mstr` (`MotoPartsID_MSTR`, `MotoPartsManID_MSTR`, `MotoPa
 (312, 37, 29, 93, '1000610985', 'Reed szelep', 63863.0000, 0.2700, 77051.0000, 192.3500, 0.0500, 3762.0000, 1, '2 db. kell belőle'),
 (313, 37, 29, 93, '1002202172', 'COVER, REED VALVE', 19901.0000, 0.2700, 24011.0000, 59.9400, 0.0500, 7313.0000, 1, ' '),
 (314, 37, 29, 93, '1002727720', 'Csavar', 20496.0000, 0.2700, 24728.0000, 61.7300, 0.0500, 5280.0000, 1, '2 db. kell belőle'),
-(315, 37, 29, 93, '1000635404', 'Szelepfedél csavar', 42779.0000, 0.2700, 48896.0000, 122.0700, 0.1000, 4460.0000, 1, '3 db. kell belőle'),
+(315, 37, 29, 93, '1000635404', 'Szelepfedél csavar', 42779.0000, 0.2700, 48896.0000, 122.0700, 0.0500, 4460.0000, 1, '3 db. kell belőle'),
 (316, 37, 29, 94, '1000647519', 'Tömítés - szelepfedél', 39825.0000, 0.2700, 48049.0000, 119.9500, 0.0500, 6462.0000, 1, '3 db. kell belőle'),
 (317, 37, 29, 94, '1000655510', 'Illesztőcsap (10x16)', 70791.0000, 0.2700, 85409.0000, 213.2200, 0.0500, 8930.0000, 1, '2 db. kell belőle'),
 (318, 37, 29, 94, '1002724810', 'COVER COMP., A.C. GENERAT', 9316.0000, 0.2700, 11240.0000, 28.0600, 0.0500, 5263.0000, 1, 'rendelésre'),
@@ -4141,6 +4135,13 @@ CREATE TABLE `ordersuser_mstr` (
   `OrdersUserRegDateTime_MSTR` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `ordersuser_mstr`
+--
+
+INSERT INTO `ordersuser_mstr` (`OrdersUserID_MSTR`, `OrdersUserOrdersMSTRID_MSTR`, `OrdersUserUserName_MSTR`, `OrdersUserCountry_MSTR`, `OrdersUserPostCode_MSTR`, `OrdersUserCity_MSTR`, `OrdersUserStreet_MSTR`, `OrdersUserAddress_MSTR`, `OrdersUserPhone_MSTR`, `OrdersUserEmail_MSTR`, `OrdersUserRegDateTime_MSTR`) VALUES
+(18, 0, 'Saláta Lajos', 'Hollandia', '15664', 'Bergen op Zoom', 'Rosenfeld', '125', '+36 30 555 55 55', 'mrkoverchenko@gmail.com', '2026-02-28 10:41:22');
+
 -- --------------------------------------------------------
 
 --
@@ -4163,6 +4164,17 @@ CREATE TABLE `orders_det` (
   `OrdersPaymentTypeID_MSTR` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `orders_det`
+--
+
+INSERT INTO `orders_det` (`OrdersID_DET`, `OrdersMSTRID_DET`, `OrdersPartsNumber_DET`, `OrdersPartsName_DET`, `OrdersNettoPrice_DET`, `OrdersVAT_DET`, `OrdersDiscount_DET`, `OrdersBruttoPrice_DET`, `OrdersBruttoEURPrice_DET`, `OrdersQuantity_DET`, `OrdersQuantityUnit_DET`, `OrdersSupplierID_MSTR`, `OrdersPaymentTypeID_MSTR`) VALUES
+(217, 148, '1001531008', 'Tömítés', 83696.0000, 27.0000, 5.0000, 100979.0000, 252.0900, 1.0000, 'DB.', 5, 3),
+(218, 149, '1001531008', 'Tömítés', 83696.0000, 27.0000, 5.0000, 100979.0000, 252.0900, 1.0000, 'DB.', 4, 2),
+(219, 150, '13151-0040', 'SWITCH-COMP', 110855.0000, 27.0000, 5.0000, 133747.0000, 333.8900, 1.0000, 'DB.', 3, 3),
+(220, 151, '1001531008', 'Tömítés', 83696.0000, 27.0000, 5.0000, 100979.0000, 252.0900, 1.0000, 'DB.', 4, 3),
+(221, 152, '1001531008', 'Tömítés', 83696.0000, 27.0000, 5.0000, 100979.0000, 252.0900, 1.0000, 'DB.', 4, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -4179,6 +4191,17 @@ CREATE TABLE `orders_mstr` (
   `OrdersNote_MSTR` tinytext NOT NULL,
   `OrdersASZFIsOK_MSTR` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `orders_mstr`
+--
+
+INSERT INTO `orders_mstr` (`OrdersID_MSTR`, `OrdersUserID_MSTR`, `OrdersDateTime_MSTR`, `OrdersFullCost_MSTR`, `OrdersStatusStatusID_MSTR`, `OrdersUserTypeID_MSTR`, `OrdersNote_MSTR`, `OrdersASZFIsOK_MSTR`) VALUES
+(148, 73, '2026-02-28 12:18:57', 100979, 1, 2, '', 1),
+(149, 73, '2026-02-28 12:25:10', 100979, 1, 2, '', 1),
+(150, 73, '2026-02-28 12:26:49', 133747, 1, 2, '', 1),
+(151, 73, '2026-02-28 12:30:14', 100979, 1, 2, '', 1),
+(152, 73, '2026-02-28 12:32:23', 100979, 1, 2, '', 1);
 
 -- --------------------------------------------------------
 
@@ -4199,8 +4222,7 @@ CREATE TABLE `password_mstr` (
 --
 
 INSERT INTO `password_mstr` (`PasswordID_MSTR`, `PasswordUserID_MSTR`, `PasswordPassword_MSTR`, `PasswordSalt_MSTR`, `PasswordStatusID_MSTR`) VALUES
-(46, 73, 'fc9ae29c54822401fb04ee307d76591f75eb3523b393cbba7182cf312d9c19ec', '8/bjHQSa7VtSsjM4ienuiAXqvHZsipDCWB2rWTcKLno=', 1),
-(47, 74, '030ce4c3a83f5560cdba54e51b5db5885ea0559bf7aff660e52e4d489e8167c3', 'fFJKbRojlJeZG0MQRvc9bCpLr3XvC1Vzc1L1pbR2DtQ=', 1);
+(56, 64, 'c42a7621ba1f5f9af7475c73b923e8ff470e8edbbb17713f28bcf5e7b8154152', 'J11PWzDLEfpl8dlgaFA1CywQlcjr5iW9tJg5Vvuq4ME=', 1);
 
 -- --------------------------------------------------------
 
@@ -4297,23 +4319,7 @@ CREATE TABLE `shoppingcart_det` (
 INSERT INTO `shoppingcart_det` (`ShoppingCartID_DET`, `ShoppingCartMSTRID_DET`, `ShoppingCartMotoPartsID_DET`, `ShoppingCartQuantity_DET`, `ShoppingCartSessionID_DET`) VALUES
 (342, 254, 1, 11, '1772190483462'),
 (343, 255, 2, 1, '1772191557620'),
-(344, 256, 308, 2, '1772192244888'),
-(346, 258, 1, 1, '1772194905523'),
-(347, 259, 1, 1, '1772195367649'),
-(348, 260, 1, 1, '1772195882476');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `shoppingcart_hist`
---
-
-CREATE TABLE `shoppingcart_hist` (
-  `ShoppingCartID_HIST` int(11) NOT NULL,
-  `ShoppingCartUserID_HIST` int(11) NOT NULL,
-  `ShoppingCartDateTime_HIST` datetime NOT NULL,
-  `ShoppingCartPartsID_HIST` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+(344, 256, 308, 2, '1772192244888');
 
 -- --------------------------------------------------------
 
@@ -4335,10 +4341,7 @@ CREATE TABLE `shoppingcart_mstr` (
 INSERT INTO `shoppingcart_mstr` (`ShoppingCartID_MSTR`, `ShoppingCartStatusID_MSTR`, `ShoppingCartDateTime_MSTR`, `ShoppingCartSessionID_MSTR`) VALUES
 (254, 0, '2026-02-27 12:08:03', '1772190483462'),
 (255, 0, '2026-02-27 12:25:57', '1772191557620'),
-(256, 0, '2026-02-27 12:37:24', '1772192244888'),
-(258, 0, '2026-02-27 13:21:45', '1772194905523'),
-(259, 0, '2026-02-27 13:29:27', '1772195367649'),
-(260, 0, '2026-02-27 13:38:02', '1772195882476');
+(256, 0, '2026-02-27 12:37:24', '1772192244888');
 
 -- --------------------------------------------------------
 
@@ -4420,8 +4423,64 @@ CREATE TABLE `user_det` (
 --
 
 INSERT INTO `user_det` (`UserID_DET`, `UserMSTRID_DET`, `UserFirstName_DET`, `UserMiddleName_DET`, `UserLastName_DET`, `UserGenderID_DET`, `UserPhone_DET`, `UserCountryID_DET`, `UserPostCode_DET`, `UserCity_DET`, `UserStreet_DET`, `UserAddress_DET`, `UserRegDate_DET`, `UserMotherName_DET`, `UserBirthPlace_DET`, `UserBirthDate_DET`, `UserLastModifiedDate_DET`) VALUES
-(48, 73, 'Lövei', 'István', '', 3, '+36 46 52899', 2, '3533', 'Miskolc', 'Nádastó', '7', '2026-02-08 13:54:09', '', '', '1900-01-01', '2026-02-27 14:19:10'),
-(49, 74, 'Lövei', 'István', '', 3, '', 2, '', '', '', '', '2026-02-08 14:28:12', '', '', '1900-01-01', '2026-02-23 13:45:20');
+(1, 1, 'Madelena', 'Hotton', 'Genders', 1, '+86-263-931-9523', 7, '', 'Kezilei', 'Fulton', '46', '2026-02-28 22:05:01', '', 'Shijiao', '1977-10-19', '2026-02-28 22:05:01'),
+(2, 2, 'Flori', 'Alyukin', 'Cusiter', 2, '+33-471-211-7071', 16, '25057 CE', 'Besançon', '5th', '9', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(3, 3, 'Jordain', 'Malyj', '', 1, '+86-205-849-0836', 7, '', 'Tatou', 'Darwin', '7', '2026-02-28 22:05:01', 'Dawna', '', '1977-10-19', '2026-02-28 22:05:01'),
+(4, 4, 'Renado', 'Mantle', 'Zukierman', 2, '+7-782-762-6040', 7, '161213', 'Krasnyy Profintern', 'Cambridge', '77', '2026-02-28 22:05:01', 'Lissy', '', '1977-10-19', '2026-02-28 22:05:01'),
+(5, 5, 'Daron', 'Brusle', 'Tissington', 2, '+62-198-887-3483', 12, '', 'Lantera', 'Laurel', '4', '2026-02-28 22:05:01', 'Sally', 'Granada', '1977-10-19', '2026-02-28 22:05:01'),
+(6, 6, 'Delila', 'Akitt', '', 2, '+223-604-831-6678', 3, '', 'Kinmparana', 'Morrow', '2', '2026-02-28 22:05:01', '', 'Titao', '1977-10-19', '2026-02-28 22:05:01'),
+(7, 7, 'Eliot', 'Sainsbury', '', 1, '+55-235-346-8777', 2, '28200-00', 'São João da Barra', 'Rigney', '2378', '2026-02-28 22:05:01', 'Sarena', '', '1977-10-19', '2026-02-28 22:05:01'),
+(8, 8, 'Klarika', 'Cortez', '', 2, '+1-535-244-8211', 3, '11109', 'Quisqueya', 'Westend', '80882', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(9, 9, 'Danella', 'Farenden', '', 2, '+266-947-581-3570', 8, '', 'Butha-Buthe', 'Larry', '98', '2026-02-28 22:05:01', 'Jenilee', 'Alemanguan', '1977-10-19', '2026-02-28 22:05:01'),
+(10, 10, 'Ryley', 'Harford', 'Crippin', 1, '+385-334-110-8358', 14, '40320', 'Hodošan', 'Prentice', '70', '2026-02-28 22:05:01', '', 'Kardzhin', '1977-10-19', '2026-02-28 22:05:01'),
+(11, 11, 'Alexander', 'Taaffe', '', 1, '+62-171-206-5784', 14, '', 'Pakalongan', '6th', '41', '2026-02-28 22:05:01', 'Lulita', 'Zlonice', '1977-10-19', '2026-02-28 22:05:01'),
+(12, 12, 'Helga', 'Cornill', '', 2, '+593-275-579-9328', 8, '', 'Rosa Zarate', 'Bayside', '6002', '2026-02-28 22:05:01', 'Christabella', 'Khoyniki', '1977-10-19', '2026-02-28 22:05:01'),
+(13, 13, 'Nevins', 'Follows', 'Gookey', 2, '+7-973-148-1071', 16, '346020', 'Krechevitsy', 'Marquette', '00', '2026-02-28 22:05:01', '', 'Xiliu', '1977-10-19', '2026-02-28 22:05:01'),
+(14, 14, 'Doria', 'Hambling', '', 2, '+33-246-432-8303', 20, '21019 CE', 'Dijon', 'Cascade', '68', '2026-02-28 22:05:01', 'Jeannie', 'Armação de Pêra', '1977-10-19', '2026-02-28 22:05:01'),
+(15, 15, 'Julieta', 'Mayoh', '', 2, '+1-915-279-8808', 6, '88574', 'El Paso', 'Chinook', '954', '2026-02-28 22:05:01', 'Elset', '', '1977-10-19', '2026-02-28 22:05:01'),
+(16, 16, 'Ignaz', 'Witherbed', '', 2, '+351-918-190-7033', 11, '2330-524', 'Casal do Conde', 'Anderson', '4', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(17, 17, 'Amber', 'Sandall', 'Paaso', 2, '+1-492-299-9924', 7, 'J9H', 'Two Hills', 'Meadow Vale', '1245', '2026-02-28 22:05:01', '', 'Sendang', '1977-10-19', '2026-02-28 22:05:01'),
+(18, 18, 'Harper', 'Peirone', 'Colaton', 1, '+595-983-175-8991', 16, '', 'Repatriación', 'Debra', '73', '2026-02-28 22:05:01', 'Simonne', 'Zangkaxa', '1977-10-19', '2026-02-28 22:05:01'),
+(19, 19, 'Derron', 'Chapleo', '', 2, '+1-302-696-1434', 1, '19805', 'Wilmington', 'Moland', '0', '2026-02-28 22:05:01', '', 'Khadyzhensk', '1977-10-19', '2026-02-28 22:05:01'),
+(20, 20, 'Domingo', 'Addess', '', 1, '+86-537-411-0387', 4, '', 'Yucheng', 'Troy', '34', '2026-02-28 22:05:01', '', 'Silodakon', '1977-10-19', '2026-02-28 22:05:01'),
+(21, 21, 'Liana', 'Borrill', '', 2, '+52-789-473-8132', 15, '94324', 'Adolfo Lopez Mateos', 'Thompson', '2', '2026-02-28 22:05:01', 'Sephira', '', '1977-10-19', '2026-02-28 22:05:01'),
+(22, 22, 'Laryssa', 'Dargavel', '', 2, '+234-624-698-6892', 11, '', 'Funtua', 'Carberry', '42', '2026-02-28 22:05:01', 'Lila', '', '1977-10-19', '2026-02-28 22:05:01'),
+(23, 23, 'Kippie', 'de Clerq', '', 1, '+1-916-951-4963', 11, '94207', 'Sacramento', 'Parkside', '15', '2026-02-28 22:05:01', '', 'Xiacang', '1977-10-19', '2026-02-28 22:05:01'),
+(24, 24, 'Idaline', 'Doxey', '', 1, '+967-892-396-9774', 18, '', 'Al Matūn', 'Walton', '735', '2026-02-28 22:05:01', 'Kayle', 'Kendayakan', '1977-10-19', '2026-02-28 22:05:01'),
+(25, 25, 'Tabor', 'Luscott', '', 2, '+48-872-218-4004', 5, '36-100', 'Kolbuszowa', '5th', '33222', '2026-02-28 22:05:01', 'Bonni', '', '1977-10-19', '2026-02-28 22:05:01'),
+(26, 26, 'Merilyn', 'Hek', '', 1, '+86-230-365-1233', 1, '', 'Gubo', 'Comanche', '44538', '2026-02-28 22:05:01', '', 'Vila Velha de Ródão', '1977-10-19', '2026-02-28 22:05:01'),
+(27, 27, 'Gorden', 'Dugget', '', 1, '+1-503-612-6155', 10, '97075', 'Beaverton', 'Lawn', '5', '2026-02-28 22:05:01', 'Tabina', 'Wenfu', '1977-10-19', '2026-02-28 22:48:57'),
+(28, 28, 'Jamison', 'Found', '', 1, '+1-505-550-2779', 12, '87105', 'Albuquerque', 'Paget', '99051', '2026-02-28 22:05:01', 'Felice', 'Banquero', '1977-10-19', '2026-02-28 22:05:01'),
+(29, 29, 'Hy', 'Fowgies', '', 2, '+49-399-302-0842', 14, '12045', 'Berlin', 'Westend', '4', '2026-02-28 22:05:01', 'Delia', '', '1977-10-19', '2026-02-28 22:05:01'),
+(30, 30, 'Thor', 'Blackwood', '', 2, '+7-368-449-4396', 6, '650904', 'Promyshlennovskiy', 'Ryan', '96434', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(31, 31, 'Wheeler', 'Toun', '', 2, '+7-582-150-7110', 18, '188680', 'Koltushi', 'Raven', '8', '2026-02-28 22:05:01', 'Rochella', 'Chiguirip', '1977-10-19', '2026-02-28 22:05:01'),
+(32, 32, 'Adam', 'Deare', '', 1, '+62-919-241-0699', 8, '', 'Barang', 'Larry', '97783', '2026-02-28 22:05:01', 'Andeee', 'Staroderevyankovskaya', '1977-10-19', '2026-02-28 22:05:01'),
+(33, 33, 'Arda', 'Ealles', '', 2, '+33-391-852-9020', 20, '11493 CE', 'Castelnaudary', 'Dahle', '70125', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(34, 34, 'Juliane', 'Chong', '', 1, '+86-337-630-9069', 13, '', 'Mashan', 'Vermont', '57868', '2026-02-28 22:05:01', 'Janine', 'Sambungjaya', '1977-10-19', '2026-02-28 22:05:01'),
+(35, 35, 'Rusty', 'Cammidge', '', 2, '+48-245-107-3997', 10, '93-524', 'Kutno', 'Miller', '172', '2026-02-28 22:05:01', 'Kathrine', 'Umpak', '1977-10-19', '2026-02-28 22:05:01'),
+(36, 36, 'Cariotta', 'Allderidge', 'Spinage', 1, '+46-732-953-8594', 15, '474 31', 'Ellös', 'Menomonie', '139', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(37, 37, 'Melba', 'Le Marquand', '', 2, '+53-124-796-8562', 20, '', 'Holguín', 'Ronald Regan', '7', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(38, 38, 'Georgine', 'Watting', '', 2, '+62-573-455-1099', 6, '', 'Heret', 'Roth', '35', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(39, 39, 'Ted', 'Beney', 'Sehorsch', 1, '+63-933-922-1337', 16, '1427', 'Sugcad', 'Scott', '16135', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(40, 40, 'Almire', 'Weiss', '', 1, '+46-283-510-2652', 20, '112 83', 'Stockholm', 'Montana', '48', '2026-02-28 22:05:01', '', 'Dachnoye', '1977-10-19', '2026-02-28 22:05:01'),
+(41, 41, 'Jaime', 'De Launde', 'Froggatt', 1, '+7-249-621-0113', 14, '', 'Georgīevka', 'Steensland', '193', '2026-02-28 22:05:01', 'Candis', 'Plumtree', '1977-10-19', '2026-02-28 22:05:01'),
+(42, 42, 'Bibi', 'Wasylkiewicz', '', 2, '+358-385-793-8524', 12, '20960', 'Turku', 'Elgar', '40471', '2026-02-28 22:05:01', 'Daune', 'Monte de Fralães', '1977-10-19', '2026-02-28 22:05:01'),
+(43, 43, 'Alphonso', 'O\'Geaney', 'Dye', 2, '+7-685-524-4673', 8, '431469', 'Ruzayevka', 'Jackson', '7931', '2026-02-28 22:05:01', '', 'Ḩātim', '1977-10-19', '2026-02-28 22:05:01'),
+(44, 44, 'Olia', 'Lyddy', '', 2, '+7-781-692-2786', 15, '', 'Burunday', 'Hoard', '0', '2026-02-28 22:05:01', 'Shaylah', '', '1977-10-19', '2026-02-28 22:05:01'),
+(45, 45, 'Jackie', 'Aplin', 'Clemon', 1, '+593-350-897-2819', 19, '', 'Machala', 'Kropf', '569', '2026-02-28 22:05:01', 'Ashla', '', '1977-10-19', '2026-02-28 22:05:01'),
+(46, 46, 'Duke', 'Ison', 'Aslie', 2, '+63-332-333-8033', 16, '6808', 'Mercedes', 'Fremont', '94390', '2026-02-28 22:05:01', 'Cristi', '', '1977-10-19', '2026-02-28 22:05:01'),
+(47, 47, 'Anna', 'De Giorgis', '', 2, '+84-599-239-1213', 12, '', 'Trà Ôn', 'Packers', '71245', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(48, 48, 'Christopher', 'Burnapp', '', 2, '+33-203-750-9173', 7, '08013 CE', 'Charleville-Mézières', 'Cambridge', '679', '2026-02-28 22:05:01', 'Cleopatra', '', '1977-10-19', '2026-02-28 22:05:01'),
+(49, 49, 'Ginelle', 'Rearden', '', 1, '+226-805-979-8389', 18, '', 'Sapouy', 'Brown', '3', '2026-02-28 22:05:01', '', 'Melaka', '1977-10-19', '2026-02-28 22:05:01'),
+(50, 50, 'Eydie', 'Puvia', '', 1, '+62-658-101-3653', 20, '', 'Noenoni', 'Summer Ridge', '22729', '2026-02-28 22:05:01', 'Heddie', 'Jianshan', '1977-10-19', '2026-02-28 22:05:01'),
+(51, 51, 'Teriann', 'Tarver', 'Povlsen', 1, '+86-684-472-3770', 11, '', 'Toutai', 'Oxford', '238', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
+(52, 52, 'Binky', 'Narup', '', 1, '+355-624-539-6425', 10, '', 'Krahës', 'Rusk', '8', '2026-02-28 22:05:01', 'Zonnya', 'Cabo de Vila', '1977-10-19', '2026-02-28 22:05:01'),
+(53, 53, 'Ariana', 'Featherstone', '', 2, '+63-734-659-4843', 9, '1703', 'Ualog', 'Russell', '9', '2026-02-28 22:05:01', 'Olivia', '', '1977-10-19', '2026-02-28 22:05:01'),
+(54, 54, 'Amanda', 'Jiruca', '', 2, '+505-263-701-1333', 6, '', 'Rama', 'Mosinee', '747', '2026-02-28 22:05:01', 'Janela', 'Aiquile', '1977-10-19', '2026-02-28 22:05:01'),
+(55, 55, 'Amaleta', 'Brisson', '', 1, '+62-297-920-2294', 1, '', 'Banyubang', 'Marcy', '4826', '2026-02-28 22:05:01', 'Sydelle', '', '1977-10-19', '2026-02-28 22:05:01'),
+(56, 56, 'Carlyle', 'Serchwell', '', 2, '+63-458-156-9371', 17, '5702', 'Aurelliana', 'Butternut', '8173', '2026-02-28 22:05:01', 'Annetta', '', '1977-10-19', '2026-02-28 22:05:01'),
+(57, 57, 'Zea', 'Cahill', '', 2, '+1-202-969-8275', 13, '20051', 'Washington', 'Golf Course', '9322', '2026-02-28 22:05:01', 'Tammara', 'Graneros', '1977-10-19', '2026-02-28 22:05:01'),
+(64, 64, 'Lövei', 'István', '', 3, '', 2, '', '', '', '', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01');
 
 -- --------------------------------------------------------
 
@@ -4443,8 +4502,64 @@ CREATE TABLE `user_mstr` (
 --
 
 INSERT INTO `user_mstr` (`UserID_MSTR`, `UserNickName_MSTR`, `UserMail_MSTR`, `UserTypeID_MSTR`, `UserFlagID_MSTR`, `UserNote_MSTR`) VALUES
-(73, 'LoIs', 'mrkoverchenko@gmail.com', 4, 2, ''),
-(74, 'istvan.lovei@yahoo.com', 'istvan.lovei@yahoo.com', 1, 1, '');
+(1, 'eewbanks0', 'krickis0@liveinternet.ru', 2, 2, ''),
+(2, 'awaterstone1', 'jpettiford1@mlb.com', 2, 2, ''),
+(3, 'tcristofalo2', 'bmcveighty2@cisco.com', 2, 4, ''),
+(4, 'nmongin3', 'lmouth3@spiegel.de', 1, 3, ''),
+(5, 'jfratczak4', 'kcracknell4@blogtalkradio.com', 1, 4, ''),
+(6, 'dbrabant5', 'stonkin5@bbc.co.uk', 3, 1, ''),
+(7, 'tpetras6', 'jmcdirmid6@virginia.edu', 2, 1, ''),
+(8, 'ahamblington7', 'gbroom7@geocities.com', 3, 2, ''),
+(9, 'sgravie8', 'sarton8@oakley.com', 3, 3, ''),
+(10, 'sfarncomb9', 'bvalenta9@over-blog.com', 3, 2, ''),
+(11, 'srosarioa', 'tcystera@rediff.com', 3, 3, ''),
+(12, 'hreinhardb', 'ccoalb@ucla.edu', 2, 4, ''),
+(13, 'fhurtc', 'gtyghtc@taobao.com', 3, 3, ''),
+(14, 'mbiskupiakd', 'jdulwichd@blog.com', 1, 4, ''),
+(15, 'rscarrotte', 'mvalentinettie@hhs.gov', 1, 1, ''),
+(16, 'rnaullsf', 'tdaingerfieldf@furl.net', 2, 3, ''),
+(17, 'mshoreg', 'bbrothertong@google.cn', 1, 3, ''),
+(18, 'eseagraveh', 'glivingstoneh@sogou.com', 2, 2, ''),
+(19, 'todoogani', 'ismeesi@jiathis.com', 3, 3, ''),
+(20, 'jbatemanj', 'ldeatonj@irs.gov', 3, 2, ''),
+(21, 'atrenowethk', 'cdrummondk@gizmodo.com', 2, 2, ''),
+(22, 'vhamonl', 'gfrerel@marketwatch.com', 3, 1, ''),
+(23, 'gkinanem', 'aoaklandm@ted.com', 1, 1, ''),
+(24, 'mishchenkon', 'cfoystern@infoseek.co.jp', 3, 3, ''),
+(25, 'rskepo', 'agavriellyo@myspace.com', 3, 3, ''),
+(26, 'dcleughp', 'msimperp@imgur.com', 3, 4, ''),
+(27, 'edehooghq', 'fyitshakq@w3.org', 1, 3, ''),
+(28, 'dorrellr', 'vromaynr@ftc.gov', 3, 2, ''),
+(29, 'sskeffingtons', 'slansleys@imdb.com', 2, 3, ''),
+(30, 'zbartakt', 'pcowardt@yelp.com', 2, 2, ''),
+(31, 'khowdenu', 'lpenyltonu@mozilla.com', 1, 3, ''),
+(32, 'sshawyerv', 'lcomiamv@parallels.com', 3, 4, ''),
+(33, 'abimsonw', 'kstovinew@cbc.ca', 1, 1, ''),
+(34, 'bcrumx', 'nscothornex@homestead.com', 1, 4, ''),
+(35, 'rdebenhamy', 'ckyngdony@theguardian.com', 1, 2, ''),
+(36, 'khorburghz', 'apietrusiakz@scientificamerican.com', 1, 3, ''),
+(37, 'rgreveson10', 'gschohier10@paypal.com', 1, 2, ''),
+(38, 'lyokley11', 'pmatteacci11@illinois.edu', 1, 2, ''),
+(39, 'cguys12', 'moxenford12@lulu.com', 2, 2, ''),
+(40, 'ikettlewell13', 'wharriott13@hibu.com', 2, 1, ''),
+(41, 'ameachen14', 'hjakubczyk14@friendfeed.com', 2, 4, ''),
+(42, 'ctesyro15', 'bkitchingman15@japanpost.jp', 2, 2, ''),
+(43, 'ckinner16', 'gthistleton16@nyu.edu', 2, 1, ''),
+(44, 'cfowlestone17', 'kmoline17@businessinsider.com', 3, 1, ''),
+(45, 'lpawlick18', 'pledson18@yellowbook.com', 1, 4, ''),
+(46, 'lmcgow19', 'ghoppner19@fastcompany.com', 2, 2, ''),
+(47, 'bhumbell1a', 'cmoyles1a@usatoday.com', 1, 4, ''),
+(48, 'pschuster1b', 'prailton1b@answers.com', 1, 3, ''),
+(49, 'relves1c', 'skobsch1c@telegraph.co.uk', 3, 3, ''),
+(50, 'mgumley1d', 'nhartman1d@cyberchimps.com', 3, 2, ''),
+(51, 'egoldster1e', 'awaldrum1e@vkontakte.ru', 3, 3, ''),
+(52, 'bmcmenamy1f', 'cnaylor1f@google.fr', 2, 2, ''),
+(53, 'lforgan1g', 'choltom1g@msn.com', 3, 1, ''),
+(54, 'vjeness1h', 'garmor1h@epa.gov', 3, 1, ''),
+(55, 'rgoodwin1i', 'mcrannis1i@deviantart.com', 3, 4, ''),
+(56, 'hrenshaw1j', 'lbarlie1j@gov.uk', 3, 1, ''),
+(57, 'arissen1k', 'gheeney1k@marketwatch.com', 3, 4, ''),
+(64, 'istvan.lovei@yahoo.com', 'istvan.lovei@yahoo.com', 5, 1, '');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -4547,14 +4662,16 @@ ALTER TABLE `orderstatus_mstr`
 -- A tábla indexei `ordersuser_mstr`
 --
 ALTER TABLE `ordersuser_mstr`
-  ADD PRIMARY KEY (`OrdersUserID_MSTR`);
+  ADD PRIMARY KEY (`OrdersUserID_MSTR`),
+  ADD KEY `OrdersUserOrdersMSTRID_MSTR` (`OrdersUserOrdersMSTRID_MSTR`);
 
 --
 -- A tábla indexei `orders_det`
 --
 ALTER TABLE `orders_det`
   ADD PRIMARY KEY (`OrdersID_DET`),
-  ADD KEY `OrdersMSTRID_DET` (`OrdersMSTRID_DET`);
+  ADD KEY `OrdersMSTRID_DET` (`OrdersMSTRID_DET`),
+  ADD KEY `OrdersSupplierID_MSTR` (`OrdersSupplierID_MSTR`);
 
 --
 -- A tábla indexei `orders_mstr`
@@ -4562,7 +4679,8 @@ ALTER TABLE `orders_det`
 ALTER TABLE `orders_mstr`
   ADD PRIMARY KEY (`OrdersID_MSTR`),
   ADD KEY `OrdersStatusStatusID_MSTR` (`OrdersStatusStatusID_MSTR`),
-  ADD KEY `OrdersUserTypeID_MSTR` (`OrdersUserTypeID_MSTR`);
+  ADD KEY `OrdersUserTypeID_MSTR` (`OrdersUserTypeID_MSTR`),
+  ADD KEY `OrdersUserID_MSTR` (`OrdersUserID_MSTR`);
 
 --
 -- A tábla indexei `password_mstr`
@@ -4599,13 +4717,6 @@ ALTER TABLE `shoppingcart_det`
   ADD KEY `ShoppingCartMotoPartsID_DET` (`ShoppingCartMotoPartsID_DET`);
 
 --
--- A tábla indexei `shoppingcart_hist`
---
-ALTER TABLE `shoppingcart_hist`
-  ADD PRIMARY KEY (`ShoppingCartID_HIST`),
-  ADD KEY `ShoppingCartUserID_HIST` (`ShoppingCartUserID_HIST`);
-
---
 -- A tábla indexei `shoppingcart_mstr`
 --
 ALTER TABLE `shoppingcart_mstr`
@@ -4629,17 +4740,17 @@ ALTER TABLE `usertype_mstr`
 --
 ALTER TABLE `user_det`
   ADD PRIMARY KEY (`UserID_DET`),
-  ADD KEY `UserMSTRID_DET` (`UserMSTRID_DET`) USING BTREE,
-  ADD KEY `UserCountryID_DET` (`UserCountryID_DET`) USING BTREE,
-  ADD KEY `UserGenderID_DET` (`UserGenderID_DET`);
+  ADD KEY `UserMSTRID_DET` (`UserMSTRID_DET`),
+  ADD KEY `UserGenderID_DET` (`UserGenderID_DET`,`UserCountryID_DET`),
+  ADD KEY `UserCountryID_DET` (`UserCountryID_DET`);
 
 --
 -- A tábla indexei `user_mstr`
 --
 ALTER TABLE `user_mstr`
-  ADD PRIMARY KEY (`UserID_MSTR`) USING BTREE,
-  ADD KEY `UserFlagID_MSTR` (`UserFlagID_MSTR`),
-  ADD KEY `UserTypeID_MSTR` (`UserTypeID_MSTR`);
+  ADD PRIMARY KEY (`UserID_MSTR`),
+  ADD KEY `UserTypeID_MSTR` (`UserTypeID_MSTR`),
+  ADD KEY `UserFlagID_MSTR` (`UserFlagID_MSTR`);
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
@@ -4649,7 +4760,7 @@ ALTER TABLE `user_mstr`
 -- AUTO_INCREMENT a táblához `booking_mstr`
 --
 ALTER TABLE `booking_mstr`
-  MODIFY `BookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `BookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT a táblához `cities_mstr`
@@ -4691,7 +4802,7 @@ ALTER TABLE `holidays_mstr`
 -- AUTO_INCREMENT a táblához `lockedquantity_mstr`
 --
 ALTER TABLE `lockedquantity_mstr`
-  MODIFY `LockedQuantityID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=286;
+  MODIFY `LockedQuantityID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
 
 --
 -- AUTO_INCREMENT a táblához `motomanufacturer_mstr`
@@ -4733,25 +4844,25 @@ ALTER TABLE `orderstatus_mstr`
 -- AUTO_INCREMENT a táblához `ordersuser_mstr`
 --
 ALTER TABLE `ordersuser_mstr`
-  MODIFY `OrdersUserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `OrdersUserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT a táblához `orders_det`
 --
 ALTER TABLE `orders_det`
-  MODIFY `OrdersID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
+  MODIFY `OrdersID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
 
 --
 -- AUTO_INCREMENT a táblához `orders_mstr`
 --
 ALTER TABLE `orders_mstr`
-  MODIFY `OrdersID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `OrdersID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT a táblához `password_mstr`
 --
 ALTER TABLE `password_mstr`
-  MODIFY `PasswordID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `PasswordID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT a táblához `paymenttype_mstr`
@@ -4775,19 +4886,13 @@ ALTER TABLE `quantityunit_mstr`
 -- AUTO_INCREMENT a táblához `shoppingcart_det`
 --
 ALTER TABLE `shoppingcart_det`
-  MODIFY `ShoppingCartID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=349;
-
---
--- AUTO_INCREMENT a táblához `shoppingcart_hist`
---
-ALTER TABLE `shoppingcart_hist`
-  MODIFY `ShoppingCartID_HIST` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ShoppingCartID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=354;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_mstr`
 --
 ALTER TABLE `shoppingcart_mstr`
-  MODIFY `ShoppingCartID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+  MODIFY `ShoppingCartID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
 
 --
 -- AUTO_INCREMENT a táblához `suppliers_mstr`
@@ -4805,13 +4910,13 @@ ALTER TABLE `usertype_mstr`
 -- AUTO_INCREMENT a táblához `user_det`
 --
 ALTER TABLE `user_det`
-  MODIFY `UserID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `UserID_DET` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT a táblához `user_mstr`
 --
 ALTER TABLE `user_mstr`
-  MODIFY `UserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `UserID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -4821,7 +4926,6 @@ ALTER TABLE `user_mstr`
 -- Megkötések a táblához `booking_mstr`
 --
 ALTER TABLE `booking_mstr`
-  ADD CONSTRAINT `booking_mstr_ibfk_1` FOREIGN KEY (`BookingUserID_MSTR`) REFERENCES `user_mstr` (`UserID_MSTR`),
   ADD CONSTRAINT `booking_mstr_ibfk_2` FOREIGN KEY (`BookingMotoManID_MSTR`) REFERENCES `motomanufacturer_mstr` (`MotoManufacturerID_MSTR`),
   ADD CONSTRAINT `booking_mstr_ibfk_3` FOREIGN KEY (`BookingMotoTypeID_MSTR`) REFERENCES `mototype_mstr` (`MotoTypeID_MSTR`),
   ADD CONSTRAINT `booking_mstr_ibfk_4` FOREIGN KEY (`BookingWorkStatusID_MSTR`) REFERENCES `orderstatus_mstr` (`OrderStatusID_MSTR`);
@@ -4836,11 +4940,18 @@ ALTER TABLE `motoparts_mstr`
   ADD CONSTRAINT `motoparts_mstr_ibfk_4` FOREIGN KEY (`MotoPartsTypeID_MSTR`) REFERENCES `mototype_mstr` (`MotoTypeID_MSTR`);
 
 --
+-- Megkötések a táblához `orders_det`
+--
+ALTER TABLE `orders_det`
+  ADD CONSTRAINT `orders_det_ibfk_1` FOREIGN KEY (`OrdersSupplierID_MSTR`) REFERENCES `suppliers_mstr` (`SupplierID_MSTR`);
+
+--
 -- Megkötések a táblához `orders_mstr`
 --
 ALTER TABLE `orders_mstr`
   ADD CONSTRAINT `orders_mstr_ibfk_3` FOREIGN KEY (`OrdersStatusStatusID_MSTR`) REFERENCES `orderstatus_mstr` (`OrderStatusID_MSTR`),
-  ADD CONSTRAINT `orders_mstr_ibfk_4` FOREIGN KEY (`OrdersUserTypeID_MSTR`) REFERENCES `usertype_mstr` (`UserTypeID_MSTR`);
+  ADD CONSTRAINT `orders_mstr_ibfk_4` FOREIGN KEY (`OrdersUserTypeID_MSTR`) REFERENCES `usertype_mstr` (`UserTypeID_MSTR`),
+  ADD CONSTRAINT `orders_mstr_ibfk_5` FOREIGN KEY (`OrdersID_MSTR`) REFERENCES `orders_det` (`OrdersMSTRID_DET`);
 
 --
 -- Megkötések a táblához `password_mstr`
@@ -4856,12 +4967,6 @@ ALTER TABLE `shoppingcart_det`
   ADD CONSTRAINT `shoppingcart_det_ibfk_2` FOREIGN KEY (`ShoppingCartMotoPartsID_DET`) REFERENCES `motoparts_mstr` (`MotoPartsID_MSTR`);
 
 --
--- Megkötések a táblához `shoppingcart_hist`
---
-ALTER TABLE `shoppingcart_hist`
-  ADD CONSTRAINT `shoppingcart_hist_ibfk_1` FOREIGN KEY (`ShoppingCartUserID_HIST`) REFERENCES `user_mstr` (`UserID_MSTR`);
-
---
 -- Megkötések a táblához `shoppingcart_mstr`
 --
 ALTER TABLE `shoppingcart_mstr`
@@ -4872,8 +4977,8 @@ ALTER TABLE `shoppingcart_mstr`
 --
 ALTER TABLE `user_det`
   ADD CONSTRAINT `user_det_ibfk_1` FOREIGN KEY (`UserMSTRID_DET`) REFERENCES `user_mstr` (`UserID_MSTR`),
-  ADD CONSTRAINT `user_det_ibfk_2` FOREIGN KEY (`UserCountryID_DET`) REFERENCES `countries_mstr` (`CountriesID_MSTR`),
-  ADD CONSTRAINT `user_det_ibfk_3` FOREIGN KEY (`UserGenderID_DET`) REFERENCES `gender_mstr` (`GenderID_MSTR`);
+  ADD CONSTRAINT `user_det_ibfk_2` FOREIGN KEY (`UserGenderID_DET`) REFERENCES `gender_mstr` (`GenderID_MSTR`),
+  ADD CONSTRAINT `user_det_ibfk_3` FOREIGN KEY (`UserCountryID_DET`) REFERENCES `countries_mstr` (`CountriesID_MSTR`);
 
 --
 -- Megkötések a táblához `user_mstr`

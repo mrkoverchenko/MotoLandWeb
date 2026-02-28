@@ -68,9 +68,13 @@
                 $fullTotal += ($partBrutto * $partQua);
             }
 
+
+            $fullTotal += $supplierCost;
+
+            if ($supplierCash > 0) 
+                $fullTotal += $supplierCash;
+
             $fullTotal = number_format($fullTotal, 0, ",", " ");
-            //$fmt = new NumberFormatter( 'hu_HU', NumberFormatter::DECIMAL );
-            //$fullTotal = $fmt->format($fullTotal);
 
 
             $ret .= "<tfoot>

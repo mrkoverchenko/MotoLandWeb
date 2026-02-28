@@ -265,6 +265,23 @@
 
     
 
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data); 
+        return $data;
+    }
+
+        function generateSalt($length = 32) {
+            return bin2hex(random_bytes($length));
+        }
+
+      
+        function createPasswordHashReg($password, $salt) {
+            return hash('sha256', $salt . $password);
+        }
+
+
     /*******************************************************
      * LOGIN
      */
@@ -273,13 +290,6 @@
                 ($_POST["formName"] == "logForm" || $_POST["formName"] == "shoppingCartLoginForm")) {
 
         
-        
-		function validate($data){
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data); 
-			return $data;
-		}
 
 		$activePage = ($_POST["formName"] == "shoppingCartLoginForm") ?  "payments": "sales";
 
@@ -349,7 +359,71 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!empty($_POST['formName']) && $_POST['formName'] === 'shoppingCartLoginForm') {
-            // HANDLE LOGIN
+
+
+
+
+        } else if (!empty($_POST["formName"]) && $_POST["formName"] === "securityForm") {
+
+            /************************************************
+             * CHANGE PASSWORD
+             */
+
+            $oldPasswordFromInput = validate($_POST['oldPassword']);
+            $newPasswordFromInput = validate($_POST['newPassword']);
+            $userID = $_SESSION['userid'];
+                
+            $sql = "SELECT PasswordSalt_MSTR, PasswordPassword_MSTR
+                    FROM password_mstr
+                    WHERE PasswordUserID_MSTR = '$userID'";
+            $passwordIsOK = false;        
+            $result = mysqli_query($connect, $sql);
+            if (mysqli_num_rows($result) === 1) {
+                $row = mysqli_fetch_assoc($result);
+                
+                $saltFromDb = $row["PasswordSalt_MSTR"];
+                $passwordFromDb = $row["PasswordPassword_MSTR"];
+                // OLDA PASSWORD CHECKING
+                if (hash('sha256', $saltFromDb.$oldPasswordFromInput) === $passwordFromDb) {
+                    $passwordIsOK = true;        
+                }
+                $_POST = array();
+                unset($_POST);
+            }
+
+
+            // CHANGE PASSWORD
+            if ($passwordIsOK) {
+                $salt = generateSalt();
+                $passHASH = createPasswordHashReg($newPasswordFromInput, $salt);
+                $sqlString = "UPDATE password_mstr
+                              SET PasswordPassword_MSTR = '$passHASH', 
+                                  PasswordSalt_MSTR ='$salt'
+                              WHERE PasswordUserID_MSTR = '$userID'";
+                mysqli_query($connect, $sqlString);
+            }
+
+
+
+
+
+
+
+
+            $hideTime = 5000;
+            $systemIsMessage = true;
+            if ($passwordIsOK) {
+                $alertType = "alert-dismissible";
+                $systemMessage = "<b>Sikeres jelszócsere!</b>";
+            } else {
+                $alertType = "alert-danger";
+                $systemMessage = "<b>Hibás jelszó!</b";
+            }
+
+
+
+
+
 
 
 
@@ -441,6 +515,11 @@
 
 
         } else if (!empty($_POST["formName"]) && $_POST["formName"] === "shoppingCartSendOrderForm") {
+
+
+
+
+
             /************************************************
              * SENDING ORDERED ITEMS
              */
@@ -640,13 +719,6 @@
         $_POST = array();
         unset($_POST);
 
-		function validate($data){
-			$data = trim($data);
-			$data = stripslashes($data);
-			$data = htmlspecialchars($data); 
-			return $data;
-		}
-		 
 		$uname = validate($username);
 		$pass = validate($password);
 
@@ -719,15 +791,6 @@
         $userdet = ($lastDETID != "") ? true : false;
 
 
-        function generateSalt($length = 32) {
-            return bin2hex(random_bytes($length));
-        }
-
-      
-        function createPasswordHashReg($password, $salt) {
-            return hash('sha256', $salt . $password);
-            //return hash('sha256', $password);
-        }
 
         $salt = generateSalt();
         $passHASH = createPasswordHashReg($pass, $salt);
@@ -1112,145 +1175,152 @@
 
 
 
+        
+        <?php 
+            /************************************************
+             * BOOKING SERVICE
+             */
+            if ($isUser) {
+                echo "  <div class='modal fade' data-backdrop='static' data-keyboard='false' id='bookingService' role='dialog'>
+
+                            <div class='modal-dialog'>
+
+                                <div class='modal-content'>
+
+                                    <div class='modal-header' style='padding:5px 50px;'>
+                                        <button type='button' class='close' style='margin-top:13px' data-dismiss='modal' style='margin-top:3px'>&times;</button>
+                                        <h4><span class='glyphicon glyphicon-calendar'></span> Időpontfoglalás</h4>
+                                    </div>
+
+                                    <div class='modal-body' style='padding:10px 50px;'>
+
+                                        <div class='row' style='margin-bottom:10px'>
+                                            <label class='col-sm-12 col-form-label' style='margin-top:5px'>
+                                                Időpontfoglaláshoz kérlek töltsd ki az alábbi űrlapot, hogy egy későbbi időpontban keresni tudjunk egyeztetés céljából.
+                                            </label>
+                                        </div>
+                                        
+
+                                        <form action='index.php' method='POST'>
+                                            <input type='hidden' name='formName' value='bookingForm'>
 
 
-        <!-- BOOKING SERVICE -->
-        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="bookingService" role="dialog">
+                                            <div class='form-group row'>
+                                                <label for='bookingDate' class='col-sm-4 col-form-label' style='margin-top:5px'> Dátum</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            readonly
+                                                            class='form-control-plaintext' 
+                                                            id='bookingDate' 
+                                                            name='bookingDate' 
+                                                            style='width:100px'>
 
-            <div class='modal-dialog'>
-
-                <div class='modal-content'>
-
-                    <div class="modal-header" style="padding:5px 50px;">
-                        <button type="button" class="close" style="margin-top:13px" data-dismiss="modal" style="margin-top:3px">&times;</button>
-                        <h4><span class="glyphicon glyphicon-calendar"></span> Időpontfoglalás</h4>
-                    </div>
-
-                    <div class='modal-body' style='padding:10px 50px;'>
-
-                        <div class='row' style='margin-bottom:10px'>
-                            <label class='col-sm-12 col-form-label' style='margin-top:5px'>
-                                Időpontfoglaláshoz kérlek töltsd ki az alábbi űrlapot, hogy egy későbbi időpontban keresni tudjunk egyeztetés céljából.
-                            </label>
-                        </div>
-                        
-
-                        <form action='index.php' method='POST'>
-                            <input type="hidden" name="formName" value="bookingForm">
+                                                    <input type='text' 
+                                                            readonly
+                                                            class='form-control-plaintext' 
+                                                            id='bookingDay' 
+                                                            name='bookingDay' 
+                                                            style='width:100px'>
+                                                </div>
+                                            </div>
 
 
-                            <div class='form-group row'>
-                                <label for='bookingDate' class='col-sm-4 col-form-label' style='margin-top:5px'> Dátum</label>
-                                <div class='col-sm-6'>
-                                    <input type='text' 
-                                            readonly
-                                            class='form-control-plaintext' 
-                                            id='bookingDate' 
-                                            name='bookingDate' 
-                                            style='width:100px'>
 
-                                    <input type='text' 
-                                            readonly
-                                            class='form-control-plaintext' 
-                                            id='bookingDay' 
-                                            name='bookingDay' 
-                                            style='width:100px'>
+
+                                            <div class='form-group row'>
+                                                <label for='bookingFullName' class='col-sm-4 col-form-label' style='margin-top:5px'> Név *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required".
+
+                                                            (($isUser)
+                                                                ? " value = '".$_SESSION["userfullname"]."' "
+                                                                : "").
+
+                                                            "class='form-control-plaintext' 
+                                                            id='bookingFullName' 
+                                                            name='bookingFullName' 
+                                                            placeholder='vezetéknév keresztnév'
+                                                            style='width:300px'>
+                                                </div>
+                                            </div>
+
+
+                                            <div class='form-group row'>
+                                                <label for='bookingPhone' class='col-sm-4 col-form-label'> Telefonszám *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='text' 
+                                                            required".
+
+                                                            (($isUser) 
+                                                                ? " value = '".$_SESSION["userphone"]."' "
+                                                                : "").
+                                                            
+                                                            "class='form-control-plaintext' 
+                                                            id='bookingPhone' 
+                                                            name='bookingPhone' 
+                                                            placeholder='telefonszám - +xx xx xxxxxxx'
+                                                            style='width:300px'
+                                                            maxlength='30'
+                                                            onkeypress='return onlyPhone(event)*/'>
+                                                </div>
+                                            </div>
+
+                                            <div class='form-group row'>
+                                                <label for='bookingMail' class='col-sm-4 col-form-label'> E-mail cím *</label>
+                                                <div class='col-sm-6'>
+                                                    <input type='email' 
+                                                            required".
+
+                                                            (($isUser) 
+                                                                ? " value = '".$_SESSION["usermail"]."' "
+                                                                : "").
+
+                                                            "class='form-control-plaintext' 
+                                                            id='bookingMail' 
+                                                            name='bookingMail' 
+                                                            placeholder='e-mail cím'
+                                                            style='width:300px'
+                                                            maxlength='64'>
+                                                </div>
+                                            </div>
+
+                                            <button type='submit' class='btn btn-success'>
+                                                <span class='glyphicon glyphicon-ok'></span> Mentés
+                                            </button>
+
+                                            <button type='reset' class='btn btn-primary' data-dismiss='modal' >
+                                                <span class='glyphicon glyphicon-remove'></span> Mégsem
+                                            </button>
+
+                                            <div class='modal-footer' style='text-align:left '>
+                                                <span>A *-al jelszett mezők kitöltése kötelező!</span>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
+                                    <script>
+                                        // ONCLOSE
+                                        $('#bookingService').on('hidden.bs.modal', function (e) {
+                                        });
+
+                                        // BEFORE ON SHOW
+                                        $('#bookingService').on('show.bs.modal', function (e) {
+                                            document.getElementById('bookingDate').value = bookingDate;
+                                            document.getElementById('bookingDay').value = bookingDay;
+                                        })
+
+                                    </script>
+                                    
                                 </div>
-                            </div>
-
-
-
-
-                            <div class='form-group row'>
-                                <label for='bookingFullName' class='col-sm-4 col-form-label' style='margin-top:5px'> Név *</label>
-                                <div class='col-sm-6'>
-                                    <input type='text' 
-                                            required
-                                            <?php
-                                                if ($isUser) 
-                                                    echo " value = '".$_SESSION["userfullname"]."' ";
-                                            ?>
-                                            class='form-control-plaintext' 
-                                            id='bookingFullName' 
-                                            name='bookingFullName' 
-                                            placeholder='vezetéknév keresztnév'
-                                            style='width:300px'>
-                                </div>
-                            </div>
-
-
-                            <div class='form-group row'>
-                                <label for='bookingPhone' class='col-sm-4 col-form-label'> Telefonszám *</label>
-                                <div class='col-sm-6'>
-                                    <input type='text' 
-                                            required
-                                            <?php
-                                                if ($isUser) 
-                                                    echo " value = '".$_SESSION["userphone"]."' ";
-                                            ?>
-                                            class='form-control-plaintext' 
-                                            id='bookingPhone' 
-                                            name='bookingPhone' 
-                                            placeholder='telefonszám - +xx xx xxxxxxx'
-                                            style='width:300px'
-                                            maxlength='30'
-                                            onkeypress='return onlyPhone(event)*/'>
-                                </div>
-                            </div>
-
-                            <div class='form-group row'>
-                                <label for='bookingMail' class='col-sm-4 col-form-label'> E-mail cím *</label>
-                                <div class='col-sm-6'>
-                                    <input type='email' 
-                                            required
-                                            <?php
-                                                if ($isUser) 
-                                                    echo " value = '".$_SESSION["usermail"]."' ";
-                                            ?>
-                                            class='form-control-plaintext' 
-                                            id='bookingMail' 
-                                            name='bookingMail' 
-                                            placeholder='e-mail cím'
-                                            style='width:300px'
-                                            maxlength='64'>
-                                </div>
-                            </div>
-
-                            <button type='submit' class='btn btn-success'>
-                                <span class='glyphicon glyphicon-ok'></span> Mentés
-                            </button>
-
-                            <button type='reset' class='btn btn-primary' data-dismiss='modal' >
-                                <span class='glyphicon glyphicon-remove'></span> Mégsem
-                            </button>
-
-                            <div class='modal-footer' style='text-align:left '>
-                                <span>A *-al jelszett mezők kitöltése kötelező!</span>
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                    <script>
-                        // ONCLOSE
-                        $('#bookingService').on('hidden.bs.modal', function (e) {
-                        });
-
-                        // BEFORE ON SHOW
-                        $('#bookingService').on('show.bs.modal', function (e) {
-                            document.getElementById("bookingDate").value = bookingDate;
-                            document.getElementById("bookingDay").value = bookingDay;
-                        })
-
-                    </script>
                     
-                </div>
-    
-            </div>
+                            </div>
 
-        </div>
-
+                        </div>"; 
+            }    
+        ?>
 
 
 
@@ -1331,6 +1401,90 @@
                 </div>
             </div>
         </div> 
+
+
+
+
+
+
+
+        <?php 
+            /************************************************
+             * SECURITY 
+             */
+            if ($isUser) {
+                echo "  <div class='modal fade' data-backdrop='static' data-keyboard='false' id='mySecurityForm' role='dialog'>
+                            <div class='modal-dialog'>
+                    
+                                <div class='modal-content'>
+
+                                    <div class='modal-header' style='padding:5px 50px;'>
+                                        <button type='button' class='close' style='margin-top:13px' data-dismiss='modal'>&times;</button>
+                                        <h4><span class='glyphicon glyphicon-lock'></span> Jelszómódosítás</h4>
+                                    </div>
+
+                                    <div class='modal-body' style='padding:40px 50px;'>
+
+                                        <form id='securityForm' action='index.php' method='POST' onsubmit='return chkPSWRD()'>
+
+                                            <div class='form-group'>
+                                                <input type='hidden' name='formName' value='securityForm'>
+                                                <label for='oldPassword'>Régi jelszó</label>
+                                                <input type='password' class='form-control' value='' required id='oldPassword' name='oldPassword' placeholder='jelenlegi jelszó'>
+                                            </div>
+
+                                            <div class='form-group'>
+                                                <label for='newPassword'>Új jelszó</label>
+                                                <input type='password' class='form-control' value='' required id='newPassword' name='newPassword' placeholder='új jelszó'>
+                                            </div>
+
+                                            <div class='form-group'>
+                                                <label for='newPasswordC'>Ismétlés</label>
+                                                <input type='password' class='form-control' value='' required id='newPasswordC' placeholder='ismétlés'>
+                                            </div>
+
+                                            <button type='submit' class='btn btn-success '>
+                                                <span class='glyphicon glyphicon-off'></span> 
+                                                Jelszócsere
+                                            </button>
+
+                                            <button class='btn btn-primary' data-dismiss='modal' >
+                                                <span class='glyphicon glyphicon-remove'></span> 
+                                                Bezárás
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+
+                                    <script>
+                                        // ONCLOSE
+                                        $('#mySecurityForm').on('hidden.bs.modal', function () {
+                                        });
+
+                                        // BEFORE ON SHOW
+                                        $('#mySecurityForm').on('show.bs.modal', function (e) {
+                                        document.getElementById('oldPassword').focus;
+                                        })
+
+                                    </script>
+
+
+                                </div>
+                            </div>
+                        </div>";
+            }
+        ?>
+
+
+
+
+
+
+
+
+
 
 
 

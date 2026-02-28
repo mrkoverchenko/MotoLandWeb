@@ -55,6 +55,33 @@ function checkForms(_this) {
     }
 }
 
+function chkPSWRD() {
+    let oPW = document.getElementById("oldPassword");
+    let nPW = document.getElementById("newPassword");
+    let nPWC = document.getElementById("newPasswordC");
+
+    if (nPW.value != nPWC.value) {
+        alert("Az új jelszó és az ellenőrzés nem egyezik!");
+        oPW.value = "";
+        nPW.value = "";
+        nPWC.value = "";
+        oPW.focus();
+        return false;
+    }
+
+    if (nPW.value.length < 8) {
+        alert("Az új jelszó nem lehet rövidebb 8 karakternél!");
+        oPW.value = "";
+        nPW.value = "";
+        nPWC.value = "";
+        oPW.focus();
+        return false;
+    }
+
+    return true;
+}
+
+
 function clearForm(formID) {
     let thisForm = document.getElementById(formID);
     let thisFormInputElements = thisForm.getElementsByTagName('INPUT');

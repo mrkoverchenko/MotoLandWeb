@@ -563,7 +563,7 @@
                                 OrdersUserTypeID_MSTR, 
                                 OrdersNote_MSTR,
                                 OrdersASZFIsOK_MSTR 
-                            ) VALUES (NULL, '$userID', '$orderDateTime', '$total', 1, $usertype, '$shoppingCartNote', '1')";
+                            ) VALUES (NULL, '$userID', '$orderDateTime', '$total', 1, $usertype, '$shoppingCartNote', 1)";
 
             mysqli_query($connect, $orderSQL);
             $lastid = mysqli_insert_id($connect);
@@ -1360,7 +1360,7 @@
                                 <input type="text" 
                                         class="form-control" 
                                         required 
-                                        value="LoIs"
+                                        value="istvan.lovei@yahoo.com"
                                         id="loginUserName" 
                                         name="loginUserName" 
                                         placeholder="e-mail">

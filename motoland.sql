@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Feb 28. 22:51
+-- Létrehozás ideje: 2026. Már 03. 15:21
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -4040,7 +4040,7 @@ CREATE TABLE `motosystem_mstr` (
 --
 
 INSERT INTO `motosystem_mstr` (`MotoSystemID_MSTR`, `MotoSystemEUR_MSTR`, `MotoSystemVAT_MSTR`, `MotoSystemDiscount_MSTR`, `MotoSystemShowID_MSTR`, `MotoSystemHourPrice_MSTR`, `MotoSystemDateTime_MSTR`, `MotoSystemWebPath_MSTR`, `MotoSystemSessionDeadline_MSTR`, `MotoSystemNewOrderAutoUpdate_MSTR`, `MotoSystemMailText_MSTR`) VALUES
-(1, 400.5700, 0.2700, 0.0500, '0', 6780.00, '2025-10-22 14:11:33', 'http://localhost/MotoLandWeb/', 3600, 1, '<h3>Kedves Megrendelő!</h3>\r\nÖrömmel értesítünk, hogy megkezdtük rendelésed feldolgozását!\r\nKöszönjük, hogy minket választottál, nagyszerű döntést hoztál és ha bármilyen kérdésed merülne fel, kérjük látogasd meg a \'Gyakori kérdések\' oldalunkat!\r\nMíg várakozol a megrendelésedre, nézz szét oldalunkon, ahol további tippeket találsz a  kényelmes és biztonságos motorozáshoz.\r\nKérlek oszd meg ismerőseiddel véleményedet, tapasztalataidat a webshoppal és a termékekkel kapcsolatban! ');
+(1, 400.5700, 0.2700, 0.0500, '1', 6780.00, '2025-10-22 14:11:33', 'http://localhost/MotoLandWeb/', 3600, 1, '<h3>Kedves Megrendelő!</h3>\r\nÖrömmel értesítünk, hogy megkezdtük rendelésed feldolgozását!\r\nKöszönjük, hogy minket választottál, nagyszerű döntést hoztál és ha bármilyen kérdésed merülne fel, kérjük látogasd meg a \'Gyakori kérdések\' oldalunkat!\r\nMíg várakozol a megrendelésedre, nézz szét oldalunkon, ahol további tippeket találsz a  kényelmes és biztonságos motorozáshoz.\r\nKérlek oszd meg ismerőseiddel véleményedet, tapasztalataidat a webshoppal és a termékekkel kapcsolatban! ');
 
 -- --------------------------------------------------------
 
@@ -4276,7 +4276,8 @@ INSERT INTO `prebooking_mstr` (`PreBookingID_MSTR`, `PreBookingDate_MSTR`, `PreB
 (8, '2026-10-05', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '2026-02-24 21:31:28'),
 (9, '2026-06-08', 'Gatya Terézia', '+36 20 555 55 55', 'mrkoverchenko@gmail.com', '2026-02-24 21:33:33'),
 (10, '2026-12-07', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '2026-02-26 13:43:02'),
-(11, '2026-02-27', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '2026-02-27 14:17:48');
+(11, '2026-02-27', 'Lövei István ', '+36 46 52899', 'mrkoverchenko@gmail.com', '2026-02-27 14:17:48'),
+(12, '2026-10-12', 'Tóth Ferenc', '+36 20 522 52 52', 'mrkoverchenko@gmail.com', '2026-03-02 13:34:03');
 
 -- --------------------------------------------------------
 
@@ -4297,6 +4298,57 @@ INSERT INTO `quantityunit_mstr` (`QuantityUnitID_MSTR`, `QuantityUnitUnit_MSTR`)
 (1, 'DB.'),
 (2, 'L.'),
 (3, 'Gar.');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `secondhandstate_mstr`
+--
+
+CREATE TABLE `secondhandstate_mstr` (
+  `SecondHandStateID_MSTR` int(11) NOT NULL,
+  `SecondHandStateState_MSTR` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `secondhandstate_mstr`
+--
+
+INSERT INTO `secondhandstate_mstr` (`SecondHandStateID_MSTR`, `SecondHandStateState_MSTR`) VALUES
+(1, 'Új (szalon állapotú)'),
+(2, 'Alig használt'),
+(3, 'Használt, jó állapotú'),
+(4, 'Használt, esztétikai hibás'),
+(5, 'Használt, sérült'),
+(6, 'Törött, alkatrésznek való'),
+(7, 'Forgalomból kivont, totálkáros'),
+(8, 'Gyakorlatilag veszélyes hulladék');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `secondhand_mstr`
+--
+
+CREATE TABLE `secondhand_mstr` (
+  `SecondHandID_MSTR` int(11) NOT NULL,
+  `SecondHandManufacturerID_MSTR` int(11) NOT NULL,
+  `SecondHandType_MSTR` varchar(30) NOT NULL,
+  `SecondHandYear_MSTR` int(4) NOT NULL,
+  `SecondHandStateID_MSTR` int(11) NOT NULL,
+  `SecondHandPrice_MSTR` int(11) NOT NULL,
+  `SecondHandUserID_MSTR` int(11) NOT NULL,
+  `SecondHandRegDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp(),
+  `SecondHandLastRegDateTime_MSTR` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  `SecondHandImages_MSTR` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `secondhand_mstr`
+--
+
+INSERT INTO `secondhand_mstr` (`SecondHandID_MSTR`, `SecondHandManufacturerID_MSTR`, `SecondHandType_MSTR`, `SecondHandYear_MSTR`, `SecondHandStateID_MSTR`, `SecondHandPrice_MSTR`, `SecondHandUserID_MSTR`, `SecondHandRegDateTime_MSTR`, `SecondHandLastRegDateTime_MSTR`, `SecondHandImages_MSTR`) VALUES
+(1, 43, '1400 GTR Concours', 2008, 3, 3500000, 64, '2026-03-03 12:42:39', '2026-03-03 14:23:24', 'motoimg/1776335-3000x1794-desktop-hd-kawasaki-1400gtr-wallpaper.jpg');
 
 -- --------------------------------------------------------
 
@@ -4454,7 +4506,7 @@ INSERT INTO `user_det` (`UserID_DET`, `UserMSTRID_DET`, `UserFirstName_DET`, `Us
 (29, 29, 'Hy', 'Fowgies', '', 2, '+49-399-302-0842', 14, '12045', 'Berlin', 'Westend', '4', '2026-02-28 22:05:01', 'Delia', '', '1977-10-19', '2026-02-28 22:05:01'),
 (30, 30, 'Thor', 'Blackwood', '', 2, '+7-368-449-4396', 6, '650904', 'Promyshlennovskiy', 'Ryan', '96434', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
 (31, 31, 'Wheeler', 'Toun', '', 2, '+7-582-150-7110', 18, '188680', 'Koltushi', 'Raven', '8', '2026-02-28 22:05:01', 'Rochella', 'Chiguirip', '1977-10-19', '2026-02-28 22:05:01'),
-(32, 32, 'Adam', 'Deare', '', 1, '+62-919-241-0699', 8, '', 'Barang', 'Larry', '97783', '2026-02-28 22:05:01', 'Andeee', 'Staroderevyankovskaya', '1977-10-19', '2026-02-28 22:05:01'),
+(32, 32, 'Adam', 'Deare', '', 1, '+62-919-241-0699', 8, '', 'Barang', 'Larry', '97783', '2026-02-28 22:05:01', 'Andeee', 'Staroderevyankovskaya', '1977-10-19', '2026-03-02 07:37:14'),
 (33, 33, 'Arda', 'Ealles', '', 2, '+33-391-852-9020', 20, '11493 CE', 'Castelnaudary', 'Dahle', '70125', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01'),
 (34, 34, 'Juliane', 'Chong', '', 1, '+86-337-630-9069', 13, '', 'Mashan', 'Vermont', '57868', '2026-02-28 22:05:01', 'Janine', 'Sambungjaya', '1977-10-19', '2026-02-28 22:05:01'),
 (35, 35, 'Rusty', 'Cammidge', '', 2, '+48-245-107-3997', 10, '93-524', 'Kutno', 'Miller', '172', '2026-02-28 22:05:01', 'Kathrine', 'Umpak', '1977-10-19', '2026-02-28 22:05:01'),
@@ -4480,7 +4532,7 @@ INSERT INTO `user_det` (`UserID_DET`, `UserMSTRID_DET`, `UserFirstName_DET`, `Us
 (55, 55, 'Amaleta', 'Brisson', '', 1, '+62-297-920-2294', 1, '', 'Banyubang', 'Marcy', '4826', '2026-02-28 22:05:01', 'Sydelle', '', '1977-10-19', '2026-02-28 22:05:01'),
 (56, 56, 'Carlyle', 'Serchwell', '', 2, '+63-458-156-9371', 17, '5702', 'Aurelliana', 'Butternut', '8173', '2026-02-28 22:05:01', 'Annetta', '', '1977-10-19', '2026-02-28 22:05:01'),
 (57, 57, 'Zea', 'Cahill', '', 2, '+1-202-969-8275', 13, '20051', 'Washington', 'Golf Course', '9322', '2026-02-28 22:05:01', 'Tammara', 'Graneros', '1977-10-19', '2026-02-28 22:05:01'),
-(64, 64, 'Lövei', 'István', '', 3, '', 2, '', '', '', '', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-02-28 22:05:01');
+(64, 64, 'Lövei', 'István', '', 3, '+36 46 66429', 2, '3533', 'Miskolc', 'Király', '4', '2026-02-28 22:05:01', '', '', '1977-10-19', '2026-03-02 07:38:27');
 
 -- --------------------------------------------------------
 
@@ -4533,7 +4585,7 @@ INSERT INTO `user_mstr` (`UserID_MSTR`, `UserNickName_MSTR`, `UserMail_MSTR`, `U
 (29, 'sskeffingtons', 'slansleys@imdb.com', 2, 3, ''),
 (30, 'zbartakt', 'pcowardt@yelp.com', 2, 2, ''),
 (31, 'khowdenu', 'lpenyltonu@mozilla.com', 1, 3, ''),
-(32, 'sshawyerv', 'lcomiamv@parallels.com', 3, 4, ''),
+(32, 'sshawyerv', 'lcomiamv@parallels.com', 2, 2, ''),
 (33, 'abimsonw', 'kstovinew@cbc.ca', 1, 1, ''),
 (34, 'bcrumx', 'nscothornex@homestead.com', 1, 4, ''),
 (35, 'rdebenhamy', 'ckyngdony@theguardian.com', 1, 2, ''),
@@ -4709,6 +4761,21 @@ ALTER TABLE `quantityunit_mstr`
   ADD PRIMARY KEY (`QuantityUnitID_MSTR`);
 
 --
+-- A tábla indexei `secondhandstate_mstr`
+--
+ALTER TABLE `secondhandstate_mstr`
+  ADD PRIMARY KEY (`SecondHandStateID_MSTR`);
+
+--
+-- A tábla indexei `secondhand_mstr`
+--
+ALTER TABLE `secondhand_mstr`
+  ADD PRIMARY KEY (`SecondHandID_MSTR`),
+  ADD KEY `SecondHandManufacturerID_MSTR` (`SecondHandManufacturerID_MSTR`,`SecondHandStateID_MSTR`,`SecondHandUserID_MSTR`),
+  ADD KEY `SecondHandStateID_MSTR` (`SecondHandStateID_MSTR`),
+  ADD KEY `SecondHandUserID_MSTR` (`SecondHandUserID_MSTR`);
+
+--
 -- A tábla indexei `shoppingcart_det`
 --
 ALTER TABLE `shoppingcart_det`
@@ -4874,13 +4941,25 @@ ALTER TABLE `paymenttype_mstr`
 -- AUTO_INCREMENT a táblához `prebooking_mstr`
 --
 ALTER TABLE `prebooking_mstr`
-  MODIFY `PreBookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `PreBookingID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT a táblához `quantityunit_mstr`
 --
 ALTER TABLE `quantityunit_mstr`
   MODIFY `QuantityUnitID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT a táblához `secondhandstate_mstr`
+--
+ALTER TABLE `secondhandstate_mstr`
+  MODIFY `SecondHandStateID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT a táblához `secondhand_mstr`
+--
+ALTER TABLE `secondhand_mstr`
+  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_det`
@@ -4958,6 +5037,14 @@ ALTER TABLE `orders_mstr`
 --
 ALTER TABLE `password_mstr`
   ADD CONSTRAINT `password_mstr_ibfk_1` FOREIGN KEY (`PasswordUserID_MSTR`) REFERENCES `user_mstr` (`UserID_MSTR`);
+
+--
+-- Megkötések a táblához `secondhand_mstr`
+--
+ALTER TABLE `secondhand_mstr`
+  ADD CONSTRAINT `secondhand_mstr_ibfk_1` FOREIGN KEY (`SecondHandStateID_MSTR`) REFERENCES `secondhandstate_mstr` (`SecondHandStateID_MSTR`),
+  ADD CONSTRAINT `secondhand_mstr_ibfk_2` FOREIGN KEY (`SecondHandManufacturerID_MSTR`) REFERENCES `motomanufacturer_mstr` (`MotoManufacturerID_MSTR`),
+  ADD CONSTRAINT `secondhand_mstr_ibfk_3` FOREIGN KEY (`SecondHandUserID_MSTR`) REFERENCES `user_mstr` (`UserID_MSTR`);
 
 --
 -- Megkötések a táblához `shoppingcart_det`

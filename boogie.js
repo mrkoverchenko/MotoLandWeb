@@ -127,7 +127,6 @@ function checkUserName(_this) {
 
 function startItem(item) {
     getSystem();
-
     let container = document.getElementById("subcontainer");
     history.pushState({}, '', 'index.php');
     //history.replaceState({}, '', 'index.php');

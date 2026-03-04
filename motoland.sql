@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 04. 15:16
+-- Létrehozás ideje: 2026. Már 04. 19:53
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -4040,7 +4040,7 @@ CREATE TABLE `motosystem_mstr` (
 --
 
 INSERT INTO `motosystem_mstr` (`MotoSystemID_MSTR`, `MotoSystemEUR_MSTR`, `MotoSystemVAT_MSTR`, `MotoSystemDiscount_MSTR`, `MotoSystemShowID_MSTR`, `MotoSystemHourPrice_MSTR`, `MotoSystemDateTime_MSTR`, `MotoSystemWebPath_MSTR`, `MotoSystemSessionDeadline_MSTR`, `MotoSystemNewOrderAutoUpdate_MSTR`, `MotoSystemMailText_MSTR`) VALUES
-(1, 400.5700, 0.2700, 0.0500, '1', 6780.00, '2025-10-22 14:11:33', 'http://localhost/MotoLandWeb/', 3600, 1, '<h3>Kedves Megrendelő!</h3>\r\nÖrömmel értesítünk, hogy megkezdtük rendelésed feldolgozását!\r\nKöszönjük, hogy minket választottál, nagyszerű döntést hoztál és ha bármilyen kérdésed merülne fel, kérjük látogasd meg a \'Gyakori kérdések\' oldalunkat!\r\nMíg várakozol a megrendelésedre, nézz szét oldalunkon, ahol további tippeket találsz a  kényelmes és biztonságos motorozáshoz.\r\nKérlek oszd meg ismerőseiddel véleményedet, tapasztalataidat a webshoppal és a termékekkel kapcsolatban! ');
+(1, 400.5700, 0.2700, 0.0500, '1', 6780.00, '2025-10-22 14:11:33', 'http://localhost/mrkoverchenko/MotoLandWeb/', 3600, 1, '<h3>Kedves Megrendelő!</h3>\r\nÖrömmel értesítünk, hogy megkezdtük rendelésed feldolgozását!\r\nKöszönjük, hogy minket választottál, nagyszerű döntést hoztál és ha bármilyen kérdésed merülne fel, kérjük látogasd meg a \'Gyakori kérdések\' oldalunkat!\r\nMíg várakozol a megrendelésedre, nézz szét oldalunkon, ahol további tippeket találsz a  kényelmes és biztonságos motorozáshoz.\r\nKérlek oszd meg ismerőseiddel véleményedet, tapasztalataidat a webshoppal és a termékekkel kapcsolatban! ');
 
 -- --------------------------------------------------------
 

@@ -956,11 +956,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>      
 		<link rel="Icon" type="image/png" href="imgs/motorbike.png">   
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="boogie.js"></script>
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <style>
@@ -2136,7 +2136,6 @@
                         // BEFORE ON SHOW
                         $('#editsecondhand').on('show.bs.modal', function (e) {
                             setSecondhandDetails(document.getElementById("detailID").value);
-                            
                         })
 
                     </script>

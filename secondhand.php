@@ -98,6 +98,7 @@
                                                             <small class='text-muted' style='color: white; font-size:10px'><i>Utolsó frissítés: $Last</i></small>
                                                         </p>
                                                         <a href='#editsecondhand' data-toggle='modal' class='btn btn-primary btn-sm'>Részletek</a>
+                                                        <input type='hidden' id='detailID' value='$ID'>
                                                     </div>
                                                 </div>
                                             </div>
@@ -322,127 +323,6 @@
 
 
 
-                  <div class='modal fade' data-backdrop='static' data-keyboard='false' id='editsecondhand' role='dialog'>
-
-                            <div class='modal-dialog'>
-
-                                <div class='modal-content'>
-
-                                    <div class='modal-header' style='padding:5px 50px;'>
-                                        <button type='button' class='close' style='margin-top:13px' data-dismiss='modal' style='margin-top:3px'>&times;</button>
-                                        <h4><span class='glyphicon glyphicon-calendar'></span> Időpontfoglalás</h4>
-                                    </div>
-
-                                    <div class='modal-body' style='padding:10px 50px;'>
-
-                                        <div class='row' style='margin-bottom:10px'>
-                                            <label class='col-sm-12 col-form-label' style='margin-top:5px'>
-                                                Időpontfoglaláshoz kérlek töltsd ki az alábbi űrlapot, hogy egy későbbi időpontban keresni tudjunk egyeztetés céljából.
-                                            </label>
-                                        </div>
-                                        
-
-                                        <form action='index.php' method='POST'>
-                                            <input type='hidden' name='formName' value='bookingForm'>
-
-
-                                            <div class='form-group row'>
-                                                <label for='bookingDate' class='col-sm-4 col-form-label' style='margin-top:5px'> Dátum</label>
-                                                <div class='col-sm-6'>
-                                                    <input type='text' 
-                                                            readonly
-                                                            class='form-control-plaintext' 
-                                                            id='bookingDate' 
-                                                            name='bookingDate' 
-                                                            style='width:100px'>
-
-                                                    <input type='text' 
-                                                            readonly
-                                                            class='form-control-plaintext' 
-                                                            id='bookingDay' 
-                                                            name='bookingDay' 
-                                                            style='width:100px'>
-                                                </div>
-                                            </div>
-
-
-
-
-                                            <div class='form-group row'>
-                                                <label for='bookingFullName' class='col-sm-4 col-form-label' style='margin-top:5px'> Név *</label>
-                                                <div class='col-sm-6'>
-                                                    <input type='text' 
-                                                            required
-                                                            class='form-control-plaintext' 
-                                                            id='bookingFullName' 
-                                                            name='bookingFullName' 
-                                                            placeholder='vezetéknév keresztnév'
-                                                            style='width:300px'>
-                                                </div>
-                                            </div>
-
-
-                                            <div class='form-group row'>
-                                                <label for='bookingPhone' class='col-sm-4 col-form-label'> Telefonszám *</label>
-                                                <div class='col-sm-6'>
-                                                    <input type='text' 
-                                                            required
-                                                            class='form-control-plaintext' 
-                                                            id='bookingPhone' 
-                                                            name='bookingPhone' 
-                                                            placeholder='+xx xx xxxxxxx'
-                                                            style='width:300px'
-                                                            maxlength='30'
-                                                            onkeypress='return onlyPhone(event)'>
-                                                </div>
-                                            </div>
-
-                                            <div class='form-group row'>
-                                                <label for='bookingMail' class='col-sm-4 col-form-label'> E-mail cím *</label>
-                                                <div class='col-sm-6'>
-                                                    <input type='email' 
-                                                            required
-                                                            class='form-control-plaintext' 
-                                                            id='bookingMail' 
-                                                            name='bookingMail' 
-                                                            placeholder='e-mail cím'
-                                                            style='width:300px'
-                                                            maxlength='64'>
-                                                </div>
-                                            </div>
-
-                                            <button type='submit' class='btn btn-success'>
-                                                <span class='glyphicon glyphicon-ok'></span> Mentés
-                                            </button>
-
-                                            <button type='reset' class='btn btn-primary' data-dismiss='modal' >
-                                                <span class='glyphicon glyphicon-remove'></span> Mégsem
-                                            </button>
-
-                                            <div class='modal-footer' style='text-align:left '>
-                                                <span>A *-al jelszett mezők kitöltése kötelező!</span>
-                                            </div>
-
-                                        </form>
-
-                                    </div>
-
-                                    <script>
-                                        // ONCLOSE
-                                        $('#bookingService').on('hidden.bs.modal', function (e) {
-                                        });
-
-                                        // BEFORE ON SHOW
-                                        $('#bookingService').on('show.bs.modal', function (e) {
-                                        })
-
-                                    </script>
-                                    
-                                </div>
-                    
-                            </div>
-
-                        </div>
 
 
 

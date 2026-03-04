@@ -1066,8 +1066,6 @@
                 <div id="navbar" class="navbar-collapse collapse"> 
 
                     <ul class="nav navbar-nav">
-                        <li><a href='#' onclick="startItem('secondhand')">Hirdetés</a></li>
-                        <li><a href="#">Kapcsolat</a></li>
 
                         <li class="dropdown">
                             <a href="#" 
@@ -1098,6 +1096,8 @@
                             </ul>
 
                         </li>
+                        <li><a href='#' onclick="startItem('secondhand')">Hirdetés feladás</a></li>
+                        <li><a href="#">Kapcsolat</a></li>
                     </ul>
 
 
@@ -2107,6 +2107,45 @@
                         </div>";
             }
         ?>
+
+
+
+
+
+
+
+        <!-- SECONDHAND -->
+        <div class='modal fade' data-backdrop='static' data-keyboard='false' id='editsecondhand' role='dialog'>
+
+            <div class='modal-dialog'>
+
+                <div class='modal-content'>
+
+                    <div class='modal-header' style='padding:5px 50px;'>
+                        <button type='button' class='close' style='margin-top:13px' data-dismiss='modal' style='margin-top:3px'>&times;</button>
+                        <H4>Részletek</h4>
+                    </div>
+
+                    <div class='modal-body' style='padding:10px 50px;' id='secondHandDetails'></div>
+
+                    <script>
+                        // ONCLOSE
+                        $('#editsecondhand').on('hidden.bs.modal', function (e) {
+                        });
+
+                        // BEFORE ON SHOW
+                        $('#editsecondhand').on('show.bs.modal', function (e) {
+                            setSecondhandDetails(document.getElementById("detailID").value);
+                            
+                        })
+
+                    </script>
+                                    
+                </div>
+                    
+            </div>
+
+        </div>
 
 
 

@@ -610,3 +610,16 @@ function setBooking(e) {
     //alert(bookingDate+"\n"+bookingDay);
 }
 
+function setSecondhandDetails(id) {
+    var param = "id=" + id;
+    var req = new XMLHttpRequest();
+    req.open("POST", "getSecondHandDetails.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+
+            document.getElementById("secondHandDetails").innerHTML = req.responseText;
+        }
+    }
+    req.send(param);
+}

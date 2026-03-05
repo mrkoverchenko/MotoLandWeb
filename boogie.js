@@ -610,8 +610,8 @@ function setBooking(e) {
     //alert(bookingDate+"\n"+bookingDay);
 }
 
-function setSecondhandDetails(id) {
-    var param = "id=" + id;
+function ssd(_this) {
+    var param = "id=" + _this.id;
     var req = new XMLHttpRequest();
     req.open("POST", "getSecondHandDetails.php", true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -661,4 +661,53 @@ function secondHandSelect(_this) {
     req.send(param);
        
 
+}
+
+
+//document.getElementById("uploadImages").onchange = uploadOnChange;
+
+function uploadOnChange(e) {
+
+    const files = e.target.files;
+    var file = [];
+    for (var ic = 0; ic < files.length; ic++) {
+        file.push("secondhandimages/" + files[ic].name);
+    }
+    document.getElementById("fileNames").value = file.toString();
+}
+
+
+function removeSecondHand() {
+    let id = document.getElementById("secondHandID").value;
+    if (id == "-1")
+        return;
+    if (confirm("Biztos, hogy törölni akarod a kijelölt hirdetést?")) {
+        var param = "id=" + id;
+        var req = new XMLHttpRequest();
+        req.open("POST", "removeSecondHand.php", true);
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.onreadystatechange = function () {
+            if (req.readyState === 4 && req.status === 200) {
+                let ret = this.responseText;
+                if (ret === "OK") {
+                    resetSecondHandFields();
+                    updateMySecondHand(param);
+                }
+            }
+        }
+        req.send(param);
+    }
+}
+
+
+function updateMySecondHand(myparam) {
+    var req = new XMLHttpRequest();
+    req.open("POST", "updateMySecondHands.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            document.getElementById("secondHandSelect").innerHTML = this.responseText;
+        }
+    }
+    req.send(myparam);
 }

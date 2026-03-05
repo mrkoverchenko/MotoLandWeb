@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 04. 19:53
+-- Létrehozás ideje: 2026. Már 05. 21:53
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -4311,7 +4311,7 @@ INSERT INTO `quantityunit_mstr` (`QuantityUnitID_MSTR`, `QuantityUnitUnit_MSTR`)
 
 CREATE TABLE `secondhandstate_mstr` (
   `SecondHandStateID_MSTR` int(11) NOT NULL,
-  `SecondHandStateState_MSTR` varchar(40) NOT NULL
+  `SecondHandStateState_MSTR` varchar(27) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
@@ -4325,8 +4325,9 @@ INSERT INTO `secondhandstate_mstr` (`SecondHandStateID_MSTR`, `SecondHandStateSt
 (4, 'Használt, esztétikai hibás'),
 (5, 'Használt, sérült'),
 (6, 'Törött, alkatrésznek való'),
-(7, 'Forgalomból kivont, totálkáros'),
-(8, 'Gyakorlatilag veszélyes hulladék');
+(7, 'Forgalomból kivont'),
+(8, 'Veszélyes hulladék'),
+(9, 'Totálkár');
 
 -- --------------------------------------------------------
 
@@ -4352,7 +4353,8 @@ CREATE TABLE `secondhand_mstr` (
 --
 
 INSERT INTO `secondhand_mstr` (`SecondHandID_MSTR`, `SecondHandManufacturerID_MSTR`, `SecondHandType_MSTR`, `SecondHandYear_MSTR`, `SecondHandStateID_MSTR`, `SecondHandPrice_MSTR`, `SecondHandUserID_MSTR`, `SecondHandRegDateTime_MSTR`, `SecondHandLastRegDateTime_MSTR`, `SecondHandImages_MSTR`) VALUES
-(1, 43, '1400 GTR Concours', 2008, 3, 3500000, 64, '2026-03-03 12:42:39', '2026-03-04 14:36:14', 'motoimg/1776335-3000x1794-desktop-hd-kawasaki-1400gtr-wallpaper.jpg,motoimg/kawasaki_z1000B.png,motoimg/kawasaki_z1000B.png');
+(1, 43, '1400 GTR Concours', 2008, 3, 3500000, 64, '2026-03-03 12:42:39', '2026-03-04 14:36:14', 'motoimg/1776335-3000x1794-desktop-hd-kawasaki-1400gtr-wallpaper.jpg,motoimg/kawasaki_z1000B.png,motoimg/kawasaki_z1000B.png'),
+(18, 5, '333', 333, 4, 333, 64, '2026-03-05 21:52:09', '2026-03-05 21:52:09', '');
 
 -- --------------------------------------------------------
 
@@ -4957,13 +4959,13 @@ ALTER TABLE `quantityunit_mstr`
 -- AUTO_INCREMENT a táblához `secondhandstate_mstr`
 --
 ALTER TABLE `secondhandstate_mstr`
-  MODIFY `SecondHandStateID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `SecondHandStateID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT a táblához `secondhand_mstr`
 --
 ALTER TABLE `secondhand_mstr`
-  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_det`

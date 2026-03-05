@@ -41,8 +41,8 @@
             $Begin = $row["SecondHandRegDateTime_MSTR"];
             $Last = $row["SecondHandLastRegDateTime_MSTR"];
 
-            $Images = explode(",", $row["SecondHandImages_MSTR"]);
-            //echo var_dump($Images);
+            $shi = $row["SecondHandImages_MSTR"];
+            $Images = explode(",", $shi);
 
             $det = "<div class='form-group row'>
                         <div class='col-sm-8'>
@@ -52,7 +52,7 @@
                             <span>Eladási ár: <b><u>".number_format($Price, 0, ",", " ").".- Ft.</u></b></span><br>
                             <span>Hirdetés felvéve: <i>$Begin</i></span><br>
                             <span>Utolsó módosítás: <i>$Last</i></span><br>
-                            <span style='font-size:10px; color:gray;'><i>".count($Images)." db. kép az adatbázisban</i></span>
+                            <span style='font-size:10px; color:gray;'><i>".((strlen($shi) > 0) ? count($Images)." db." : "<b><u>Nincs</u></b>")." kép a hirdetésben.</i></span>
                         </div>
                         
                     </div>

@@ -65,7 +65,7 @@
                                         SecondHandManufacturerID_MSTR = MotoManufacturerID_MSTR AND 
                                         secondhand_mstr.SecondHandStateID_MSTR = secondhandstate_mstr.SecondHandStateID_MSTR";
 
-                            //$Images = Array();
+                            $div = "";
                             $value = mysqli_query($connect, $sql);
                             while ($row = mysqli_fetch_assoc($value)) {
                                 $ID = $row["SecondHandID_MSTR"];
@@ -73,38 +73,55 @@
                                 $Year = $row["SecondHandYear_MSTR"];
                                 $State = $row["SecondHandStateState_MSTR"];
                                 $Price = $row["SecondHandPrice_MSTR"];
-                                $Image = explode(",", $row["SecondHandImages_MSTR"])[0];
+
+                                $shi = $row["SecondHandImages_MSTR"];
+                                $Image = (strlen($shi) > 0) 
+                                            ? explode(",", $shi)[0]
+                                            : "imgs/nopic-64.png";
+
                                 $Begin = $row["SecondHandRegDateTime_MSTR"];
                                 $Last = $row["SecondHandLastRegDateTime_MSTR"];
                                 //array_push($Images, $ImagesA[0]);
 
 
-                                echo "  <div class='card mb-3' style='min-width:180px;  max-width: 450px; background-color: rgba(0,0,0,0.3); color:white; border-radius:5px;padding:5px;'>
-                                            <div class='row g-0'>
-                                                <div class='col-md-5'>
-                                                    <img src='".$_SESSION['systemPath'].$Image."'
-                                                        style='width:auto; max-width:180px; cursor: pointer;'
-                                                        alt=''
-                                                        class='rounded-start'/>
-                                                </div>
-                                                <div class='col-md-6'>
-                                                    <div class='card-body'>
-                                                        <h5 class='card-title'><b><u>$BrandAndType</u></b></h5>
-                                                        <p class='card-text'>
-                                                            Évjárat: $Year<br>
-                                                            Állapot: $State
-                                                        </p>
-                                                        <p class='card-text'>
-                                                            <small class='text-muted' style='color: white; font-size:10px'><i>Utolsó frissítés: $Last</i></small>
-                                                        </p>
-                                                        <a href='#editsecondhand' data-toggle='modal' class='btn btn-primary btn-sm'>Részletek</a>
-                                                        <input type='hidden' id='detailID' value='$ID'>
+                                $div .= "  <div class='card mb-2' 
+                                                    style='width: 400px; height:120px;
+                                                            background-color: rgba(0,0,0,0.3); 
+                                                            color:white; 
+                                                            border-radius:5px;padding:5px;
+                                                            margin:5px;
+                                                            display: inline-block'>
+
+                                                <div class='row g-0'>
+
+                                                    <div class='col-md-6' >
+                                                        <img src='".$_SESSION['systemPath'].$Image."'
+                                                            style='width:auto; max-width:180px; cursor: pointer;border-radius:3px'
+                                                            alt='$BrandAndType'
+                                                            title='$BrandAndType'
+                                                            class='rounded-start'/>
+                                                    </div>
+
+                                                    <div class='col-md-6'>
+                                                        <div class='card-body'>
+                                                            <p class='card-title' style='font-size:12px'><b><u>$BrandAndType</u></b></p>
+                                                            <p class='card-text' style='font-size:10px'>
+                                                                Évjárat: $Year<br>
+                                                                Állapot: $State<br>
+                                                                <small class='text-muted' style='color: white; font-size:10px'><i>Utolsó frissítés: $Last</i></small>
+                                                            </p>
+                                                            <a href='#editsecondhand' 
+                                                                    data-toggle='modal' 
+                                                                    class='btn btn-primary btn-sm' 
+                                                                    id='$ID' 
+                                                                    onclick='ssd(this)'>Részletek</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>";
+                                            </div>";
 
                             }
+                            echo $div;
                     ?>
                 </div>
 
@@ -176,6 +193,7 @@
                                                 <span style='display:inline-block; width:120px;'>Saját hirdetéseim</span>
                                                 <select 
                                                     onchange='secondHandSelect(this)'
+                                                    id='secondHandSelect'
                                                     class='form-select form-select-lg' 
                                                     aria-label='.form-select-lg'
                                                     style='margin-bottom:20px' >";
@@ -298,12 +316,49 @@
                                                         placeholder='irányár'>
                                                 </div>
 
+                                                
+
+                                                <div style='display:block; margin:5px;'>
+                                                    <span style='display:inline-block; width:120px;'>Feltöltés</span>
+                                                    <input type='file' 
+                                                            onchange='uploadOnChange(event)'
+                                                            class='form-control' 
+                                                            id='inputGroupFile' 
+                                                            accept='image/png, image/jpeg'
+                                                            multiple='multiple'
+                                                            id='uploadImages'
+                                                            style='display:inline-block; width:300px;'>
+                                                    <input type='hidden' value='' id='fileNames' name='shFileNames'>        
+                                                </div>
+
+
+                                                <div style='display:block; margin:5px;'>
+                                                    <span style='display:inline-block; width:120px; vertical-align:top'>Képek (max.10db.)</span>
+                                                    <div style='width: 600px; 
+                                                                height:100px; 
+                                                                background-color:lightgreen; 
+                                                                display: inline-block;
+                                                                overflow-y: auto'>
+                                                        <img src='$Images[$ic]' 
+                                                            alt='$BrandAndType' 
+                                                            width='450' 
+                                                            height='auto' 
+                                                            style='margin:15px; 
+                                                                    border-radius:5px; 
+                                                                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);'>
+                                                    </div>
+                                                </div>
+
+
 
 
                                                 <div style='display:inline;'>
                                                     <span style='display:inline-block; width:120px;'></span>
                                                     <button type='submit' class='btn btn-success' form='secondHandAddForm' style='display:inline; margin-left:5px;' id='shSubmit'>
                                                         Feladás
+                                                    </button>
+                                                    <button type='button' class='btn btn-success' style='display:inline; margin-left:5px;' onclick='removeSecondHand()'>
+                                                        Törlés
                                                     </button>
                                                 </div>
 

@@ -369,6 +369,45 @@
 
 
 
+        /************************************************
+        * SECONDHAND EDIT
+        */
+
+        } else if (!empty($_POST["formName"]) && $_POST["formName"] === "secondHandAddForm") {
+
+            $ID = $_POST["secondHandID"];
+            $ManID = $_POST["secondHandManufacturer"];
+            $Type = $_POST["secondHandType"];
+            $Year = $_POST["secondHandYear"];
+            $StateID = $_POST["secondHandState"];
+            $Price = $_POST["secondHandPrice"];
+
+            if ($ID > -1) {
+            $sqlString = "UPDATE 
+                                secondhand_mstr
+                            SET 
+                                SecondHandManufacturerID_MSTR = $ManID,
+                                SecondHandType_MSTR = '$Type',
+                                SecondHandYear_MSTR = '$Year',
+                                SecondHandStateID_MSTR = $StateID,
+                                SecondHandPrice_MSTR = '$Price' 
+                            WHERE 
+                                SecondHandID_MSTR = $ID";
+            } else {
+            $sqlString = "INSERT INTO 
+                                secondhand_mstr (
+                                    SecondHandManufacturerID_MSTR,
+                                    SecondHandType_MSTR,
+                                    SecondHandYear_MSTR,
+                                    SecondHandStateID_MSTR,
+                                    SecondHandPrice_MSTR
+                            ) VALUES (
+                                    $ManID, '$Type', '$Year', $StateID, '$Price');
+            }
+            mysqli_query($connect, $sqlString);
+
+
+
         } else if (!empty($_POST["formName"]) && $_POST["formName"] === "securityForm") {
 
             /************************************************

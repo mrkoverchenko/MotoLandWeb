@@ -175,7 +175,7 @@
                                             <div style='display:block; margin:5px;'>
                                                 <span style='display:inline-block; width:120px;'>Saját hirdetéseim</span>
                                                 <select 
-                                                    onchange=''
+                                                    onchange='secondHandSelect(this)'
                                                     class='form-select form-select-lg' 
                                                     aria-label='.form-select-lg'
                                                     style='margin-bottom:20px' >";
@@ -186,7 +186,7 @@
                                                                     MotoManufacturerID_MSTR = SecondHandManufacturerID_MSTR 
                                                                 ORDER BY 
                                                                     SecondHandRegDateTime_MSTR ASC";
-                                                        $ret = "<option>Új hirdetés feladása</option>";
+                                                        $ret = "<option value='-1'>Új hirdetés feladása</option>";
                                                         $result = mysqli_query($connect, $sql);
                                                         while ($row = mysqli_fetch_assoc($result)) {                                    
                                                             $cntr = $row['SecondHandID_MSTR'];
@@ -200,8 +200,9 @@
                                             </div>
 
 
-                                            <form action='index.php' method='POST' id='secondhandAddForm'>
-                                                <input type='hidden' name='formName' value='secondhandAddForm'>
+                                            <form action='index.php' method='POST' id='secondHandAddForm'>
+                                                <input type='hidden' name='formName' value='secondHandAddForm'>
+                                                <input type='hidden' name='secondHandID' id='secondHandID' value='-1'>
 
 
                                                 <div style='display:block; margin:5px;'>
@@ -209,7 +210,8 @@
                                                     <select 
                                                         required    
                                                         class='form-select form-select-lg' 
-                                                        id='shoppingCartCountryID' 
+                                                        id='secondHandManufacturer' 
+                                                        name='secondHandManufacturer' 
                                                         aria-label='.form-select-lg'>";
 
                                                             $sql = "SELECT * FROM motomanufacturer_mstr
@@ -236,8 +238,8 @@
                                                         required
                                                         maxlength=30
                                                         class='form-control' 
-                                                        id='shoppingCartEMail' 
-                                                        name='shoppingCartEMail' 
+                                                        id='secondHandType' 
+                                                        name='secondHandType' 
                                                         style='display:inline-block; width:250px;' 
                                                         placeholder='típus'>
                                                 </div>
@@ -248,6 +250,8 @@
                                                     <input type='text' 
                                                         required
                                                         maxlength=4
+                                                        id='secondHandYear' 
+                                                        name='secondHandYear' 
                                                         class='form-control'
                                                         style='display:inline-block; width:60px;' 
                                                         onkeypress='return onlyNumber(event)'
@@ -262,7 +266,8 @@
                                                         onchange=''
                                                         required
                                                         class='form-select form-select-lg' 
-                                                        id='shoppingCartCountryID' 
+                                                        id='secondHandState' 
+                                                        name='secondHandState' 
                                                         aria-label='.form-select-lg'>";
 
                                                             $sql = "SELECT * FROM secondhandstate_mstr
@@ -285,6 +290,8 @@
                                                     <input type='text' 
                                                         required
                                                         maxlength=9
+                                                        id='secondHandPrice' 
+                                                        name='secondHandPrice' 
                                                         class='form-control'
                                                         style='display:inline-block; width:160px;' 
                                                         onkeypress='return onlyNumber(event)'
@@ -295,7 +302,7 @@
 
                                                 <div style='display:inline;'>
                                                     <span style='display:inline-block; width:120px;'></span>
-                                                    <button type='submit' class='btn btn-success' form='secondhandAddForm' style='display:inline; margin-left:5px;'>
+                                                    <button type='submit' class='btn btn-success' form='secondHandAddForm' style='display:inline; margin-left:5px;' id='shSubmit'>
                                                         Feladás
                                                     </button>
                                                 </div>

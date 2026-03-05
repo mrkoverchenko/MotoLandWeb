@@ -623,3 +623,42 @@ function setSecondhandDetails(id) {
     }
     req.send(param);
 }
+
+function resetSecondHandFields() {
+    let form = document.getElementById("secondHandAddForm");
+    const selectElements = form.querySelectorAll("select");
+    const textElements = form.querySelectorAll("input[type=text ]");
+    selectElements.forEach((sel) => { sel.value = 0; });
+    textElements.forEach((txt) => { txt.value = ""; });
+    document.getElementById("shSubmit").innerHTML = "Feladás";
+    document.getElementById("secondHandID").value = "-1";
+}
+
+
+function secondHandSelect(_this) {
+    if (_this.value == -1) {
+        resetSecondHandFields();
+        return;
+    }
+
+    document.getElementById("shSubmit").innerHTML = "Módosítás";
+
+    var param = "id=" + _this.value;
+    var req = new XMLHttpRequest();
+    req.open("POST", "getSecondHandDetailsByID.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+       if (req.readyState === 4 && req.status === 200) {
+            const myObj = JSON.parse(this.responseText);
+            document.getElementById("secondHandID").value = myObj[0].SecondHandID_MSTR;
+            document.getElementById("secondHandManufacturer").value = myObj[0].SecondHandManufacturerID_MSTR;
+            document.getElementById("secondHandType").value = myObj[0].SecondHandType_MSTR;
+            document.getElementById("secondHandYear").value = myObj[0].SecondHandYear_MSTR;
+            document.getElementById("secondHandState").value = myObj[0].SecondHandStateID_MSTR;
+            document.getElementById("secondHandPrice").value = myObj[0].SecondHandPrice_MSTR;
+       }
+    }
+    req.send(param);
+       
+
+}

@@ -379,6 +379,7 @@
             * SECONDHAND EDIT
             */
 
+
             $ID = $_POST["secondHandID"];
             $ManID = $_POST["secondHandManufacturer"];
             $Type = $_POST["secondHandType"];
@@ -386,6 +387,60 @@
             $StateID = $_POST["secondHandState"];
             $Price = $_POST["secondHandPrice"];
             $Files = $_POST["shFileNames"];
+            $CFiles = array();
+
+            $fileMoved = false;
+            if ($ID == -1) {
+
+                $maxSize = 2 * 1024 * 1024;
+                $allowedTypes = ['jpg', 'png'];
+                $targetDir = "secondhandimages/";
+                if (!is_dir($targetDir)) {
+                    mkdir($targetDir, 0755, true);
+                }
+
+
+                if (!empty($_FILES['secondhandimages']['name'][0])) {
+
+                    foreach ($_FILES['secondhandimages']['name'] as $key => $name) {
+
+                        $tmpName = $_FILES['secondhandimages']['tmp_name'][$key];
+                        $size    = $_FILES['secondhandimages']['size'][$key];
+                        $error   = $_FILES['secondhandimages']['error'][$key];
+
+                        if ($error !== UPLOAD_ERR_OK) {
+                            die("Error: Valami szarság van: $name");
+                        }
+
+                        if ($size > $maxSize) {
+                            die("Error: File size exceeds 2MB limit: $name");
+                        }
+
+                        $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+                        if (!in_array($ext, $allowedTypes)) {
+                            die("Error: Only JPG and  PNG files are allowed.");
+                        }
+
+                        $newName = uniqid('img_', true).'.'.$ext;
+
+                        if (move_uploaded_file($tmpName, $targetDir . $newName)) {
+                            $fileMoved = true;
+                        } else {
+                            $fileMoved = false;
+                        }
+
+                        array_push($CFiles, $targetDir.$newName);
+
+                    }
+
+                }
+
+            }
+
+
+
+
+
 
             if ($ID > -1) {
                 $sqlString = "UPDATE 
@@ -399,25 +454,30 @@
                                     SecondHandImages_MSTR = '$Files' 
                                 WHERE 
                                     SecondHandID_MSTR = $ID";
+                mysqli_query($connect, $sqlString);
             } else {
-                $uid = $_SESSION['userid'];
-                $rdate = Date("Y-m-d H:i:s");
-                $sqlString = "INSERT INTO 
-                                    secondhand_mstr (
-                                        SecondHandID_MSTR,
-                                        SecondHandManufacturerID_MSTR,
-                                        SecondHandType_MSTR,
-                                        SecondHandYear_MSTR,
-                                        SecondHandStateID_MSTR,
-                                        SecondHandPrice_MSTR,
-                                        SecondHandUserID_MSTR,
-                                        SecondHandRegDateTime_MSTR,
-                                        SecondHandLastRegDateTime_MSTR,
-                                        SecondHandImages_MSTR 
-                                ) VALUES (
-                                        NULL, $ManID, '$Type', '$Year', $StateID, '$Price', $uid, '$rdate', '$rdate', '$Files')";
+                if ($fileMoved) {
+                    $CFiles = implode(",", $CFiles);
+                    $uid = $_SESSION['userid'];
+                    $rdate = Date("Y-m-d H:i:s");
+                    $sqlString = "INSERT INTO 
+                                        secondhand_mstr (
+                                            SecondHandID_MSTR,
+                                            SecondHandManufacturerID_MSTR,
+                                            SecondHandType_MSTR,
+                                            SecondHandYear_MSTR,
+                                            SecondHandStateID_MSTR,
+                                            SecondHandPrice_MSTR,
+                                            SecondHandUserID_MSTR,
+                                            SecondHandRegDateTime_MSTR,
+                                            SecondHandLastRegDateTime_MSTR,
+                                            SecondHandImages_MSTR,
+                                            SecondHandImageFileNames_MSTR
+                                    ) VALUES (
+                                            NULL, $ManID, '$Type', '$Year', $StateID, '$Price', $uid, '$rdate', '$rdate', '$Files', '$CFiles')";
+                    mysqli_query($connect, $sqlString);
+                }
             }
-            mysqli_query($connect, $sqlString);
 
             $hideTime = 5000;
             $alertType = "alert-dismissible";
@@ -1185,7 +1245,8 @@
 
                                             <li><a href='#' onclick='startItem(\"bookedItems\")'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalásaim</a></li>
 
-                                            <li><a href='#' onclick='startItem(\"orderedItems\")'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>";
+                                            <li><a href='#' onclick='startItem(\"orderedItems\")'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>
+                                            <li><a href='#' onclick='startItem(\"secondhand\")'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Hirdetéseim</a></li>";
 
                                             if (isset($_SESSION['usertype']) && ($_SESSION['usertype'] == "admin" || $_SESSION["usertype"] == "root")) {
                                                 echo "<li role='separator' class='divider'></li>

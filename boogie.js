@@ -688,11 +688,16 @@ function removeSecondHand() {
         req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         req.onreadystatechange = function () {
             if (req.readyState === 4 && req.status === 200) {
+
                 let ret = this.responseText;
-                if (ret === "OK") {
+
+                if (ret == "OK") {
                     resetSecondHandFields();
                     updateMySecondHand(param);
+                } else {
+                    alert(ret);
                 }
+
             }
         }
         req.send(param);

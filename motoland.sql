@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 05. 21:53
+-- Létrehozás ideje: 2026. Már 06. 15:10
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -4040,7 +4040,7 @@ CREATE TABLE `motosystem_mstr` (
 --
 
 INSERT INTO `motosystem_mstr` (`MotoSystemID_MSTR`, `MotoSystemEUR_MSTR`, `MotoSystemVAT_MSTR`, `MotoSystemDiscount_MSTR`, `MotoSystemShowID_MSTR`, `MotoSystemHourPrice_MSTR`, `MotoSystemDateTime_MSTR`, `MotoSystemWebPath_MSTR`, `MotoSystemSessionDeadline_MSTR`, `MotoSystemNewOrderAutoUpdate_MSTR`, `MotoSystemMailText_MSTR`) VALUES
-(1, 400.5700, 0.2700, 0.0500, '1', 6780.00, '2025-10-22 14:11:33', 'http://localhost/mrkoverchenko/MotoLandWeb/', 3600, 1, '<h3>Kedves Megrendelő!</h3>\r\nÖrömmel értesítünk, hogy megkezdtük rendelésed feldolgozását!\r\nKöszönjük, hogy minket választottál, nagyszerű döntést hoztál és ha bármilyen kérdésed merülne fel, kérjük látogasd meg a \'Gyakori kérdések\' oldalunkat!\r\nMíg várakozol a megrendelésedre, nézz szét oldalunkon, ahol további tippeket találsz a  kényelmes és biztonságos motorozáshoz.\r\nKérlek oszd meg ismerőseiddel véleményedet, tapasztalataidat a webshoppal és a termékekkel kapcsolatban! ');
+(1, 400.5700, 0.2700, 0.0500, '1', 6780.00, '2025-10-22 14:11:33', 'http://localhost/MotoLandWeb/', 3600, 1, '<h3>Kedves Megrendelő!</h3>\r\nÖrömmel értesítünk, hogy megkezdtük rendelésed feldolgozását!\r\nKöszönjük, hogy minket választottál, nagyszerű döntést hoztál és ha bármilyen kérdésed merülne fel, kérjük látogasd meg a \'Gyakori kérdések\' oldalunkat!\r\nMíg várakozol a megrendelésedre, nézz szét oldalunkon, ahol további tippeket találsz a  kényelmes és biztonságos motorozáshoz.\r\nKérlek oszd meg ismerőseiddel véleményedet, tapasztalataidat a webshoppal és a termékekkel kapcsolatban! ');
 
 -- --------------------------------------------------------
 
@@ -4344,17 +4344,10 @@ CREATE TABLE `secondhand_mstr` (
   `SecondHandPrice_MSTR` int(11) NOT NULL,
   `SecondHandUserID_MSTR` int(11) NOT NULL,
   `SecondHandRegDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp(),
-  `SecondHandLastRegDateTime_MSTR` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
-  `SecondHandImages_MSTR` varchar(500) NOT NULL
+  `SecondHandLastRegDateTime_MSTR` datetime NOT NULL,
+  `SecondHandImages_MSTR` varchar(500) NOT NULL,
+  `SecondHandImageFileNames_MSTR` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `secondhand_mstr`
---
-
-INSERT INTO `secondhand_mstr` (`SecondHandID_MSTR`, `SecondHandManufacturerID_MSTR`, `SecondHandType_MSTR`, `SecondHandYear_MSTR`, `SecondHandStateID_MSTR`, `SecondHandPrice_MSTR`, `SecondHandUserID_MSTR`, `SecondHandRegDateTime_MSTR`, `SecondHandLastRegDateTime_MSTR`, `SecondHandImages_MSTR`) VALUES
-(1, 43, '1400 GTR Concours', 2008, 3, 3500000, 64, '2026-03-03 12:42:39', '2026-03-04 14:36:14', 'motoimg/1776335-3000x1794-desktop-hd-kawasaki-1400gtr-wallpaper.jpg,motoimg/kawasaki_z1000B.png,motoimg/kawasaki_z1000B.png'),
-(18, 5, '333', 333, 4, 333, 64, '2026-03-05 21:52:09', '2026-03-05 21:52:09', '');
 
 -- --------------------------------------------------------
 
@@ -4965,7 +4958,7 @@ ALTER TABLE `secondhandstate_mstr`
 -- AUTO_INCREMENT a táblához `secondhand_mstr`
 --
 ALTER TABLE `secondhand_mstr`
-  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_det`

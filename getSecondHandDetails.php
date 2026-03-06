@@ -16,6 +16,7 @@
                     SecondHandImages_MSTR,
                     SecondHandRegDateTime_MSTR,
                     SecondHandLastRegDateTime_MSTR,
+                    SecondHandImageFileNames_MSTR,  
                     MotoManufacturerManufacturer_MSTR AS Brand,
                     SecondHandType_MSTR AS Type
                 FROM 
@@ -41,7 +42,7 @@
             $Begin = $row["SecondHandRegDateTime_MSTR"];
             $Last = $row["SecondHandLastRegDateTime_MSTR"];
 
-            $shi = $row["SecondHandImages_MSTR"];
+            $shi = $row["SecondHandImageFileNames_MSTR"];
             $Images = explode(",", $shi);
 
             $det = "<div class='form-group row'>

@@ -36,7 +36,7 @@
                     <a class="nav-link active" data-bs-toggle="tab" href="#secondhandmoto">Motorok</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#sacondhandhandling">Feladás</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#sacondhandhandling">Hirdetéskezelés</a>
                 </li>
             </ul>
 
@@ -56,7 +56,8 @@
                                         SecondHandPrice_MSTR,
                                         SecondHandImages_MSTR,
                                         SecondHandRegDateTime_MSTR,
-                                        SecondHandLastRegDateTime_MSTR
+                                        SecondHandLastRegDateTime_MSTR,
+                                        SecondHandImageFileNames_MSTR
                                     FROM 
                                         secondhand_mstr,
                                         secondhandstate_mstr,
@@ -74,7 +75,7 @@
                                 $State = $row["SecondHandStateState_MSTR"];
                                 $Price = $row["SecondHandPrice_MSTR"];
 
-                                $shi = $row["SecondHandImages_MSTR"];
+                                $shi = $row["SecondHandImageFileNames_MSTR"];
                                 $Image = (strlen($shi) > 0) 
                                             ? explode(",", $shi)[0]
                                             : "imgs/nopic-64.png";
@@ -96,7 +97,7 @@
 
                                                     <div class='col-md-6' >
                                                         <img src='".$_SESSION['systemPath'].$Image."'
-                                                            style='width:auto; max-width:180px; cursor: pointer;border-radius:3px'
+                                                            style='width:auto; max-width: 200px; max-width:150px; cursor: pointer;border-radius:3px'
                                                             alt='$BrandAndType'
                                                             title='$BrandAndType'
                                                             class='rounded-start'/>
@@ -218,7 +219,7 @@
                                             </div>
 
 
-                                            <form action='index.php' method='POST' id='secondHandAddForm'>
+                                            <form action='index.php' method='POST' id='secondHandAddForm' enctype='multipart/form-data'>
                                                 <input type='hidden' name='formName' value='secondHandAddForm'>
                                                 <input type='hidden' name='secondHandID' id='secondHandID' value='-1'>
 
@@ -321,12 +322,12 @@
                                                 <div style='display:block; margin:5px;'>
                                                     <span style='display:inline-block; width:120px;'>Feltöltés</span>
                                                     <input type='file' 
+                                                            required
                                                             onchange='uploadOnChange(event)'
                                                             class='form-control' 
-                                                            id='inputGroupFile' 
                                                             accept='image/png, image/jpeg'
-                                                            multiple='multiple'
-                                                            id='uploadImages'
+                                                            multiple='multiple' 
+                                                            name='secondhandimages[]' 
                                                             style='display:inline-block; width:300px;'>
                                                     <input type='hidden' value='' id='fileNames' name='shFileNames'>        
                                                 </div>

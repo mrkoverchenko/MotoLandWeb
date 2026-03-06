@@ -632,6 +632,8 @@ function resetSecondHandFields() {
     textElements.forEach((txt) => { txt.value = ""; });
     document.getElementById("shSubmit").innerHTML = "Feladás";
     document.getElementById("secondHandID").value = "-1";
+    document.getElementById("imageContainerDIV").style.display = "none";
+    document.getElementById("imageContainer").innerHTML = "";
 }
 
 
@@ -642,6 +644,7 @@ function secondHandSelect(_this) {
     }
 
     document.getElementById("shSubmit").innerHTML = "Módosítás";
+    document.getElementById("imageContainer").innerHTML = "";
 
     var param = "id=" + _this.value;
     var req = new XMLHttpRequest();
@@ -656,11 +659,30 @@ function secondHandSelect(_this) {
             document.getElementById("secondHandYear").value = myObj[0].SecondHandYear_MSTR;
             document.getElementById("secondHandState").value = myObj[0].SecondHandStateID_MSTR;
             document.getElementById("secondHandPrice").value = myObj[0].SecondHandPrice_MSTR;
+
+            document.getElementById("imageContainerDIV").style.display = "block";
+
+            const fNames = myObj[0].SecondHandImageFileNames_MSTR.split(",");
+            
+            let dr = document.getElementById("dr").value;
+            for (var ic = 0; ic < fNames.length; ic++) {
+                var img = document.createElement("img");
+                img.src = dr + fNames[ic];
+                img.title = dr + fNames[ic];
+                img.id = "sh_" + ic;
+                img.style.width = "auto";
+                img.style.height = "110px";
+                img.style.verticalAlign = "middle";
+                img.style.margin = "5px";
+                img.style.borderRadius = "5px";
+                document.getElementById("imageContainer").appendChild(img);        
+
+//                var closeIMG = document.createElement("img");
+                //closeIMG.src = dr + 
+            }
        }
     }
     req.send(param);
-       
-
 }
 
 
@@ -670,10 +692,12 @@ function uploadOnChange(e) {
 
     const files = e.target.files;
     var file = [];
+    var images = "";
     for (var ic = 0; ic < files.length; ic++) {
         file.push("secondhandimages/" + files[ic].name);
     }
     document.getElementById("fileNames").value = file.toString();
+    
 }
 
 
@@ -715,4 +739,18 @@ function updateMySecondHand(myparam) {
         }
     }
     req.send(myparam);
+}
+
+
+function refresh() {
+    var p = "";
+    var req = new XMLHttpRequest();
+    req.open("POST", "updateSecondHands.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            document.getElementById("secondhandmoto").innerHTML = this.responseText;
+        }
+    }
+    req.send(p);
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 06. 15:10
+-- Létrehozás ideje: 2026. Már 06. 21:31
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -4349,6 +4349,14 @@ CREATE TABLE `secondhand_mstr` (
   `SecondHandImageFileNames_MSTR` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `secondhand_mstr`
+--
+
+INSERT INTO `secondhand_mstr` (`SecondHandID_MSTR`, `SecondHandManufacturerID_MSTR`, `SecondHandType_MSTR`, `SecondHandYear_MSTR`, `SecondHandStateID_MSTR`, `SecondHandPrice_MSTR`, `SecondHandUserID_MSTR`, `SecondHandRegDateTime_MSTR`, `SecondHandLastRegDateTime_MSTR`, `SecondHandImages_MSTR`, `SecondHandImageFileNames_MSTR`) VALUES
+(46, 5, 'dgjdghj', 3563, 2, 3467, 64, '2026-03-06 20:56:34', '2026-03-06 20:56:34', 'secondhandimages/Kawasaki_1400_GTR_05.jpg', 'secondhandimages/img_69ab3172268bb1.89553339.jpg'),
+(47, 9, 'dddddddddddddd', 1222, 6, 1222, 64, '2026-03-06 21:11:10', '2026-03-06 21:11:10', 'secondhandimages/Kawasaki_1400_GTR_01.jpg,secondhandimages/Kawasaki_1400_GTR_02.jpg,secondhandimages/Kawasaki_1400_GTR_03.jpg,secondhandimages/Kawasaki_1400_GTR_04.jpg,secondhandimages/Kawasaki_1400_GTR_05.jpg,secondhandimages/Kawasaki_1400_GTR_06.jpg,secondhandimages/Kawasaki_1400_GTR_07.jpg,secondhandimages/Kawasaki_1400_GTR_08.jpg,secondhandimages/Kawasaki_1400_GTR_09.jpg,secondhandimages/Kawasaki_1400_GTR_10.jpg', 'secondhandimages/img_69ab34deb92121.85953789.jpg,secondhandimages/img_69ab34deb94069.30855992.jpg,secondhandimages/img_69ab34deb96420.84223658.jpg,secondhandimages/img_69ab34deb980e7.83056278.jpg,secondhandimages/img_69ab34deb9a797.17606247.jpg,secondhandimages/img_69ab34deb9c208.97346705.jpg,secondhandimages/img_69ab34deb9dcf6.45593754.jpg,secondhandimages/img_69ab34deb9f8d0.30168062.jpg,secondhandimages/img_69ab34deba1848.37015995.jpg,secondhandimages/img_69ab34deba41f3.70673275.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -4958,7 +4966,7 @@ ALTER TABLE `secondhandstate_mstr`
 -- AUTO_INCREMENT a táblához `secondhand_mstr`
 --
 ALTER TABLE `secondhand_mstr`
-  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_det`

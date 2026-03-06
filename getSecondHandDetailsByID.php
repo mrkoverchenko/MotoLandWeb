@@ -16,7 +16,8 @@
                     SecondHandPrice_MSTR,
                     SecondHandImages_MSTR,
                     SecondHandRegDateTime_MSTR,
-                    SecondHandLastRegDateTime_MSTR
+                    SecondHandLastRegDateTime_MSTR,
+                    SecondHandImageFileNames_MSTR 
                 FROM 
                     secondhand_mstr
                 WHERE 

@@ -33,7 +33,7 @@
         <div class="secondhandbody">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#secondhandmoto">Motorok</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="#secondhandmoto" onclick="refresh()">Motorok</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" href="#sacondhandhandling">Hirdetéskezelés</a>
@@ -44,7 +44,10 @@
 
             <div class="tab-content">
 
-                <div id="secondhandmoto" class="container tab-pane active tabcontain" style="margin-bottom:30px;">
+                <div id="secondhandmoto" class="container tab-pane active tabcontain" style="margin-bottom:30px; ">
+
+
+
                     <h3>Hirdetések</h3>
 
                     <?php
@@ -97,7 +100,7 @@
 
                                                     <div class='col-md-6' >
                                                         <img src='".$_SESSION['systemPath'].$Image."'
-                                                            style='width:auto; max-width: 200px; max-width:150px; cursor: pointer;border-radius:3px'
+                                                            style='width:auto; max-height:110px; cursor: pointer;border-radius:3px'
                                                             alt='$BrandAndType'
                                                             title='$BrandAndType'
                                                             class='rounded-start'/>
@@ -124,6 +127,10 @@
                             }
                             echo $div;
                     ?>
+
+
+
+
                 </div>
 
 
@@ -333,20 +340,16 @@
                                                 </div>
 
 
-                                                <div style='display:block; margin:5px;'>
+                                                <div style='display:none; margin:5px;' id='imageContainerDIV'>
                                                     <span style='display:inline-block; width:120px; vertical-align:top'>Képek (max.10db.)</span>
-                                                    <div style='width: 600px; 
-                                                                height:100px; 
-                                                                background-color:lightgreen; 
+                                                    <input type='hidden' value='".$_SESSION["systemPath"]."' id='dr'>
+                                                    <div style='width: auto; 
+                                                                height: 130px; 
+                                                                border: 1px solid gray;
                                                                 display: inline-block;
-                                                                overflow-y: auto'>
-                                                        <img src='$Images[$ic]' 
-                                                            alt='$BrandAndType' 
-                                                            width='450' 
-                                                            height='auto' 
-                                                            style='margin:15px; 
-                                                                    border-radius:5px; 
-                                                                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);'>
+                                                                overflow-y: auto;'  
+                                                                id='imageContainer'>
+
                                                     </div>
                                                 </div>
 
@@ -397,5 +400,7 @@
 
 
         </div>
+
+
 
 

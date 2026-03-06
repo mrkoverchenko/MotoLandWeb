@@ -24,8 +24,8 @@
             for ($ic = 0; $ic < count($fls); $ic++) {
 
                 $f = $_SERVER['DOCUMENT_ROOT']."/MotoLandWeb/".$fls[$ic];
-
-                //if (file_exists($f])) {
+                $ret = $f;
+                if (file_exists($f)) {
 
                     if (unlink($f) ) {
                         $ret = "OK";
@@ -37,9 +37,9 @@
                         $ret = "Hiba a file törlésnél!";
                     }
 
-                /*} else {
+                } else {
                     $ret = "Nincs ilyen file: $f";
-                }*/
+                }
             }
         }
     }

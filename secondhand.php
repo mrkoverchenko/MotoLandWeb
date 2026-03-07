@@ -27,6 +27,24 @@
             .readonly {
                 color: gray;
             } 
+
+            .imageContainer {
+                width: 70%;
+                height: 150px;
+                overflow-x: auto;
+                overflow-y: hidden; 
+                white-space: nowrap;
+                border: 1px solid #ccc;
+                display: inline-block; 
+            }
+
+            .imageContainer div {
+                display: inline-block; 
+                width: 100px;
+                height: 100px;
+                margin-right: 10px;
+            }
+
         </style>
 
 
@@ -57,7 +75,7 @@
                                         SecondHandYear_MSTR,
                                         SecondHandStateState_MSTR,
                                         SecondHandPrice_MSTR,
-                                        SecondHandImages_MSTR,
+                                        SecondHandImageCount_MSTR,
                                         SecondHandRegDateTime_MSTR,
                                         SecondHandLastRegDateTime_MSTR,
                                         SecondHandImageFileNames_MSTR
@@ -197,14 +215,13 @@
                             echo " <div>
                                         <div class='brdr' style='color: gray'>
 
-                                            <div style='display:block; margin:5px;'>
-                                                <span style='display:inline-block; width:120px;'>Saját hirdetéseim</span>
-                                                <select 
-                                                    onchange='secondHandSelect(this)'
-                                                    id='secondHandSelect'
-                                                    class='form-select form-select-lg' 
-                                                    aria-label='.form-select-lg'
-                                                    style='margin-bottom:20px' >";
+                                            <div class='form-group' style='margin:5px;'>
+                                                <span style='display:inline-block; width:140px;'>Saját hirdetéseim</span>
+
+                                                <select class='form-control'
+                                                        onchange='secondHandSelect(this)'
+                                                        id='secondHandSelect'
+                                                        style='margin-bottom:20px; width: 300px; display: inline-block;'>";
 
                                                         $sql = "SELECT * FROM secondhand_mstr, motomanufacturer_mstr
                                                                 WHERE 
@@ -231,14 +248,13 @@
                                                 <input type='hidden' name='secondHandID' id='secondHandID' value='-1'>
 
 
-                                                <div style='display:block; margin:5px;'>
-                                                    <span style='display:inline-block; width:120px;'>Márkanév</span>
-                                                    <select 
+                                                <div class='form-group' style='margin:5px;'>
+                                                    <span style='display:inline-block; width:140px;'>Márkanév</span>
+                                                    <select class='form-control'
                                                         required    
-                                                        class='form-select form-select-lg' 
                                                         id='secondHandManufacturer' 
                                                         name='secondHandManufacturer' 
-                                                        aria-label='.form-select-lg'>";
+                                                        style='width: 300px; display: inline-block;'>";
 
                                                             $sql = "SELECT * FROM motomanufacturer_mstr
                                                                     ORDER BY MotoManufacturerManufacturer_MSTR ASC";
@@ -258,8 +274,8 @@
 
 
 
-                                                <div style='display:block; margin:5px;'>
-                                                    <span style='display:inline-block; width:120px;'>Típus</span>
+                                                <div class='form-group' style='margin:5px;'>
+                                                    <span style='display:inline-block; width:140px;'>Típus</span>
                                                     <input type='text' 
                                                         required
                                                         maxlength=30
@@ -271,8 +287,8 @@
                                                 </div>
 
 
-                                                <div style='display:block; margin:5px;'>
-                                                    <span style='display:inline-block; width:120px;'>Évjárat</span>
+                                                <div class='form-group' style='margin:5px;'>
+                                                    <span style='display:inline-block; width:140px;'>Évjárat</span>
                                                     <input type='text' 
                                                         required
                                                         maxlength=4
@@ -287,14 +303,13 @@
 
 
                                                 <div style='display:block; margin:5px;'>
-                                                    <span style='display:inline-block; width:120px;'>Állapot</span>
-                                                    <select 
-                                                        onchange=''
+                                                    <span style='display:inline-block; width:140px;'>Állapot</span>
+                                                    <select class='form-control'
                                                         required
                                                         class='form-select form-select-lg' 
                                                         id='secondHandState' 
-                                                        name='secondHandState' 
-                                                        aria-label='.form-select-lg'>";
+                                                        name='secondHandState'
+                                                        style='width: 300px; display: inline-block;'>";
 
                                                             $sql = "SELECT * FROM secondhandstate_mstr
                                                                     ORDER BY SecondHandStateID_MSTR ASC";
@@ -312,7 +327,7 @@
 
 
                                                 <div style='display:block; margin:5px;'>
-                                                    <span style='display:inline-block; width:120px;'>Ár</span>
+                                                    <span style='display:inline-block; width:140px;'>Ár</span>
                                                     <input type='text' 
                                                         required
                                                         maxlength=9
@@ -327,7 +342,7 @@
                                                 
 
                                                 <div style='display:block; margin:5px;'>
-                                                    <span style='display:inline-block; width:120px;'>Feltöltés</span>
+                                                    <span style='display:inline-block; width:140px;'>Feltöltés (max. 10db.)</span>
                                                     <input type='file' 
                                                             required
                                                             onchange='uploadOnChange(event)'
@@ -335,21 +350,16 @@
                                                             accept='image/png, image/jpeg'
                                                             multiple='multiple' 
                                                             name='secondhandimages[]' 
+                                                            id='secondhandimages'
                                                             style='display:inline-block; width:300px;'>
-                                                    <input type='hidden' value='' id='fileNames' name='shFileNames'>        
+                                                    <input type='number' value='0' id='secondHandFileCount' name='secondHandFileCount'>        
                                                 </div>
 
 
-                                                <div style='display:none; margin:5px;' id='imageContainerDIV'>
-                                                    <span style='display:inline-block; width:120px; vertical-align:top'>Képek (max.10db.)</span>
+                                                <div style='display:none; margin:5px' id='imageContainerDIV'>
+                                                    <span style='display:inline-block; width:140px; vertical-align:top'>Képek</span>
                                                     <input type='hidden' value='".$_SESSION["systemPath"]."' id='dr'>
-                                                    <div style='width: auto; 
-                                                                height: 130px; 
-                                                                border: 1px solid gray;
-                                                                display: inline-block;
-                                                                overflow-y: auto;'  
-                                                                id='imageContainer'>
-
+                                                    <div class='imageContainer' id='imageContainer'>    
                                                     </div>
                                                 </div>
 
@@ -357,7 +367,7 @@
 
 
                                                 <div style='display:inline;'>
-                                                    <span style='display:inline-block; width:120px;'></span>
+                                                    <span style='display:inline-block; width:140px;'></span>
                                                     <button type='submit' class='btn btn-success' form='secondHandAddForm' style='display:inline; margin-left:5px;' id='shSubmit'>
                                                         Feladás
                                                     </button>
@@ -379,24 +389,6 @@
                 </div>
 
             </div>
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         </div>

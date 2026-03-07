@@ -126,6 +126,7 @@ function checkUserName(_this) {
 }
 
 function startItem(item) {
+
     getSystem();
     let container = document.getElementById("subcontainer");
     history.pushState({}, '', 'index.php');
@@ -634,6 +635,9 @@ function resetSecondHandFields() {
     document.getElementById("secondHandID").value = "-1";
     document.getElementById("imageContainerDIV").style.display = "none";
     document.getElementById("imageContainer").innerHTML = "";
+    document.getElementById("secondHandFileCount").value = "0";
+    document.getElementById("secondhandimages").disabled = false;     
+
 }
 
 
@@ -651,7 +655,7 @@ function secondHandSelect(_this) {
     req.open("POST", "getSecondHandDetailsByID.php", true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = function () {
-       if (req.readyState === 4 && req.status === 200) {
+        if (req.readyState === 4 && req.status === 200) {
             const myObj = JSON.parse(this.responseText);
             document.getElementById("secondHandID").value = myObj[0].SecondHandID_MSTR;
             document.getElementById("secondHandManufacturer").value = myObj[0].SecondHandManufacturerID_MSTR;
@@ -659,6 +663,7 @@ function secondHandSelect(_this) {
             document.getElementById("secondHandYear").value = myObj[0].SecondHandYear_MSTR;
             document.getElementById("secondHandState").value = myObj[0].SecondHandStateID_MSTR;
             document.getElementById("secondHandPrice").value = myObj[0].SecondHandPrice_MSTR;
+            document.getElementById("secondHandFileCount").value = myObj[0].SecondHandImageCount_MSTR;
 
             document.getElementById("imageContainerDIV").style.display = "block";
 
@@ -679,7 +684,12 @@ function secondHandSelect(_this) {
 
 //                var closeIMG = document.createElement("img");
                 //closeIMG.src = dr + 
-            }
+           }
+
+            if (fNames.length < 10)
+                document.getElementById("secondhandimages").disabled = false;     
+            else
+                document.getElementById("secondhandimages").disabled = true;     
        }
     }
     req.send(param);
@@ -689,6 +699,7 @@ function secondHandSelect(_this) {
 //document.getElementById("uploadImages").onchange = uploadOnChange;
 
 function uploadOnChange(e) {
+    var shfc = document.getElementById("secondHandFileCount");
 
     const files = e.target.files;
     var file = [];
@@ -696,7 +707,14 @@ function uploadOnChange(e) {
     for (var ic = 0; ic < files.length; ic++) {
         file.push("secondhandimages/" + files[ic].name);
     }
-    document.getElementById("fileNames").value = file.toString();
+    let maxImage = Number(shfc.value) + Number(file.length);
+
+    if (maxImage > 10) {
+        e.target.value = "";
+        document.getElementById("secondHandFileCount").value = shfc.value;
+        alert("Csak 10 kép tölthető fel a hirdetésbe!");
+    }   
+        //document.getElementById("secondHandFileCount").value = maxImage;
     
 }
 

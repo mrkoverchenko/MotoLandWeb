@@ -386,7 +386,7 @@
             $Year = $_POST["secondHandYear"];
             $StateID = $_POST["secondHandState"];
             $Price = $_POST["secondHandPrice"];
-            $Files = $_POST["shFileNames"];
+            $FileCount = $_POST["secondHandFileCount"];
             $CFiles = array();
 
             $fileMoved = false;
@@ -441,6 +441,7 @@
 
 
 
+            $CFiles = implode(",", $CFiles);
 
             if ($ID > -1) {
                 $sqlString = "UPDATE 
@@ -451,13 +452,13 @@
                                     SecondHandYear_MSTR = '$Year',
                                     SecondHandStateID_MSTR = $StateID,
                                     SecondHandPrice_MSTR = '$Price', 
-                                    SecondHandImages_MSTR = '$Files' 
+                                    SecondHandImageCount_MSTR = '$FileCount',
+                                    SecondHandImageFileNames_MSTR = CONCAT(SecondHandImageFileNames_MSTR, ',', '$CFiles')
                                 WHERE 
                                     SecondHandID_MSTR = $ID";
                 mysqli_query($connect, $sqlString);
             } else {
                 if ($fileMoved) {
-                    $CFiles = implode(",", $CFiles);
                     $uid = $_SESSION['userid'];
                     $rdate = Date("Y-m-d H:i:s");
                     $sqlString = "INSERT INTO 
@@ -471,10 +472,10 @@
                                             SecondHandUserID_MSTR,
                                             SecondHandRegDateTime_MSTR,
                                             SecondHandLastRegDateTime_MSTR,
-                                            SecondHandImages_MSTR,
+                                            SecondHandImageCount_MSTR,
                                             SecondHandImageFileNames_MSTR
                                     ) VALUES (
-                                            NULL, $ManID, '$Type', '$Year', $StateID, '$Price', $uid, '$rdate', '$rdate', '$Files', '$CFiles')";
+                                            NULL, $ManID, '$Type', '$Year', $StateID, '$Price', $uid, '$rdate', '$rdate', '$FileCount', '$CFiles')";
                     mysqli_query($connect, $sqlString);
                 }
             }
@@ -507,7 +508,7 @@
                 
                 $saltFromDb = $row["PasswordSalt_MSTR"];
                 $passwordFromDb = $row["PasswordPassword_MSTR"];
-                // OLDA PASSWORD CHECKING
+                // OLD PASSWORD CHECKING
                 if (hash('sha256', $saltFromDb.$oldPasswordFromInput) === $passwordFromDb) {
                     $passwordIsOK = true;        
                 }
@@ -1141,6 +1142,7 @@
             window.onload = (event) => {
                 startItem("<?php echo $activePage;?>");
             };
+
         </script>
 
     </head>
@@ -1246,7 +1248,7 @@
                                             <li><a href='#' onclick='startItem(\"bookedItems\")'><span class='glyphicon glyphicon-calendar' style='margin-right:20px;'></span>Időpontfoglalásaim</a></li>
 
                                             <li><a href='#' onclick='startItem(\"orderedItems\")'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Rendeléseim</a></li>
-                                            <li><a href='#' onclick='startItem(\"secondhand\")'><span class='glyphicon glyphicon-euro' style='margin-right:20px;'></span>Hirdetéseim</a></li>";
+                                            <li><a href='#' onclick='startItem(\"secondhand\")'><span class='glyphicon glyphicon-th-large' style='margin-right:20px;'></span>Hirdetéseim</a></li>";
 
                                             if (isset($_SESSION['usertype']) && ($_SESSION['usertype'] == "admin" || $_SESSION["usertype"] == "root")) {
                                                 echo "<li role='separator' class='divider'></li>

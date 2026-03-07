@@ -14,7 +14,7 @@
                     SecondHandYear_MSTR,
                     SecondHandStateID_MSTR,
                     SecondHandPrice_MSTR,
-                    SecondHandImages_MSTR,
+                    SecondHandImageCount_MSTR,
                     SecondHandRegDateTime_MSTR,
                     SecondHandLastRegDateTime_MSTR,
                     SecondHandImageFileNames_MSTR 

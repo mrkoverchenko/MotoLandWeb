@@ -390,7 +390,7 @@
             $CFiles = array();
 
             $fileMoved = false;
-            if ($ID == -1) {
+            //if ($ID == -1) {
 
                 $maxSize = 2 * 1024 * 1024;
                 $allowedTypes = ['jpg', 'png'];
@@ -425,17 +425,17 @@
 
                         if (move_uploaded_file($tmpName, $targetDir . $newName)) {
                             $fileMoved = true;
+                            array_push($CFiles, $targetDir.$newName);
                         } else {
                             $fileMoved = false;
                         }
 
-                        array_push($CFiles, $targetDir.$newName);
 
                     }
 
                 }
 
-            }
+            //}
 
 
 
@@ -452,12 +452,12 @@
                                     SecondHandYear_MSTR = '$Year',
                                     SecondHandStateID_MSTR = $StateID,
                                     SecondHandPrice_MSTR = '$Price', 
-                                    SecondHandImageCount_MSTR = '$FileCount',
                                     SecondHandImageFileNames_MSTR = CONCAT(SecondHandImageFileNames_MSTR, ',', '$CFiles')
                                 WHERE 
                                     SecondHandID_MSTR = $ID";
                 mysqli_query($connect, $sqlString);
-            } else {
+                $systemMessage = "<b>Hirdetés sikeresen frissítve!";
+        } else {
                 if ($fileMoved) {
                     $uid = $_SESSION['userid'];
                     $rdate = Date("Y-m-d H:i:s");
@@ -472,18 +472,16 @@
                                             SecondHandUserID_MSTR,
                                             SecondHandRegDateTime_MSTR,
                                             SecondHandLastRegDateTime_MSTR,
-                                            SecondHandImageCount_MSTR,
                                             SecondHandImageFileNames_MSTR
                                     ) VALUES (
-                                            NULL, $ManID, '$Type', '$Year', $StateID, '$Price', $uid, '$rdate', '$rdate', '$FileCount', '$CFiles')";
+                                            NULL, $ManID, '$Type', '$Year', $StateID, '$Price', $uid, '$rdate', '$rdate', '$CFiles')";
                     mysqli_query($connect, $sqlString);
                 }
+                $systemMessage = "<b>Új hirdetés sikeresen rögzítve!";
             }
-
             $hideTime = 5000;
             $alertType = "alert-dismissible";
             $systemIsMessage = true;
-            $systemMessage = "<b>Új hirdetés sikeresen rögzítve!";
 
             $activePage = "secondhand";
 

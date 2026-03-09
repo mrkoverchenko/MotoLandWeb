@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 07. 15:46
+-- Létrehozás ideje: 2026. Már 09. 15:25
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -4345,7 +4345,6 @@ CREATE TABLE `secondhand_mstr` (
   `SecondHandUserID_MSTR` int(11) NOT NULL,
   `SecondHandRegDateTime_MSTR` datetime NOT NULL DEFAULT current_timestamp(),
   `SecondHandLastRegDateTime_MSTR` datetime NOT NULL,
-  `SecondHandImageCount_MSTR` int(2) NOT NULL,
   `SecondHandImageFileNames_MSTR` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
@@ -4353,9 +4352,11 @@ CREATE TABLE `secondhand_mstr` (
 -- A tábla adatainak kiíratása `secondhand_mstr`
 --
 
-INSERT INTO `secondhand_mstr` (`SecondHandID_MSTR`, `SecondHandManufacturerID_MSTR`, `SecondHandType_MSTR`, `SecondHandYear_MSTR`, `SecondHandStateID_MSTR`, `SecondHandPrice_MSTR`, `SecondHandUserID_MSTR`, `SecondHandRegDateTime_MSTR`, `SecondHandLastRegDateTime_MSTR`, `SecondHandImageCount_MSTR`, `SecondHandImageFileNames_MSTR`) VALUES
-(38, 43, '1400 GTR ABS', 2008, 3, 2850000, 64, '2026-03-07 12:21:11', '2026-03-07 12:21:11', 10, 'secondhandimages/img_69ac0a277b9575.33663623.jpg,secondhandimages/img_69ac0a277bac56.24999738.jpg,secondhandimages/img_69ac0a277bc132.95985137.jpg,secondhandimages/img_69ac0a277bd296.84097676.jpg,secondhandimages/img_69ac0a277be6d8.54431587.jpg,secondhandimages/img_69ac0a277bfa88.50450723.jpg,secondhandimages/img_69ac0a277c0b26.09623328.jpg,secondhandimages/img_69ac0a277c1a24.51262191.jpg,secondhandimages/img_69ac0a277c2923.15938314.jpg,secondhandimages/img_69ac0a277c3947.94562050.jpg'),
-(40, 13, 'fos', 2000, 9, 100, 64, '2026-03-07 15:30:53', '2026-03-07 15:30:53', 2, ',,');
+INSERT INTO `secondhand_mstr` (`SecondHandID_MSTR`, `SecondHandManufacturerID_MSTR`, `SecondHandType_MSTR`, `SecondHandYear_MSTR`, `SecondHandStateID_MSTR`, `SecondHandPrice_MSTR`, `SecondHandUserID_MSTR`, `SecondHandRegDateTime_MSTR`, `SecondHandLastRegDateTime_MSTR`, `SecondHandImageFileNames_MSTR`) VALUES
+(38, 43, '1400 GTR ABS', 2008, 3, 2850000, 64, '2026-03-07 12:21:11', '2026-03-07 12:21:11', 'secondhandimages/img_69ac0a277b9575.33663623.jpg,secondhandimages/img_69ac0a277bac56.24999738.jpg,secondhandimages/img_69ac0a277bc132.95985137.jpg,secondhandimages/img_69ac0a277bd296.84097676.jpg,secondhandimages/img_69ac0a277be6d8.54431587.jpg,secondhandimages/img_69ac0a277bfa88.50450723.jpg,secondhandimages/img_69ac0a277c0b26.09623328.jpg,secondhandimages/img_69ac0a277c1a24.51262191.jpg,secondhandimages/img_69ac0a277c2923.15938314.jpg,secondhandimages/img_69ac0a277c3947.94562050.jpg'),
+(40, 13, 'fos', 2000, 5, 100, 64, '2026-03-07 15:30:53', '2026-03-07 15:30:53', 'secondhandimages/img_69aecc1684c682.63472798.jpg,secondhandimages/img_69aecc4c649972.37783834.jpg,secondhandimages/img_69aecd4daf4846.66198426.jpg,secondhandimages/img_69aece01e0c091.77612865.jpg,secondhandimages/img_69aece273d3865.45670126.jpg,secondhandimages/img_69aece273d5240.98175359.jpg,secondhandimages/img_69aece273d7196.48541293.jpg,secondhandimages/img_69aece273d90a2.20465182.jpg,secondhandimages/img_69aece273db9d4.65922409.jpg,secondhandimages/img_69aece273dd6a3.86841136.jpg'),
+(41, 2, 'dddd', 2012, 3, 2850000, 64, '2026-03-09 13:41:07', '2026-03-09 13:41:07', 'secondhandimages/img_69aebfe3455651.40994052.jpg,secondhandimages/img_69aebfe34569b1.07136930.jpg,secondhandimages/img_69aebfe3457b71.17596203.jpg,secondhandimages/img_69aebfe3459056.23314534.jpg,secondhandimages/img_69aebfe345a3b5.04469744.jpg,secondhandimages/img_69aebfe345b617.07164518.jpg,secondhandimages/img_69aebfe345c794.42815451.jpg,secondhandimages/img_69aebfe345d853.07766461.jpg,secondhandimages/img_69aebfe345e9f4.88479975.jpg,secondhandimages/img_69aebfe345fd10.98424041.jpg'),
+(42, 74, 'dzjdgh', 2323, 8, 34673, 64, '2026-03-09 14:45:40', '2026-03-09 14:45:40', 'secondhandimages/img_69aecf047505e0.59082666.jpg,secondhandimages/img_69aecf04751d57.67430764.jpg,secondhandimages/img_69aed3888bd661.50542313.jpg');
 
 -- --------------------------------------------------------
 
@@ -4966,7 +4967,7 @@ ALTER TABLE `secondhandstate_mstr`
 -- AUTO_INCREMENT a táblához `secondhand_mstr`
 --
 ALTER TABLE `secondhand_mstr`
-  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `SecondHandID_MSTR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT a táblához `shoppingcart_det`

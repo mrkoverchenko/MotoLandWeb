@@ -75,7 +75,6 @@
                                         SecondHandYear_MSTR,
                                         SecondHandStateState_MSTR,
                                         SecondHandPrice_MSTR,
-                                        SecondHandImageCount_MSTR,
                                         SecondHandRegDateTime_MSTR,
                                         SecondHandLastRegDateTime_MSTR,
                                         SecondHandImageFileNames_MSTR
@@ -292,6 +291,7 @@
                                                     <input type='text' 
                                                         required
                                                         maxlength=4
+                                                        onfocusout='checkYear(this)'
                                                         id='secondHandYear' 
                                                         name='secondHandYear' 
                                                         class='form-control'

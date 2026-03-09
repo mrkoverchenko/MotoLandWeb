@@ -663,24 +663,48 @@ function secondHandSelect(_this) {
             document.getElementById("secondHandYear").value = myObj[0].SecondHandYear_MSTR;
             document.getElementById("secondHandState").value = myObj[0].SecondHandStateID_MSTR;
             document.getElementById("secondHandPrice").value = myObj[0].SecondHandPrice_MSTR;
-            document.getElementById("secondHandFileCount").value = myObj[0].SecondHandImageCount_MSTR;
 
             document.getElementById("imageContainerDIV").style.display = "block";
 
             const fNames = myObj[0].SecondHandImageFileNames_MSTR.split(",");
-            
+
+            document.getElementById("secondHandFileCount").value = fNames.length;
+
             let dr = document.getElementById("dr").value;
             for (var ic = 0; ic < fNames.length; ic++) {
+                var div = document.createElement("div");
+                div.style.width = "auto";
+                div.style.height = "auto";
+                document.getElementById("imageContainer").appendChild(div);        
+
+
                 var img = document.createElement("img");
                 img.src = dr + fNames[ic];
-                img.title = dr + fNames[ic];
                 img.id = "sh_" + ic;
                 img.style.width = "auto";
                 img.style.height = "110px";
                 img.style.verticalAlign = "middle";
                 img.style.margin = "5px";
                 img.style.borderRadius = "5px";
-                document.getElementById("imageContainer").appendChild(img);        
+                img.style.zIndex = "1";
+                div.appendChild(img);
+
+                var removeIMG = document.createElement("img");
+                removeIMG.src = "imgs/close.png";
+                removeIMG.id = "close_" + ic;
+                //removeIMG.style.position = "absolute";
+                removeIMG.style.right = "15px";
+                removeIMG.style.top = "15px";
+                removeIMG.style.width = "10px";
+                removeIMG.style.height = "10px";
+                removeIMG.style.padding = "3px";
+                removeIMG.style.backgroundColor = "red";
+                removeIMG.style.zIndex = "10";
+
+                div.appendChild(removeIMG);
+
+                //document.getElementById("imageContainer").appendChild(removeIMG);        
+
 
 //                var closeIMG = document.createElement("img");
                 //closeIMG.src = dr + 
@@ -695,8 +719,14 @@ function secondHandSelect(_this) {
     req.send(param);
 }
 
+function checkYear(_this) {
+    const d = new Date();
+    if (_this.value < 1900 || _this.value > d.getFullYear()) {
+        alert("Hibás vagy hiányos gyártási év!");
+        _this.value = "";
+    }
+}
 
-//document.getElementById("uploadImages").onchange = uploadOnChange;
 
 function uploadOnChange(e) {
     var shfc = document.getElementById("secondHandFileCount");

@@ -387,10 +387,10 @@
             $StateID = $_POST["secondHandState"];
             $Price = $_POST["secondHandPrice"];
             $FileCount = $_POST["secondHandFileCount"];
+
             $CFiles = array();
 
             $fileMoved = false;
-            //if ($ID == -1) {
 
                 $maxSize = 2 * 1024 * 1024;
                 $allowedTypes = ['jpg', 'png'];
@@ -435,13 +435,17 @@
 
                 }
 
-            //}
 
 
 
 
+            $isImages = "";
+            if (!empty($_FILES['secondhandimages']['name'][0])) {
+                $CFiles = implode(",", $CFiles);
+                $isImages = ", SecondHandImageFileNames_MSTR = CONCAT(SecondHandImageFileNames_MSTR, ',', '$CFiles')";
+            }
 
-            $CFiles = implode(",", $CFiles);
+            $rdate = Date("Y-m-d H:i:s");
 
             if ($ID > -1) {
                 $sqlString = "UPDATE 
@@ -452,7 +456,8 @@
                                     SecondHandYear_MSTR = '$Year',
                                     SecondHandStateID_MSTR = $StateID,
                                     SecondHandPrice_MSTR = '$Price', 
-                                    SecondHandImageFileNames_MSTR = CONCAT(SecondHandImageFileNames_MSTR, ',', '$CFiles')
+                                    SecondHandLastRegDateTime_MSTR = '$rdate'
+                                    $isImages
                                 WHERE 
                                     SecondHandID_MSTR = $ID";
                 mysqli_query($connect, $sqlString);
@@ -460,7 +465,6 @@
         } else {
                 if ($fileMoved) {
                     $uid = $_SESSION['userid'];
-                    $rdate = Date("Y-m-d H:i:s");
                     $sqlString = "INSERT INTO 
                                         secondhand_mstr (
                                             SecondHandID_MSTR,

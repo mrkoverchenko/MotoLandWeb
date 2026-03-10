@@ -352,7 +352,7 @@
                                                             name='secondhandimages[]' 
                                                             id='secondhandimages'
                                                             style='display:inline-block; width:300px;'>
-                                                    <input type='number' value='0' id='secondHandFileCount' name='secondHandFileCount'>        
+                                                    <input type='hidden' value='0' id='secondHandFileCount' name='secondHandFileCount'>        
                                                 </div>
 
 

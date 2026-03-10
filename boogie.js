@@ -636,9 +636,13 @@ function resetSecondHandFields() {
     document.getElementById("imageContainerDIV").style.display = "none";
     document.getElementById("imageContainer").innerHTML = "";
     document.getElementById("secondHandFileCount").value = "0";
-    document.getElementById("secondhandimages").disabled = false;     
+
+    let si = document.getElementById("secondhandimages");
+    si.disabled = false;     
+    si.required = true;
 
 }
+
 
 
 function secondHandSelect(_this) {
@@ -650,6 +654,9 @@ function secondHandSelect(_this) {
     document.getElementById("shSubmit").innerHTML = "Módosítás";
     document.getElementById("imageContainer").innerHTML = "";
 
+    let si = document.getElementById("secondhandimages");
+    si.required = false;
+
     var param = "id=" + _this.value;
     var req = new XMLHttpRequest();
     req.open("POST", "getSecondHandDetailsByID.php", true);
@@ -657,8 +664,8 @@ function secondHandSelect(_this) {
     req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
             const myObj = JSON.parse(this.responseText);
-            let id = myObj[0].SecondHandID_MSTR;
-            document.getElementById("secondHandID").value = id;
+            let shID = myObj[0].SecondHandID_MSTR;
+            document.getElementById("secondHandID").value = shID;
             document.getElementById("secondHandManufacturer").value = myObj[0].SecondHandManufacturerID_MSTR;
             document.getElementById("secondHandType").value = myObj[0].SecondHandType_MSTR;
             document.getElementById("secondHandYear").value = myObj[0].SecondHandYear_MSTR;
@@ -679,7 +686,7 @@ function secondHandSelect(_this) {
             for (var ic = 0; ic < fNames.length; ic++) {
                 var divv = document.createElement("div");
                 divv.style.position = "relative";
-                divv.id = "divv_" + ic;
+                divv.id = "div|" + fNames[ic] + "|" + shID + "|" + ic;
                 divv.style.width = "auto";
                 divv.style.height = "auto";
                 divv.style.zIndex = "1";
@@ -688,7 +695,7 @@ function secondHandSelect(_this) {
 
                 var imgg = document.createElement("img");
                 imgg.src = dr + fNames[ic];
-                imgg.id = dr + fNames[ic];
+                imgg.id = "img|" + fNames[ic] + "|" + shID + "|" + ic;
                 imgg.style.position = "relative";
                 imgg.style.top = "0";
                 imgg.style.left = "0";
@@ -699,10 +706,10 @@ function secondHandSelect(_this) {
                 imgg.style.borderRadius = "5px";
                 imgg.style.zIndex = "10";
                 divv.appendChild(imgg);
-
+                
                 var removerIMG = document.createElement("img");
                 removerIMG.src = "imgs/close.png";
-                removerIMG.id = fNames[ic] + "_" + id + "_" + ic;
+                removerIMG.id = "close|" + fNames[ic] + "|" + shID + "|" + ic;
                 removerIMG.style.position = "absolute";
                 removerIMG.style.right = "5px";
                 removerIMG.style.top = "5px";
@@ -713,50 +720,64 @@ function secondHandSelect(_this) {
                 removerIMG.title = "Törlés";
                 removerIMG.style.zIndex = "100";
                 removerIMG.onclick = function (e) {
-                    alert(e.target.parentNode.id);
-                    fileCount--;
-                    document.getElementById("secondHandFileCount").value = fileCount;
-                    imgCont.removeChild(e.target.parentNode);
+                    if (confirm("Biztos, hogy törölni akarod a kijelölt képet?")) {
+                        fileCount--;
+                        document.getElementById("secondHandFileCount").value = fileCount;
 
-                    //removeSelectedImage(e.target.id);
+                        imgCont.removeChild(e.target.parentNode);
+                        setInputImages(fileCount);
+                        var f = [];
+                        for (var ic = 0; ic < imgCont.children.length; ic++) {
+                            f.push(imgCont.children[ic].id);
+                        }
+                        updateImageList(f, e.target.id);
+                    }
                 }
-
-                divv.appendChild(removerIMG);
+                if (ic > 0)    
+                    divv.appendChild(removerIMG);
            }
 
-            if (fNames.length < 10)
-                document.getElementById("secondhandimages").disabled = false;     
-            else
-                document.getElementById("secondhandimages").disabled = true;     
+           setInputImages(fileCount);
        }
     }
     req.send(param);
 }
 
+function updateImageList(f, removed) {
+    var hfA = [];
+    let fileName = "";
+    let secondHandID = "";
 
-function removeSelectedImage(target) {
+    let rem = removed.split("|")[1];
 
-    /*var param = "target=" + id;
+    for (var ic = 0; ic < f.length; ic++) {
+        var fA = f[ic].split("|");
+        fileName = fA[1];
+        secondHandID = fA[2];
+        hfA.push(fileName);
+    }
+
+    var param = "id=" + secondHandID + "&filenames=" + hfA.toString() + "&rem=" + rem;
     var req = new XMLHttpRequest();
-    req.open("POST", "removeSecondHand.php", true);
+    req.open("POST", "updateSecondHandImages.php", true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
-
             let ret = this.responseText;
-
-            if (ret == "OK") {
-                resetSecondHandFields();
-                updateMySecondHand(param);
-            } else {
-                alert(ret);
-            }
-
         }
     }
-    req.send(param);*/
-
+    req.send(param);
 }
+
+
+function setInputImages(fileCount) {
+    if (fileCount < 10)
+        document.getElementById("secondhandimages").disabled = false;     
+    else
+        document.getElementById("secondhandimages").disabled = true;     
+}
+
+
 
 
 
@@ -783,10 +804,8 @@ function uploadOnChange(e) {
     if (maxImage > 10) {
         e.target.value = "";
         document.getElementById("secondHandFileCount").value = shfc.value;
-        alert("Csak 10 kép tölthető fel a hirdetésbe!");
+        alert("Összesen csak 10 db. kép tölthető fel a hirdetésbe!");
     }   
-        //document.getElementById("secondHandFileCount").value = maxImage;
-    
 }
 
 

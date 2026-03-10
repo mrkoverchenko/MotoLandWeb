@@ -657,7 +657,8 @@ function secondHandSelect(_this) {
     req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
             const myObj = JSON.parse(this.responseText);
-            document.getElementById("secondHandID").value = myObj[0].SecondHandID_MSTR;
+            let id = myObj[0].SecondHandID_MSTR;
+            document.getElementById("secondHandID").value = id;
             document.getElementById("secondHandManufacturer").value = myObj[0].SecondHandManufacturerID_MSTR;
             document.getElementById("secondHandType").value = myObj[0].SecondHandType_MSTR;
             document.getElementById("secondHandYear").value = myObj[0].SecondHandYear_MSTR;
@@ -668,46 +669,59 @@ function secondHandSelect(_this) {
 
             const fNames = myObj[0].SecondHandImageFileNames_MSTR.split(",");
 
-            document.getElementById("secondHandFileCount").value = fNames.length;
+            var fileCount = fNames.length;
+            document.getElementById("secondHandFileCount").value = fileCount;
 
             let dr = document.getElementById("dr").value;
+
+            let imgCont = document.getElementById("imageContainer")        
+
             for (var ic = 0; ic < fNames.length; ic++) {
-                var div = document.createElement("div");
-                div.style.width = "auto";
-                div.style.height = "auto";
-                document.getElementById("imageContainer").appendChild(div);        
+                var divv = document.createElement("div");
+                divv.style.position = "relative";
+                divv.id = "divv_" + ic;
+                divv.style.width = "auto";
+                divv.style.height = "auto";
+                divv.style.zIndex = "1";
+                imgCont.appendChild(divv);        
 
 
-                var img = document.createElement("img");
-                img.src = dr + fNames[ic];
-                img.id = "sh_" + ic;
-                img.style.width = "auto";
-                img.style.height = "110px";
-                img.style.verticalAlign = "middle";
-                img.style.margin = "5px";
-                img.style.borderRadius = "5px";
-                img.style.zIndex = "1";
-                div.appendChild(img);
+                var imgg = document.createElement("img");
+                imgg.src = dr + fNames[ic];
+                imgg.id = dr + fNames[ic];
+                imgg.style.position = "relative";
+                imgg.style.top = "0";
+                imgg.style.left = "0";
+                imgg.style.width = "auto";
+                imgg.style.height = "110px";
+                imgg.style.verticalAlign = "middle";
+                imgg.style.margin = "5px";
+                imgg.style.borderRadius = "5px";
+                imgg.style.zIndex = "10";
+                divv.appendChild(imgg);
 
-                var removeIMG = document.createElement("img");
-                removeIMG.src = "imgs/close.png";
-                removeIMG.id = "close_" + ic;
-                //removeIMG.style.position = "absolute";
-                removeIMG.style.right = "15px";
-                removeIMG.style.top = "15px";
-                removeIMG.style.width = "10px";
-                removeIMG.style.height = "10px";
-                removeIMG.style.padding = "3px";
-                removeIMG.style.backgroundColor = "red";
-                removeIMG.style.zIndex = "10";
+                var removerIMG = document.createElement("img");
+                removerIMG.src = "imgs/close.png";
+                removerIMG.id = fNames[ic] + "_" + id + "_" + ic;
+                removerIMG.style.position = "absolute";
+                removerIMG.style.right = "5px";
+                removerIMG.style.top = "5px";
+                removerIMG.style.width = "20px";
+                removerIMG.style.height = "20px";
+                removerIMG.style.padding = "3px";
+                removerIMG.style.cursor = "pointer";
+                removerIMG.title = "Törlés";
+                removerIMG.style.zIndex = "100";
+                removerIMG.onclick = function (e) {
+                    alert(e.target.parentNode.id);
+                    fileCount--;
+                    document.getElementById("secondHandFileCount").value = fileCount;
+                    imgCont.removeChild(e.target.parentNode);
 
-                div.appendChild(removeIMG);
+                    //removeSelectedImage(e.target.id);
+                }
 
-                //document.getElementById("imageContainer").appendChild(removeIMG);        
-
-
-//                var closeIMG = document.createElement("img");
-                //closeIMG.src = dr + 
+                divv.appendChild(removerIMG);
            }
 
             if (fNames.length < 10)
@@ -718,6 +732,33 @@ function secondHandSelect(_this) {
     }
     req.send(param);
 }
+
+
+function removeSelectedImage(target) {
+
+    /*var param = "target=" + id;
+    var req = new XMLHttpRequest();
+    req.open("POST", "removeSecondHand.php", true);
+    req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+
+            let ret = this.responseText;
+
+            if (ret == "OK") {
+                resetSecondHandFields();
+                updateMySecondHand(param);
+            } else {
+                alert(ret);
+            }
+
+        }
+    }
+    req.send(param);*/
+
+}
+
+
 
 function checkYear(_this) {
     const d = new Date();

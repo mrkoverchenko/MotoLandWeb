@@ -645,6 +645,11 @@ function resetSecondHandFields() {
 
 
 
+
+
+
+
+
 function secondHandSelect(_this) {
     if (_this.value == -1) {
         resetSecondHandFields();
@@ -681,7 +686,7 @@ function secondHandSelect(_this) {
 
             let dr = document.getElementById("dr").value;
 
-            let imgCont = document.getElementById("imageContainer")        
+            let imgCont = document.getElementById("imageContainer")
 
             for (var ic = 0; ic < fNames.length; ic++) {
                 var divv = document.createElement("div");
@@ -690,7 +695,24 @@ function secondHandSelect(_this) {
                 divv.style.width = "auto";
                 divv.style.height = "auto";
                 divv.style.zIndex = "1";
-                imgCont.appendChild(divv);        
+                divv.onmouseover = function (e) {
+                    var newETargetId = e.target.id;
+                    if (document.getElementById("secondHandFileCount").value > 1) {
+                        var newID = newETargetId.replace("img|", "close|");
+                        document.getElementById(newID).style.visibility = "visible";
+                    }
+                    var newID = newETargetId.replace("img|", "fullscreen|");
+                    document.getElementById(newID).style.visibility = "visible";
+                }
+                divv.onmouseout = function (e) {
+                    var newETargetId = e.target.id;
+                    var newID = newETargetId.replace("img|", "close|");
+                    document.getElementById(newID).style.visibility = "hidden";
+
+                    var newID = newETargetId.replace("img|", "fullscreen|");
+                    document.getElementById(newID).style.visibility = "hidden";
+                }
+                imgCont.appendChild(divv);
 
 
                 var imgg = document.createElement("img");
@@ -702,14 +724,15 @@ function secondHandSelect(_this) {
                 imgg.style.width = "auto";
                 imgg.style.height = "110px";
                 imgg.style.verticalAlign = "middle";
-                imgg.style.margin = "5px";
                 imgg.style.borderRadius = "5px";
                 imgg.style.zIndex = "10";
+                imgg.ondblclick = function (e) { fullScreen(e.target); }
                 divv.appendChild(imgg);
-                
+
                 var removerIMG = document.createElement("img");
                 removerIMG.src = "imgs/close.png";
                 removerIMG.id = "close|" + fNames[ic] + "|" + shID + "|" + ic;
+                removerIMG.style.visibility = "hidden";
                 removerIMG.style.position = "absolute";
                 removerIMG.style.right = "5px";
                 removerIMG.style.top = "5px";
@@ -733,15 +756,45 @@ function secondHandSelect(_this) {
                         updateImageList(f, e.target.id);
                     }
                 }
-                if (ic > 0)    
-                    divv.appendChild(removerIMG);
-           }
+                divv.appendChild(removerIMG);
 
-           setInputImages(fileCount);
-       }
+
+                var fullscreenIMG = document.createElement("img");
+                fullscreenIMG.src = "imgs/fullscreen.png";
+                fullscreenIMG.id = "fullscreen|" + fNames[ic] + "|" + shID + "|" + ic;
+                fullscreenIMG.style.visibility = "hidden";
+                fullscreenIMG.style.position = "absolute";
+                fullscreenIMG.style.left = "5px";
+                fullscreenIMG.style.top = "5px";
+                fullscreenIMG.style.width = "20px";
+                fullscreenIMG.style.height = "20px";
+                fullscreenIMG.style.padding = "3px";
+                fullscreenIMG.style.cursor = "pointer";
+                fullscreenIMG.title = "Fullscreen";
+                fullscreenIMG.style.zIndex = "100";
+                fullscreenIMG.onclick = function (e) { fullScreen(e.target.parentNode.firstChild); }
+                divv.appendChild(fullscreenIMG);
+
+
+            }
+
+            setInputImages(fileCount);
+        }
     }
     req.send(param);
 }
+
+
+function fullScreen(target) {
+    if (target.requestFullscreen) {
+        target.requestFullscreen();
+    } else if (target.webkitRequestFullscreen) {
+        target.webkitRequestFullscreen();
+    } else if (target.msRequestFullscreen) {
+        target.msRequestFullscreen();
+    }
+}
+
 
 function updateImageList(f, removed) {
     var hfA = [];

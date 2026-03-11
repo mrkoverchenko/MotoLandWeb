@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 10. 20:37
+-- Létrehozás ideje: 2026. Már 11. 15:14
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -4353,7 +4353,7 @@ CREATE TABLE `secondhand_mstr` (
 --
 
 INSERT INTO `secondhand_mstr` (`SecondHandID_MSTR`, `SecondHandManufacturerID_MSTR`, `SecondHandType_MSTR`, `SecondHandYear_MSTR`, `SecondHandStateID_MSTR`, `SecondHandPrice_MSTR`, `SecondHandUserID_MSTR`, `SecondHandRegDateTime_MSTR`, `SecondHandLastRegDateTime_MSTR`, `SecondHandImageFileNames_MSTR`) VALUES
-(44, 3, 'erzerzerzeh', 2023, 4, 222222333, 64, '2026-03-10 20:14:16', '2026-03-10 20:34:16', 'secondhandimages/img_69b06d8822c3a5.98003734.jpg,secondhandimages/img_69b06f365d88f0.95829347.jpg,secondhandimages/img_69b06f365da461.23989674.jpg'),
+(44, 3, 'erzerzerzeh', 2023, 4, 222222333, 64, '2026-03-10 20:14:16', '2026-03-11 14:29:30', 'secondhandimages/img_69b15cf4dad727.57830595.jpg,secondhandimages/img_69b15cf4daeb26.52578723.jpg,secondhandimages/img_69b15cf4db0193.11130576.jpg,secondhandimages/img_69b15cf4db1712.24149252.jpg,secondhandimages/img_69b15cf4db3ac4.40962811.jpg,secondhandimages/img_69b15cf4db4f07.70894705.jpg,secondhandimages/img_69b15cf4db60e9.27604840.jpg,secondhandimages/img_69b15cf4db72f6.16037902.png'),
 (45, 2, 'ssss', 2012, 5, 234523523, 64, '2026-03-10 20:34:44', '2026-03-10 20:34:44', 'secondhandimages/img_69b072540148b4.51447850.jpg');
 
 -- --------------------------------------------------------

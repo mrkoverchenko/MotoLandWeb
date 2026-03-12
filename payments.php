@@ -384,10 +384,11 @@
                                 <select 
                                     required
                                     onchange="changeCountry(this)"
-                                    class="form-select form-select-sm" 
+                                    class="form-control" 
                                     id="shoppingCartCountryID" 
                                     name="shoppingCartCountryID" 
-                                    aria-label=".form-select-sm">
+                                    aria-label=".form-select-sm"
+                                    style="width:200px;display: inline-block">
 
                                     <?php
                                         $sql = "SELECT CountriesID_MSTR, CountriesCountry_MSTR 

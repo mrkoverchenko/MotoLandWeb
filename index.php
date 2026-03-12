@@ -1305,119 +1305,122 @@
 
 
         
-        <div class='modal fade' data-backdrop='static' data-keyboard='false' id='bookingService' role='dialog'>
+        <div class="modal fade" data-backdrop="static" data-keyboard="false" id="bookingService" role="dialog">
 
-            <div class='modal-dialog'>
+            <div class="modal-dialog">
 
-                <div class='modal-content'>
+                <div class="modal-content">
 
-                    <div class='modal-header' style='padding:5px 50px;'>
-                        <button type='button' class='close' style='margin-top:13px' data-dismiss='modal' style='margin-top:3px'>&times;</button>
-                        <h4><span class='glyphicon glyphicon-calendar'></span> Időpontfoglalás</h4>
+                    <div class="modal-header" style="padding:5px 50px;">
+                        <button type="button" class="close" style="margin-top:13px" data-dismiss="modal" style="margin-top:3px">&times;</button>
+                        <h4><span class="glyphicon glyphicon-calendar"></span> Időpontfoglalás</h4>
                     </div>
 
-                    <div class='modal-body' style='padding:10px 50px;'>
+                    <div class="modal-body" style="padding:10px 50px;">
 
-                        <div class='row' style='margin-bottom:10px'>
-                            <label class='col-sm-12 col-form-label' style='margin-top:5px'>
+                        <div class="row" style="margin-bottom:10px">
+                            <label class="col-sm-12 col-form-label" style="margin-top:5px">
                                 Időpontfoglaláshoz kérlek töltsd ki az alábbi űrlapot, hogy egy későbbi időpontban keresni tudjunk egyeztetés céljából.
                             </label>
                         </div>
                                         
 
-                        <form action='index.php' method='POST'>
-                            <input type='hidden' name='formName' value='bookingForm'>
+                        <form action="index.php" method="POST">
+                            <input type="hidden" name="formName" value="bookingForm">
 
 
-                            <div class='form-group row'>
-                                <label for='bookingDate' class='col-sm-4 col-form-label' style='margin-top:5px'> Dátum</label>
-                                <div class='col-sm-6'>
-                                    <input type='text' 
+                            <div class="form-group row">
+                                <label for="bookingDate" class="col-sm-4 col-form-label" style="margin-top:5px"> Dátum</label>
+                                <div class="col-sm-3">
+                                    <input type="text" 
                                             readonly
-                                            class='form-control-plaintext' 
-                                            id='bookingDate' 
-                                            name='bookingDate' 
-                                            style='width:100px'>
-
-                                    <input type='text' 
+                                            class="form-control" 
+                                            id="bookingDate" 
+                                            name="bookingDate" 
+                                            style="width:120px">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" 
                                             readonly
-                                            class='form-control-plaintext' 
-                                            id='bookingDay' 
-                                            name='bookingDay' 
-                                            style='width:100px'>
+                                            class="form-control" 
+                                            id="bookingDay" 
+                                            name="bookingDay" 
+                                            style="width:120px">
                                 </div>
                             </div>
 
 
 
+                            <div class="form-group row">
+                                <label for="bookingFullName" class="col-sm-4 col-form-label" style="margin-top:5px"> Név *</label>
+                                <div class="col-sm-6">
 
-                            <div class='form-group row'>
-                                <label for='bookingFullName' class='col-sm-4 col-form-label' style='margin-top:5px'> Név *</label>
-                                <div class='col-sm-6'>
-                                    <input type='text' 
-                                            required
-                                            <?php
-                                                echo (($isUser)
-                                                        ? " value = '".$_SESSION["userfullname"]."' "
-                                                        : "");
-                                            ?>
-                                            class='form-control-plaintext' 
-                                            id='bookingFullName' 
-                                            name='bookingFullName' 
-                                            placeholder='vezetéknév keresztnév'
-                                            style='width:300px'>
+                                <input type='text' 
+                                        required 
+                                        <?php
+                                            echo (($isUser) 
+                                                    ? " value = '".$_SESSION["userfullname"]."' "
+                                                    : "");
+                                        ?>                                                            
+                                        class='form-control' 
+                                        id='bookingFullName' 
+                                        name='bookingFullName' 
+                                        placeholder='vezetéknév keresztnév' 
+                                        style='width:300px'>
+
+
                                 </div>
                             </div>
 
 
-                            <div class='form-group row'>
-                                <label for='bookingPhone' class='col-sm-4 col-form-label'> Telefonszám *</label>
-                                <div class='col-sm-6'>
-                                    <input type='text' 
+                            <div class="form-group row">
+                                <label for="bookingPhone" class="col-sm-4 col-form-label"> Telefonszám *</label>
+                                <div class="col-sm-6">
+                                    <input type="text" 
                                             required
                                             <?php
                                                 echo (($isUser) 
                                                         ? " value = '".$_SESSION["userphone"]."' "
                                                         : "");
                                             ?>                                                            
-                                            class='form-control-plaintext' 
-                                            id='bookingPhone' 
-                                            name='bookingPhone' 
-                                            placeholder='+xx xx xxxxxxx'
-                                            style='width:300px'
-                                            maxlength='30'
-                                            onkeypress='return onlyPhone(event)'>
+                                            class="form-control" 
+                                            id="bookingPhone" 
+                                            name="bookingPhone" 
+                                            placeholder="+xx xx xxxxxxx"
+                                            style="width:300px"
+                                            maxlength="30"
+                                            onkeypress="return onlyPhone(event)">
                                 </div>
                             </div>
 
-                            <div class='form-group row'>
-                                <label for='bookingMail' class='col-sm-4 col-form-label'> E-mail cím *</label>
-                                <div class='col-sm-6'>
-                                    <input type='email' 
+                            <div class="form-group row">
+                                <label for="bookingMail" class="col-sm-4 col-form-label"> E-mail cím *</label>
+                                <div class="col-sm-6">
+                                    <input type="email" 
                                             required
                                             <?php
                                                 echo (($isUser) 
                                                         ? " value = '".$_SESSION["usermail"]."' "
                                                         : "");
                                             ?>
-                                            class='form-control-plaintext' 
-                                            id='bookingMail' 
-                                            name='bookingMail' 
-                                            placeholder='e-mail cím'
-                                            style='width:300px'
-                                            maxlength='64'>
+                                            class="form-control" 
+                                            id="bookingMail" 
+                                            name="bookingMail" 
+                                            placeholder="e-mail cím"
+                                            style="width:300px"
+                                            maxlength="64">
                                 </div>
                             </div>
 
-                            <button type='submit' class='btn btn-success'>
-                                <span class='glyphicon glyphicon-ok'></span> Mentés
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok"></span> Mentés
                             </button>
 
-                            <button type='reset' class='btn btn-primary' data-dismiss='modal' >
-                                <span class='glyphicon glyphicon-remove'></span> Mégsem
+                            <button type="reset" class="btn btn-primary" data-dismiss="modal" >
+                                <span class="glyphicon glyphicon-remove"></span> Mégsem
                             </button>
 
-                            <div class='modal-footer' style='text-align:left '>
+                            <div class="modal-footer" style="text-align:left ">
                                 <span>A *-al jelszett mezők kitöltése kötelező!</span>
                             </div>
 
@@ -1428,15 +1431,15 @@
                     <script>
                         // ONCLOSE
                         $('#bookingService').on('hidden.bs.modal', function (e) {
+                            document.getElementById('bookingFullName').value = "";
+                            document.getElementById('bookingPhone').value = "";
+                            document.getElementById('bookingMail').value = "";
                         });
 
                         // BEFORE ON SHOW
                         $('#bookingService').on('show.bs.modal', function (e) {
                             document.getElementById('bookingDate').value = bookingDate;
                             document.getElementById('bookingDay').value = bookingDay;
-                            document.getElementById('bookingFullName').value = "";
-                            document.getElementById('bookingPhone').value = "";
-                            document.getElementById('bookingMail').value = "";
                         })
 
                     </script>
@@ -1794,7 +1797,7 @@
 
                                     <input type="text" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regUserName" 
                                             name="regUserName" 
                                             placeholder="email cím vagy felhasználónév"  
@@ -1813,7 +1816,7 @@
                                     <input type="password" 
                                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regPassword" 
                                             name="regPassword" 
                                             placeholder="jelszó"
@@ -1834,7 +1837,7 @@
                                 <div class="col-sm-6">
                                     <input type="password" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="passwordCheck" 
                                             placeholder="jelszó ellenőrzés"
                                             style="width:270px">
@@ -1846,7 +1849,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regFirstName" 
                                             name="regFirstName" 
                                             placeholder="vezetéknév"
@@ -1859,7 +1862,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regMiddleName" 
                                             name="regMiddleName" 
                                             placeholder="keresztnév"
@@ -1872,7 +1875,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             alt="noChecking"
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regLastName" 
                                             name="regLastName" 
                                             placeholder="keresztnév"
@@ -1883,7 +1886,7 @@
                             <div class="form-group row">
                                 <label for="regCountryID" class="col-sm-4 col-form-label" style="margin-top:5px"> Ország *</label>
                                 <div class="col-sm-6">
-                                    <select class="form-select form-select-sm" id="regCountryID" name="regCountryID" aria-label=".form-select-sm example"></select>
+                                    <select class="form-control" id="regCountryID" name="regCountryID" aria-label=".form-select-sm example"></select>
                                 </div>
                             </div>
 
@@ -1892,7 +1895,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required 
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regPostCode" 
                                             name="regPostCode" 
                                             placeholder="irányítószám" 
@@ -1907,7 +1910,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regCity" 
                                             name="regCity" 
                                             placeholder="város"
@@ -1921,7 +1924,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regStreet" 
                                             name="regStreet" 
                                             placeholder="út/utca/tér ...stb"
@@ -1935,7 +1938,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regAddress" 
                                             name="regAddress" 
                                             placeholder="házszám/emelet/ajtó...stb"
@@ -1949,7 +1952,7 @@
                                 <div class="col-sm-6">
                                     <input type="text" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regPhone" 
                                             name="regPhone" 
                                             placeholder="telefonszám"
@@ -1964,7 +1967,7 @@
                                 <div class="col-sm-6">
                                     <input type="email" 
                                             required
-                                            class="form-control-plaintext" 
+                                            class="form-control" 
                                             id="regEmail" 
                                             name="regEmail" 
                                             placeholder="e-mail cím"
@@ -2051,7 +2054,7 @@
                                                     <input type='text' 
                                                             readonly 
                                                             disabled 
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profileUserName' 
                                                             name='profileUserName' 
                                                             placeholder='email cím vagy felhasználónév'  
@@ -2066,7 +2069,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='text' 
                                                             required
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profileFirstName' 
                                                             name='profileFirstName' 
                                                             placeholder='vezetéknév'
@@ -2079,7 +2082,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='text' 
                                                             required
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profileMiddleName' 
                                                             name='profileMiddleName' 
                                                             placeholder='keresztnév'
@@ -2092,7 +2095,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='text' 
                                                             alt='noChecking'
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profileLastName' 
                                                             name='profileLastName' 
                                                             placeholder='keresztnév'
@@ -2103,7 +2106,7 @@
                                             <div class='form-group row'>
                                                 <label for='profileCountryID' class='col-sm-4 col-form-label' style='margin-top:5px'> Ország *</label>
                                                 <div class='col-sm-6'>
-                                                    <select class='form-select form-select-sm' id='profileCountryID' name='profileCountryID' aria-label='.form-select-sm example'></select>
+                                                    <select class='form-control' id='profileCountryID' name='profileCountryID' aria-label='.form-select-sm example'></select>
                                                 </div>
                                             </div>
 
@@ -2112,7 +2115,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='text' 
                                                             required 
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profilePostCode' 
                                                             name='profilePostCode' 
                                                             placeholder='irányítószám' 
@@ -2127,7 +2130,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='text' 
                                                             required
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profileCity' 
                                                             name='profileCity' 
                                                             placeholder='város'
@@ -2141,7 +2144,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='text' 
                                                             required
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profileStreet' 
                                                             name='profileStreet' 
                                                             placeholder='út/utca/tér ...stb'
@@ -2155,7 +2158,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='text' 
                                                             required
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profileAddress' 
                                                             name='profileAddress' 
                                                             placeholder='házszám/emelet/ajtó...stb'
@@ -2169,7 +2172,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='text' 
                                                             required
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profilePhone' 
                                                             name='profilePhone' 
                                                             placeholder='telefonszám'
@@ -2184,7 +2187,7 @@
                                                 <div class='col-sm-6'>
                                                     <input type='email' 
                                                             required
-                                                            class='form-control-plaintext' 
+                                                            class='form-control' 
                                                             id='profileEmail' 
                                                             name='profileEmail' 
                                                             placeholder='e-mail cím'

@@ -1809,7 +1809,7 @@
 
                             <div class="form-group row">
                                 <label for="regPassword" class="col-sm-4 col-form-label" style="margin-top:5px">
-                                    <span class="glyphicon glyphicon-eye-open"></span> Jelszó *
+                                    <span class="glyphicon glyphicon-eye-open"></span> Jelszó * 
                                 </label>
 
                                 <div class="col-sm-6">
@@ -1832,6 +1832,9 @@
                             <div class="form-group row">
                                 <label for="password1Check" class="col-sm-4 col-form-label" style="margin-top:5px">
                                     <span class="glyphicon glyphicon-eye-open"></span> Ellenőrzés *
+                                    <img src="imgs/information.png" 
+                                            style="width:20px;" 
+                                            title="Jelszó min. 8 karakter, kisbetű, nagybetű és szám is szükséges! Csak mondom!"/>
                                 </label>
 
                                 <div class="col-sm-6">

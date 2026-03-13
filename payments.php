@@ -49,7 +49,7 @@
         </style>
 
 
-        <div class="paymentsbody" style="margin-bottom:70px;">
+        <div class="paymentsbody" style="margin-bottom:170px;">
 
             <div id="types" class="container" style="margin-bottom:30px;">
                 

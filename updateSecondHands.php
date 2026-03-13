@@ -52,6 +52,7 @@
                                 <img src='".$_SESSION['systemPath'].$Image."'
                                     style='width:auto; max-height:110px; cursor: pointer;border-radius:3px'
                                     alt='$BrandAndType'
+                                    ondblclick = 'fullScreen(event.target)'
                                     title='$BrandAndType'
                                     class='rounded-start'/>
                             </div>

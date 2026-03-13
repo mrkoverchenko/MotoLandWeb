@@ -17,12 +17,19 @@
                     SecondHandLastRegDateTime_MSTR,
                     SecondHandImageFileNames_MSTR,  
                     MotoManufacturerManufacturer_MSTR AS Brand,
-                    SecondHandType_MSTR AS Type
+                    SecondHandType_MSTR AS Type,
+                    UserMail_MSTR,
+                    UserPhone_DET,
+                    CONCAT(UserFirstName_DET,' ', UserMiddleName_DET, ' ', UserLastName_DET) AS UserFullName
                 FROM 
                     secondhand_mstr,
                     secondhandstate_mstr,
-                    motomanufacturer_mstr
+                    motomanufacturer_mstr,
+                    user_mstr,
+                    user_det
                 WHERE 
+                    SecondHandUserID_MSTR = UserID_MSTR AND
+                    UserID_MSTR = UserMSTRID_DET AND 
                     SecondHandID_MSTR = '$id' AND 
                     SecondHandManufacturerID_MSTR = MotoManufacturerID_MSTR AND 
                     secondhand_mstr.SecondHandStateID_MSTR = secondhandstate_mstr.SecondHandStateID_MSTR";
@@ -40,6 +47,9 @@
             $Price = $row["SecondHandPrice_MSTR"];
             $Begin = $row["SecondHandRegDateTime_MSTR"];
             $Last = $row["SecondHandLastRegDateTime_MSTR"];
+            $FullName = $row["UserFullName"];
+            $Phone = $row["UserPhone_DET"];
+            $Mail = $row["UserMail_MSTR"]; 
 
             $shi = $row["SecondHandImageFileNames_MSTR"];
             $Images = explode(",", $shi);
@@ -50,6 +60,11 @@
                             <span>Gyártási év: <b>$Year</b></span><br>
                             <span>Állapot: <b>$State</b></span><br>
                             <span>Eladási ár: <b><u>".number_format($Price, 0, ",", " ").".- Ft.</u></b></span><br>
+
+                            <span>Feladó: <b>$FullName</b></span><br>
+                            <span>Telefon: <b>$Phone</b></span><br>
+                            <span>E-mail: <b><a href='mailto:$Mail'>$Mail</a></b></span><br>
+
                             <span>Hirdetés felvéve: <i>$Begin</i></span><br>
                             <span>Utolsó módosítás: <i>$Last</i></span><br>
                             <span style='font-size:10px; color:gray;'><i>".((strlen($shi) > 0) ? count($Images)." db." : "<b><u>Nincs</u></b>")." kép a hirdetésben.</i></span>
@@ -87,43 +102,6 @@
     }
     mysqli_close($connect);
     echo $det;
-
-
-/*
-
-
-                        <div class='carousel slide' data-ride='carousel'>
-                            <ol class='carousel-indicators'>";
-                                for ($ic = 0; $ic < count($Images); $ic++) { 
-                                    $det .= "<li data-target='#shCarousel' data-slide-to='$ic' ".(($ic == 0) ? "class='active'" : "")."></li>";
-                                }
-                            $det .= "</ol>
-                            <div class='carousel-inner' role='listbox'>";
-                                for ($ic = 0; $ic < count($Images); $ic++) {
-                                    $det .="<div class='item ".(($ic == 0) ? "active" : "")."'>
-                                                <img src='$Images[$ic]' alt='$BrandAndType' width='160' height='145'>
-                                                <div class='carousel-caption'>
-                                                    <h3>$Brand</h3>
-                                                    <p>$Type ($Year)</p>
-                                                </div>
-                                            </div>";
-                                }
-                            $det .= "</div>
-                            <a class='left carousel-control' href='#shCarousel' role='button' data-slide='prev'>
-                                <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>
-                                <span class='sr-only'>Previous</span>
-                            </a>
-                            <a class='right carousel-control' href='#shCarousel' role='button' data-slide='next'>
-                                <span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>
-                                <span class='sr-only'>Next</span>
-                            </a>
-                        </div>
-
-
-
-
-
-*/
 
 
 ?>

@@ -103,7 +103,7 @@
                                 $Begin = $row["SecondHandRegDateTime_MSTR"];
                                 $Last = $row["SecondHandLastRegDateTime_MSTR"];
                                 //array_push($Images, $ImagesA[0]);
-
+ 
 
                                 $div .= "  <div class='card mb-2' 
                                                     style='width: 400px; height:120px;

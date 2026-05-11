@@ -8,6 +8,11 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
 
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__. '/../');
+    $dotenv->load();
+
+
+
     if (!empty($_SESSION["cartid"])) {
             $p = "";
             $serverName = "http://".$_SERVER['SERVER_NAME'];
@@ -219,7 +224,7 @@
                                     </tr>
                                 </thead>
 
-                                <tbody>
+                                <tbody> 
                                     $parts
                                 </tbody>
 
@@ -322,18 +327,19 @@
                 $mail = new PHPMailer(true);
                 $mail->isSMTP();
                 $mail->CharSet = "UTF-8";
+                $mail->addBCC($_ENV["MAIL_USER"]);            
                 //$mail->SMTPDebug = 1;
-                $mail->Host = "smtp.mail.yahoo.com";
+                $mail->Host = $_ENV['MAIL_HOST']; 
                 $mail->SMTPAuth = true;
-                $mail->Username = "istvan.lovei@yahoo.com";
-                $mail->Password = "zopxdyyvskobaqjz";
-                $mail->SMTPSecure = "ssl"; //465 tls-587
-                $mail->Port = 465; //587; 465; imap:993
-                $mail->setFrom("istvan.lovei@yahoo.com", "MotoLand");
+                $mail->Username = $_ENV["MAIL_USER"]; 
+                $mail->Password = $_ENV['MAIL_PASSWORD'];
+                $mail->SMTPSecure = "ssl";
+                $mail->Port = 465; 
+                $mail->setFrom($_ENV["MAIL_USER"], $_ENV["MAIL_SETFROM"]);
                 $mail->addAddress($usermail, $username);
 
                 $mail->isHTML(true);
-                $mail->Subject = "MotoLand rendelés: $orderid";
+                $mail->Subject = $_ENV["MAIL_SUBJECT"].$orderid;
                 $mail->Body    = $mailbody;
                 if(!$mail->send()){
                     echo 'Nincs küldés, szarakodás van: ' . $mail->ErrorInfo;

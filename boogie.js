@@ -130,7 +130,7 @@ function startItem(item) {
     let container = document.getElementById("subcontainer");
     history.pushState({}, '', 'index.php');
     //history.replaceState({}, '', 'index.php');
-    var param = "";
+    var param = "null";
     var req = new XMLHttpRequest();
     req.open("POST", item + ".php", true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -903,13 +903,13 @@ function updateMySecondHand(myparam) {
 
 
 function refresh() {
-    var p = "";
+    var p = "null";
     var req = new XMLHttpRequest();
     req.open("POST", "updateSecondHands.php", true);
     req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     req.onreadystatechange = function () {
         if (req.readyState === 4 && req.status === 200) {
-            document.getElementById("secondhandmoto").innerHTML = this.responseText;
+            //document.getElementById("secondhandmoto").innerHTML = this.responseText;
         }
     }
     req.send(p);
